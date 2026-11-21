@@ -1083,18 +1083,279 @@
   \]</div>
   <p>This is the normalization used with \(v_\ell(\ell)=1\). In particular, a factor \(\varpi^{a_i}\) contributes \(a_i/e_{\mathcal O}\) units of \(\ell\)-adic depth.</p>
 
-  <h4 id="galois-automorphic-rigidity"><span class="note-number">2.7.12</span> Use automorphy to control the characteristic-zero points.</h4>
-  <p>The split reference representation was easy to write down. The hard arithmetic enters when studying the other points of the deformation ring. A characteristic-zero specialization \(f:R\to\overline{\mathbb Q}_\ell\) produces a representation \(\rho_f\). For the relevant points, the source's lifting results place it in a controlled class: either an admissible rank-three automorphic representation, or a rank-two modular constituent in the second case.</p>
-  <p>These statements do three jobs. They supply finiteness of the weight-zero algebra, place the resulting Frobenius traces in a finite list with arithmetic bounds, and supply the rigidity needed for the length comparison. The construction of Galois representations and their local compatibility is used together with these lifting and vanishing theorems.</p>
-  <p>At a characteristic-zero point, a permitted infinitesimal deformation again gives an adjoint cocycle. The local conditions place it in the appropriate Bloch–Kato Selmer problem. The source then uses the relevant adjoint vanishing theorem, or the corresponding modular and auxiliary vanishing input, to show that the deformation is a change of basis. In the cases covered by that vanishing theorem, the logical step is</p>
+  <h4 id="galois-automorphic-rigidity"><span class="note-number">2.7.12</span> Use automorphy and Selmer vanishing to obtain rigidity.</h4>
+  <p>We need to understand how a characteristic-zero point of the deformation ring can move. Automorphy identifies the arithmetic representations occurring at the relevant points. Separate Selmer-vanishing theorems then show that every permitted first-order motion is a change of basis. The normalization leaves just one such motion, the grading orbit. A transverse slice removes it, giving the multiplicity-one input in the cotangent-to-trace bound.</p>
+  <nav class="landau-step-nav trace-step-nav" aria-label="Automorphy, Selmer vanishing and rigidity">
+    <ol>
+      <li><a href="#rigidity-target"><span class="note-nav-number">2.7.12.1</span><span>Fix the point and the question</span></a></li>
+      <li><a href="#rigidity-tangent"><span class="note-nav-number">2.7.12.2</span><span>Turn a tangent into a cocycle</span></a></li>
+      <li><a href="#rigidity-basis"><span class="note-nav-number">2.7.12.3</span><span>Recognize changes of basis</span></a></li>
+      <li><a href="#rigidity-selmer"><span class="note-nav-number">2.7.12.4</span><span>Impose the Selmer conditions</span></a></li>
+      <li><a href="#rigidity-local"><span class="note-nav-number">2.7.12.5</span><span>Check those local conditions</span></a></li>
+      <li><a href="#rigidity-type-one"><span class="note-nav-number">2.7.12.6</span><span>Handle the rank-three case</span></a></li>
+      <li><a href="#rigidity-type-two"><span class="note-nav-number">2.7.12.7</span><span>Handle the rank-two constituent</span></a></li>
+      <li><a href="#rigidity-normalization"><span class="note-nav-number">2.7.12.8</span><span>Leave only the grading orbit</span></a></li>
+      <li><a href="#rigidity-base"><span class="note-nav-number">2.7.12.9</span><span>Treat the split point separately</span></a></li>
+      <li><a href="#rigidity-slice"><span class="note-nav-number">2.7.12.10</span><span>Deduce multiplicity at most one</span></a></li>
+    </ol>
+  </nav>
+
+  <h5 id="rigidity-target"><span class="note-number">2.7.12.1</span> Fix a point and ask what can move.</h5>
+  <p>Let \(\kappa=\overline{\mathbb Q}_\ell\), and choose a local characteristic-zero specialization \(f:R\to\kappa\) of the constrained deformation ring. The point retains the ramification, local type, polarization and marked normalization imposed on the universal representation. Its full representation \(\mathcal R_f\) includes a quadratic sign character \(\eta\); on \(G_K=\ker\eta\), for the imaginary quadratic field \(K\) in this construction, it is an ordinary three-dimensional representation \(\rho_f\).</p>
+  <p>The source distinguishes two sorts of relevant, two-sided points. In Type I, \(\rho_f\) is irreducible. In Type II, it has the prescribed outer rank-two block and middle line, with the outer block irreducible. Automorphy lifting supplies rank-three automorphy in the first case and modularity of a rank-two extension in the second.</p>
+  <p>Finiteness alone would not give the needed rigidity. A space can have one geometric point and still carry infinitesimal motion: \(\kappa[z]/(z^2)\) has just the point \(z=0\), but the map \(z\mapsto\epsilon\) into \(\kappa[\epsilon]/(\epsilon^2)\) is nonconstant. Selmer vanishing is used to control these invisible first-order directions, not merely to count points.</p>
+
+  <h5 id="rigidity-tangent"><span class="note-number">2.7.12.2</span> Turn a first-order motion into an adjoint cocycle.</h5>
+  <p>A tangent vector at \(f\) is an \(\mathcal O\)-linear derivation \(\delta:R\to\kappa\). Equivalently, it is a map into the dual numbers:</p>
   <div class="technical-equation">\[
-    [c_f]\in H^1_{\mathcal L}(G,\operatorname{ad}\rho_f),\qquad
-    H^1_{\mathcal L}(G,\operatorname{ad}\rho_f)=0
-    \quad\Longrightarrow\quad
-    c_f\text{ is a coboundary}.
+    F(b)=f(b)+\epsilon\delta(b),\qquad \epsilon^2=0,
+    \qquad
+    \delta(bb')=f(b)\delta(b')+f(b')\delta(b).
   \]</div>
-  <p>Here \(\mathcal L\) denotes the prescribed local conditions; this is not a vanishing assertion about unrestricted \(H^1\). The source separately treats the diagonal base point and the one-sided degeneracies. These are the hypotheses that make the graded comparison applicable.</p>
-  <p>Rigidity over a field does not force integral torsion to vanish. Two distinct characteristic-zero points may still become congruent modulo a high power of \(\varpi\). That remaining integral proximity is precisely what the next estimate measures.</p>
+  <p>The symbol \(\epsilon\) keeps the first-order change and discards products of changes. Applying \(F\) to the matrix coefficients produces, on \(G_K\),</p>
+  <div class="technical-equation">\[
+    \rho_\epsilon(g)=\rho_f(g)+\epsilon\dot\rho(g)
+       =(1+\epsilon\gamma(g))\rho_f(g),
+    \qquad \gamma(g)=\dot\rho(g)\rho_f(g)^{-1}.
+  \]</div>
+  <p>Now expand the representation law and compare the coefficient of \(\epsilon\):</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \rho_\epsilon(g)\rho_\epsilon(h)
+      &=(1+\epsilon\gamma(g))\rho_f(g)
+        (1+\epsilon\gamma(h))\rho_f(h),\\
+    \gamma(gh)&=\gamma(g)+
+       \rho_f(g)\gamma(h)\rho_f(g)^{-1}.
+    \end{aligned}
+  \]</div>
+  <p>This is the cocycle equation for the adjoint action. The global representation is polarized, so its action on all of \(G_{\mathbb Q}\) must retain the sign. With \(R_f(g)\) the matrix part of \(\mathcal R_f(g)\) and \(J\) the antidiagonal matrix, the coefficient representation \(V_f\) is the space of all \(3\times3\) matrices with action</p>
+  <div class="technical-equation">\[
+    g\cdot X=
+    \begin{cases}
+      R_f(g)X R_f(g)^{-1},&\eta(g)=1,\\
+      R_f(g)(-JX^{\mathsf T}J)R_f(g)^{-1},&\eta(g)=-1.
+    \end{cases}
+    \qquad
+    \gamma(gh)=\gamma(g)+g\cdot\gamma(h).
+  \]</div>
+  <p>The negative transpose differentiates the duality condition in the polarization. In particular, this is not silently a trace-zero adjoint or ordinary conjugation on every Galois element. The source proves that the tangent cocycle is continuous as well as satisfying the algebraic identity.</p>
+
+  <h5 id="rigidity-basis"><span class="note-number">2.7.12.3</span> Identify the motions that merely change coordinates.</h5>
+  <p>Take a matrix \(X\), and change the basis by \(1+\epsilon X\), whose inverse is \(1-\epsilon X\). On \(G_K\),</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    (1+\epsilon X)\rho_f(g)(1-\epsilon X)
+      &=\rho_f(g)+\epsilon\bigl(X\rho_f(g)-\rho_f(g)X\bigr)\\
+      &=\bigl(1+\epsilon(X-g\cdot X)\bigr)\rho_f(g).
+    \end{aligned}
+  \]</div>
+  <p>Thus the cocycle \(\gamma_X(g)=X-g\cdot X\) represents an infinitesimal change of basis. The polarized action gives the same interpretation on the full group. The opposite sign convention \(g\cdot Y-Y\) describes the same coboundaries by taking \(Y=-X\).</p>
+  <div class="technical-equation">\[
+    H^1(G_{\mathbb Q},V_f)=Z^1(G_{\mathbb Q},V_f)/B^1(G_{\mathbb Q},V_f).
+  \]</div>
+  <p>This quotient distinguishes a genuine deformation from a coordinate change. Vanishing of the relevant class means that one single matrix \(X\) removes the motion for every Galois element. Finding different matrices locally at different primes is a weaker statement; the Selmer group measures the possible obstruction to making them compatible globally.</p>
+
+  <h5 id="rigidity-selmer"><span class="note-number">2.7.12.4</span> Restrict to motions allowed by the arithmetic.</h5>
+  <p>The deformation problem does not allow arbitrary classes in \(H^1\). Away from \(\ell\), it requires the class to be unramified; at \(\ell\), it requires the crystalline finite condition. In customary cohomological notation, these local spaces are</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    H^1_{\mathrm{unr}}(\mathbb Q_p,V_f)
+      &=\ker\!\left(H^1(G_{\mathbb Q_p},V_f)
+                      \longrightarrow H^1(I_p,V_f)\right)
+                      &&(p\ne\ell),\\
+    H^1_f(\mathbb Q_\ell,V_f)
+      &=\ker\!\left(H^1(G_{\mathbb Q_\ell},V_f)
+          \longrightarrow H^1(G_{\mathbb Q_\ell},
+                       V_f\otimes_{\mathbb Q_\ell}B_{\mathrm{cris}})\right).
+    \end{aligned}
+  \]</div>
+  <p>Here \(I_p\) is inertia and \(B_{\mathrm{cris}}\) is the crystalline period ring. The latter condition says that a local extension becomes split after adding the crystalline periods. Combining the local tests gives the global Bloch–Kato Selmer space:</p>
+  <div class="technical-equation">\[
+    H^1_{\mathrm{BK}}(\mathbb Q,V_f)=
+    \left\{[\gamma]\in H^1(G_{\mathbb Q},V_f):
+      \begin{array}{ll}
+      \operatorname{res}_p[\gamma]\in H^1_{\mathrm{unr}}(\mathbb Q_p,V_f)
+          &\text{for }p\ne\ell,\\
+      \operatorname{res}_\ell[\gamma]\in H^1_f(\mathbb Q_\ell,V_f)
+      \end{array}\right\}.
+  \]</div>
+  <p>The source expresses this directly in terms of continuous cocycles and local coboundaries. Its polarized action and marked normalization also retain the complex-conjugation data. The subscript \(f\) in the usual local notation \(H^1_f\) means the finite local condition; it is not the name of our specialization.</p>
+  <p>The two assertions needed are now separate and precise:</p>
+  <div class="technical-equation">\[
+    F\text{ an allowed tangent lift}
+       \Longrightarrow[\gamma_F]\in H^1_{\mathrm{BK}}(\mathbb Q,V_f),
+    \qquad
+    H^1_{\mathrm{BK}}(\mathbb Q,V_f)=0.
+  \]</div>
+  <p>The first comes from the construction of the constrained ring. The second comes from the vanishing inputs discussed below. Together they imply \(\gamma_F(g)=X-g\cdot X\).</p>
+
+  <h5 id="rigidity-local"><span class="note-number">2.7.12.5</span> Check why a permitted tangent satisfies the local tests.</h5>
+  <p><strong>Away from \(\ell\).</strong> The imposed relations make the representation trivial on \(H_p=I_p\cap\ker\overline{\mathcal R}\), where \(\overline{\mathcal R}\) is the residual representation. The tangent cocycle therefore vanishes there too. Since the residual image is finite, \(H_p\) has finite index in inertia.</p>
+  <p>The characteristic-zero averaging argument explains why this gives an inertia coboundary. For a cocycle on the resulting finite quotient \(\Gamma_p\), set \(S=\sum_{h\in\Gamma_p}\gamma(h)\) and \(n=|\Gamma_p|\). Summing the cocycle identity gives</p>
+  <div class="technical-equation">\[
+    S=\sum_h\gamma(gh)=n\gamma(g)+g\cdot S,
+    \qquad
+    \gamma(g)=X_p-g\cdot X_p,\quad X_p=S/n.
+  \]</div>
+  <p>Division by \(n\) is allowed in the characteristic-zero coefficient field. The class on inertia is zero. This still permits unramified variation of Frobenius; it does not say that the class vanishes on the entire decomposition group.</p>
+  <p><strong>At \(\ell\).</strong> A permitted tangent lift factors through the prescribed local type ideal. The source's local deformation theorem shows that such dual-number points preserve the required crystalline structure, first on the subgroup fixing the sign and local type. Its dual-number comparison then identifies this condition with the finite condition on the adjoint cocycle. After the required descent, there is a period-valued \(z\) with</p>
+  <div class="technical-equation">\[
+    z\in V_f\otimes_{\mathbb Q_\ell}B_{\mathrm{cris}},
+    \qquad \gamma(g)\otimes1=g\cdot z-z
+       \quad(g\in G_{\mathbb Q_\ell}).
+  \]</div>
+  <p>Intuitively, the local crystalline coordinates absorb the infinitesimal change. Fixed Hodge–Tate weights alone would not justify this step: it uses the local type ideal, the crystalline deformation result and the comparison for dual numbers. These local arguments establish membership in the Selmer space before any global vanishing theorem is used.</p>
+
+  <h5 id="rigidity-type-one"><span class="note-number">2.7.12.6</span> Apply adjoint vanishing in the rank-three automorphic case.</h5>
+  <p>At a Type I point, the source places the twist
+    \(\rho_{\mathrm{aut}}=\rho_f\otimes\varepsilon_\ell^{-1}\)
+    in the required regular algebraic, polarized automorphic class over \(K\). Here \(\varepsilon_\ell\) denotes the cyclotomic character. It also proves the required irreducibility after restriction to its kernel. The polarization supplies the comparison at complex conjugation; for this rank-three twist its multiplier is \(\varepsilon_\ell^{-2}\).</p>
+  <p>These facts make the separate polarized adjoint-vanishing theorem applicable:</p>
+  <div class="technical-equation">\[
+    \begin{gathered}
+    \rho_{\mathrm{aut}}\text{ has the required automorphy and polarization},\\
+    \rho_{\mathrm{aut}}|_{G_{K(\mu_{\ell^\infty})}}
+       \text{ is irreducible}
+    \end{gathered}
+    \quad\Longrightarrow\quad
+    H^1_{\mathrm{BK}}(\mathbb Q,V_f)=0.
+  \]</div>
+  <p>This is not a formal consequence of calling a representation automorphic. The vanishing theorem is a substantive arithmetic input, with continuity, field, polarization and irreducibility hypotheses. Related results are discussed in the <a href="sources.html#ref-adjoint-selmer">adjoint Selmer reference</a>.</p>
+  <p>Why can a twist provide information about the original adjoint? A scalar character cancels out of conjugation:</p>
+  <div class="technical-equation">\[
+    (\chi(g)\rho_f(g))X(\chi(g)\rho_f(g))^{-1}
+       =\rho_f(g)X\rho_f(g)^{-1}.
+  \]</div>
+  <p>The twist adjusts the automorphic normalization while preserving this action on matrices. The source also checks the polarized action outside \(G_K\). Thus the Selmer group that vanishes is the one containing our tangent class, rather than a different adjoint group with a similar name.</p>
+
+  <h5 id="rigidity-type-two"><span class="note-number">2.7.12.7</span> Control all four pieces in the rank-two case.</h5>
+  <p>A Type II point is not covered by the preceding irreducible rank-three argument. Its outer block extends to an odd rank-two representation \(W\) of \(G_{\mathbb Q}\), while the middle line is fixed. The source's modularity input supplies a newform \(h\) of weight \(2e+1\), with \(e\ge1\), such that \(W\otimes\varepsilon_\ell^{-e}\) is attached to \(h\). The determinant of \(W\) is the quadratic character \(\eta\).</p>
+  <p>The full adjoint contains more than endomorphisms of \(W\): it also contains maps between the outer block and the middle line. With the polarized action included, the source separates its nine dimensions into</p>
+  <div class="technical-equation">\[
+    V_f\simeq A_W\oplus W\oplus(W\otimes\eta)\oplus C,
+    \qquad 9=4+2+2+1.
+  \]</div>
+  <p>Here \(A_W\) is the polarized rank-two adjoint corner, the two rank-two summands describe mixing with the middle line, and \(C\) is the middle-coordinate piece with the quadratic-sign action. Each requires its own vanishing input:</p>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Piece</th><th>Why its Selmer class vanishes</th></tr></thead>
+    <tbody>
+      <tr><td>\(A_W\)</td><td>The newform-to-automorphic comparison and the polarized rank-two adjoint-vanishing theorem.</td></tr>
+      <tr><td>\(W\)</td><td>The source's Kato-type input for the specified positive twist of the newform representation.</td></tr>
+      <tr><td>\(W\otimes\eta\)</td><td>The same input with the permitted finite-conductor quadratic twist.</td></tr>
+      <tr><td>\(C\)</td><td>The split-representation vanishing argument in nonpositive grading weight, applied in weight zero.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The Kato-type input retains the odd coefficient-prime, positive twist, newform attachment and finite-character hypotheses. It does not assert vanishing for every modular representation or every twist.</p>
+  <p>The decomposition also explains how the four conclusions combine. Its projections \(p_i\) are equivariant, so they carry a global cocycle and its local splitting witnesses to cocycles and witnesses in each piece. If
+    \(p_i(\gamma(g))=X_i-g\cdot X_i\),
+    the equivariant reconstruction maps combine the \(X_i\) into one \(X\), giving</p>
+  <div class="technical-equation">\[
+    \gamma(g)=X-g\cdot X
+       \qquad\text{for every }g\in G_{\mathbb Q}.
+  \]</div>
+  <details>
+    <summary>See how the two off-diagonal pieces are separated.</summary>
+    <p>Using matrix indices \(0,1,2\), the projections are</p>
+    <div class="technical-equation">\[
+      p_A(X)=\begin{pmatrix}X_{00}&X_{02}\\X_{20}&X_{22}\end{pmatrix},
+      \quad
+      p_+(X)=\binom{X_{01}+X_{12}}{X_{21}-X_{10}},
+      \quad
+      p_-(X)=\binom{X_{01}-X_{12}}{X_{21}+X_{10}}.
+    \]</div>
+    <p>Let \(p_C(X)=X_{11}E_{11}\), where \(E_{11}\) has its only nonzero entry in the middle. The reconstruction maps put these coordinates back into their matrix positions, with</p>
+    <div class="technical-equation">\[
+      X=s_Ap_A(X)+\tfrac12s_+p_+(X)
+          +\tfrac12s_-p_-(X)+p_C(X).
+    \]</div>
+    <p>The plus and minus combinations distinguish how the mixing terms transform under complex conjugation. The factors \(1/2\) undo the sum-and-difference projections. Equivariance means this identity works for cocycles and coboundaries, not just for their underlying vector spaces.</p>
+  </details>
+  <p>Modularity of the outer block is therefore one input to full rigidity. Vanishing for its adjoint corner alone would leave the off-diagonal extension classes uncontrolled.</p>
+
+  <h5 id="rigidity-normalization"><span class="note-number">2.7.12.8</span> Show that normalization leaves only the grading orbit.</h5>
+  <p>We now know that every allowed tangent cocycle at a two-sided point is some \(\gamma_X\). But not every infinitesimal basis change respects the chosen normalization. The source fixes the matrix part at a distinguished complex conjugation \(c_\infty\) and imposes two further marked-entry conditions. Linearizing those conditions restricts \(X\).</p>
+  <p>At \(c_\infty\), the requirement \(\gamma_X(c_\infty)=0\) gives
+    \(X=-JX^{\mathsf T}J\).
+    The two other conditions become commutator equations at the marked element. Using the invertible marked difference and invertibility of \(2\), the source's matrix calculation gives precisely</p>
+  <div class="technical-equation">\[
+    \gamma_X\text{ respects the normalization}
+      \quad\Longleftrightarrow\quad
+    X=aH,\qquad H=\operatorname{diag}(1,0,-1),\quad a\in\kappa.
+  \]</div>
+  <p>This is the infinitesimal form of the surviving torus
+    \(\operatorname{diag}(t,1,t^{-1})\).
+    All other permitted coordinate motions have been removed. On a homogeneous model function \(b\in A_j\), its action and derivative are</p>
+  <div class="technical-equation">\[
+    (t\cdot\xi)(b)=t^j\xi(b),\qquad
+    D_{\mathrm{gr}}(b)=
+       \left.\frac{d}{dt}\right|_{t=1}t^j\xi(b)=j\,\xi(b).
+  \]</div>
+  <p>There is one further logical step: a tangent cocycle must faithfully record the model derivation. The source proves this for the model and its normalized deformation ring. For derivations \(D,D'\) represented by lifts \(F,F'\), it gives</p>
+  <div class="technical-equation">\[
+    a\,\gamma_F+b\,\gamma_{F'}=0
+       \quad\Longrightarrow\quad aD+bD'=0.
+  \]</div>
+  <p>Since the cocycles are multiples of \(\gamma_H\), any two such derivations are linearly dependent. At a two-sided point, \(D_{\mathrm{gr}}\) is nonzero and kills the homogeneous equation ideal. Thus</p>
+  <div class="technical-equation">\[
+    \operatorname{Der}_{\mathcal O,\xi}(A/I,\kappa)
+       =\kappa D_{\mathrm{gr}}.
+  \]</div>
+  <p>There is exactly one tangent direction in these coordinates, but it only rescales a basis. This is the precise meaning of rigidity transverse to the grading orbit.</p>
+
+  <h5 id="rigidity-base"><span class="note-number">2.7.12.9</span> Keep the split point and one-sided loci separate.</h5>
+  <p>The split base point is not two-sided, and its rigidity is proved by a different argument. The source needs vanishing only for Bloch–Kato cocycles supported in matrix grading weights \(j\le0\). That argument uses its character-cohomology, local and global inputs; it is not an application of irreducible rank-three automorphy to a reducible representation.</p>
+  <p>After this vanishing result makes a cocycle a coboundary, normalization again forces \(X\in\kappa H\). At the split diagonal representation \(\mathcal R_0\), however, the grading torus fixes the point. Consequently,</p>
+  <div class="technical-equation">\[
+    \gamma_H(g)=H-g\cdot H=0,\qquad
+    \gamma_F=0\quad\Longrightarrow\quad D=0
+       \quad\text{in the required nonpositive weights}.
+  \]</div>
+  <p>This supplies rational spanning by the equations in the weights \(-1,-2,0\). For the selected cotangent quotient it permits</p>
+  <div class="technical-equation">\[
+    C_{-1}\otimes_{\mathcal O}E=0,
+    \qquad E=\operatorname{Frac}(\mathcal O),
+  \]</div>
+  <p>while its integral length can still be positive. For example,
+    \((\mathcal O/\varpi^n\mathcal O)\otimes_{\mathcal O}E=0\),
+    although its length is \(n\). Characteristic-zero rigidity removes free directions; it does not measure how many integral torsion layers remain.</p>
+  <p>The source also separately proves that a normalized point lying in both triangular loci is the split reference point. This supplies the condition controlling one-sided degeneracies in the graded support argument. The three jobs are distinct: nonpositive-weight rigidity at the base, identification of the doubly triangular point, and rigidity at two-sided points.</p>
+
+  <h5 id="rigidity-slice"><span class="note-number">2.7.12.10</span> Remove the orbit direction and obtain multiplicity one.</h5>
+  <p>We can now explain the multiplicity bound used in <a href="#trace-multiplicity">§2.7.13.10</a>. At a two-sided point, choose nonvanishing functions of weights \(-2\) and \(+2\). After extending the generic coefficient field to \(\kappa\), move along the grading orbit: choose \(t\) with \(t^2=\xi(b_-)\), so that \((t\cdot\xi)(b_-)=t^{-2}\xi(b_-)=1\). Keeping the same homogeneous functions, take the local slice</p>
+  <div class="technical-equation">\[
+    b_-=1,\qquad b_+\ne0,
+    \qquad b_-\in A_{-2},\quad b_+\in A_2.
+  \]</div>
+  <p>A tangent to this slice must satisfy \(D(b_-)=0\). Since every tangent is \(aD_{\mathrm{gr}}\),</p>
+  <div class="technical-equation">\[
+    0=D(b_-)=a(-2)\xi(b_-)=-2a
+       \quad\Longrightarrow\quad a=0.
+  \]</div>
+  <p>Fixing the value of \(b_-\) has removed the last change-of-basis direction. The source uses its finiteness hypotheses to turn this into a finite, reduced generic slice. The local algebra explanation is useful: at a finite local algebra over the algebraically closed coefficient field, the tangent space is dual to \(\mathfrak m/\mathfrak m^2\). If it is zero, Nakayama's lemma forces \(\mathfrak m=0\); the point has no nilpotent thickening. This reasoning concerns the generic slice, after inverting \(\varpi\), not the entire integral deformation ring.</p>
+  <p>Next let \(B=A_0\), let \(\tau:B\to\kappa\) be a surviving two-sided degree-zero character, and put \(\mathfrak p=\ker\tau\). The slice and orbit calculations show that each localized weight piece</p>
+  <div class="technical-equation">\[
+    L_w=\bigl((A/I)_w\bigr)_{\mathfrak p}
+  \]</div>
+  <p>is cyclic and is annihilated by the maximal ideal of \(B_{\mathfrak p}\). Intuitively, a function of fixed weight along one orbit is determined by a single coefficient; the reduced slice contributes no additional infinitesimal layers. Algebraically, the two properties give a surjection from the residue field:</p>
+  <div class="technical-equation">\[
+    \kappa(\mathfrak p)\twoheadrightarrow L_w,
+    \qquad
+    \operatorname{length}_{B_{\mathfrak p}}L_w\le1.
+  \]</div>
+  <p>This is the exact starting bound needed in the next subsection. Replacing the selected \(u+1+v\) equations by their squares can multiply this bound by at most \(2^{u+1+v}\). The lower cotangent count contributes \(2^{u+v}\), and their ratio leaves the factor of two:</p>
+  <div class="technical-equation">\[
+    \begin{gathered}
+    \text{Selmer vanishing}\ \Longrightarrow\
+    \text{normalized orbit rigidity}\ \Longrightarrow\
+    \operatorname{length}_{B_{\mathfrak p}}L_w\le1,\\
+    2^{u+v}\operatorname{length}_{\mathcal O}C_{-1}
+      \le 2^{u+1+v}\sum_{\xi\in\mathcal T}
+          v_\varpi\!\left(\xi(a_\sigma)\right).
+    \end{gathered}
+  \]</div>
+  <p>The full graded comparison in §2.7.13 is still needed for the second line. Rigidity supplies its multiplicity input; it does not by itself produce a numerical integral bound or force \(C_{-1}=0\).</p>
+  <div class="technical-note"><p><strong>What each input contributes.</strong> Local deformation conditions put the tangent class in the correct Selmer space. Automorphy and modularity make the relevant vanishing theorems applicable, separately in the two cases. Vanishing makes the tangent a change of basis; normalization leaves the grading orbit; the slice and weight-piece arguments give multiplicity at most one. The later valuation comparison measures the integral congruence depth that these characteristic-zero statements leave open.</p></div>
+  <p class="source-callout">Two source entry points for this passage: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/PtHypOf.lean">the assembly of local Selmer conditions and point rigidity</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/GradedModelDerivationConditionOfPtHyp.lean">the passage from normalized coboundaries to the one-dimensional derivation condition</a>.</p>
 
   <h4 id="galois-trace-congruences"><span class="note-number">2.7.13</span> Bound the cotangent length by trace congruences.</h4>
   <p>The remaining question is quantitative: how can a finite list of trace differences pay for every torsion layer in \(C_{-1}\)? The argument measures an auxiliary graded module in two ways. Near the split point, its equations remember the elementary divisors of \(C_{-1}\). At the other characteristic-zero points, its multiplicities are controlled by rigidity, and its length is measured by valuations of traces. The construction connecting those measurements is the essential part of the proof.</p>
@@ -1138,7 +1399,7 @@
     (1+\epsilon)^j f(b)=f(b)+\epsilon\,j f(b),
     \qquad D_{\mathrm{gr}}(b)=j f(b).
   \]</div>
-  <p>The point-rigidity input says that permitted derivations killing the equations span at most one dimension. At a two-sided point, the displayed grading derivation is nonzero in characteristic zero. Thus the surviving direction is accounted for by this change of basis; there is no additional transverse infinitesimal motion.</p>
+  <p>The <a href="#rigidity-normalization">Selmer-vanishing and normalization argument in §2.7.12.8</a> shows that permitted derivations killing the equations span at most one dimension. At a two-sided point, the displayed grading derivation is nonzero in characteristic zero. Thus the surviving direction is accounted for by this change of basis; there is no additional transverse infinitesimal motion.</p>
   <p>This does not mean that traces directly detect the cocycles of §2.7.7. Those cocycles enter through off-diagonal matrices \(M(t)\), and</p>
   <div class="technical-equation">\[
     \operatorname{tr}\!\left((1+\epsilon M(t))\rho_0(g)\right)
@@ -1320,7 +1581,7 @@
         \bigl((\mathcal M_{\mathbf n})_{\mathfrak p_\tau}\bigr).
   \]</div>
   <p>The finite degree-zero quotient and the conditions on one-sided points imply that, in large multidegrees, the surviving generic support comes from two-sided solutions of \(I\). More concretely, it disappears if the degree-zero equations fail or if \(\tau\) kills the ideal generated by all products \(fg\), with \(f\in A_{-2}\) and \(g\in A_2\). This is how the split and one-sided loci, where the trace difference can vanish, leave the generic sum. They are not simply deleted by fiat.</p>
-  <p>At a surviving point, rigidity transverse to the grading orbit gives, for every weight \(w\),</p>
+  <p>At a surviving point, the <a href="#rigidity-slice">transverse slice and cyclic weight-piece argument in §2.7.12.10</a> gives, for every weight \(w\),</p>
   <div class="technical-equation">\[
     \operatorname{length}_{B_{\mathfrak p_\tau}}
        \bigl(((A/I)_w)_{\mathfrak p_\tau}\bigr)\le1.

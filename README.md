@@ -63,6 +63,9 @@ The current edition explains:
 - **The cotangent-to-trace bound:** graded Euler characteristics with kernel
   corrections, elementary-divisor layers, an explicit monomial count, localized
   multiplicities, and the factor of two in the trace-valuation estimate.
+- **Automorphy and rigidity:** tangent cocycles, the polarized adjoint, local
+  Selmer conditions, separate rank-three and rank-two vanishing arguments,
+  normalized basis changes, and the slice giving multiplicity at most one.
 - **Theta matching:** convergent integrals, nonzero proportionality constants,
   test vectors, periods in a common lattice, correlation bounds, and mean slopes.
 - **Covolume estimates:** lattices, slopes, projection losses, and the absorption
