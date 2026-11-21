@@ -1097,37 +1097,306 @@
   <p>Rigidity over a field does not force integral torsion to vanish. Two distinct characteristic-zero points may still become congruent modulo a high power of \(\varpi\). That remaining integral proximity is precisely what the next estimate measures.</p>
 
   <h4 id="galois-trace-congruences"><span class="note-number">2.7.13</span> Bound the cotangent length by trace congruences.</h4>
-  <p>Choose a suitable element \(\sigma\in G_K\). The split reference trace is</p>
+  <p>The remaining question is quantitative: how can a finite list of trace differences pay for every torsion layer in \(C_{-1}\)? The argument measures an auxiliary graded module in two ways. Near the split point, its equations remember the elementary divisors of \(C_{-1}\). At the other characteristic-zero points, its multiplicities are controlled by rigidity, and its length is measured by valuations of traces. The construction connecting those measurements is the essential part of the proof.</p>
+  <nav class="landau-step-nav trace-step-nav" aria-label="Cotangent length and trace congruences">
+    <ol>
+      <li><a href="#trace-target"><span class="note-nav-number">2.7.13.1</span><span>State the precise comparison</span></a></li>
+      <li><a href="#trace-orbits"><span class="note-nav-number">2.7.13.2</span><span>Understand the orbit direction</span></a></li>
+      <li><a href="#trace-determinant"><span class="note-nav-number">2.7.13.3</span><span>Turn an index into valuations</span></a></li>
+      <li><a href="#trace-euler"><span class="note-nav-number">2.7.13.4</span><span>Keep the kernel correction</span></a></li>
+      <li><a href="#trace-graded-model"><span class="note-nav-number">2.7.13.5</span><span>Build the graded comparison</span></a></li>
+      <li><a href="#trace-leading-terms"><span class="note-nav-number">2.7.13.6</span><span>Retain the elementary divisors</span></a></li>
+      <li><a href="#trace-scalar-layers"><span class="note-nav-number">2.7.13.7</span><span>Count uniformizer layers</span></a></li>
+      <li><a href="#trace-monomial-count"><span class="note-nav-number">2.7.13.8</span><span>Calculate the lower constant</span></a></li>
+      <li><a href="#trace-reorder"><span class="note-nav-number">2.7.13.9</span><span>Compare the two orders of cutting</span></a></li>
+      <li><a href="#trace-multiplicity"><span class="note-nav-number">2.7.13.10</span><span>Bound the point multiplicities</span></a></li>
+      <li><a href="#trace-final-bound"><span class="note-nav-number">2.7.13.11</span><span>Sum valuations and cancel</span></a></li>
+    </ol>
+  </nav>
+
+  <h5 id="trace-target"><span class="note-number">2.7.13.1</span> State the precise comparison and its hypotheses.</h5>
+  <p>Keep the coefficient discrete valuation ring \(\mathcal O\), uniformizer \(\varpi\), and selected cotangent quotient from §§2.7.10–11. Write \(E=\operatorname{Frac}(\mathcal O)\), let \(\overline E\) be an algebraic closure, and normalize \(v_\varpi(\varpi)=1\). Choose a suitable \(\sigma\in G_K\), and form the weight-zero element \(a=a_\sigma\) of the model algebra \(A\) whose values are</p>
   <div class="technical-equation">\[
-    t_0(\sigma)=\Psi(\sigma)+1+\Psi(\sigma)^{-1}.
+    t_0(\sigma)=\Psi(\sigma)+1+\Psi(\sigma)^{-1},\qquad
+    f(a)=\operatorname{tr}\rho_f(\sigma)-t_0(\sigma).
   \]</div>
-  <p>The universal trace difference defines a weight-zero function on the deformation space, vanishing at the split point. At a specialization it evaluates to</p>
+  <p>It vanishes at the split base point \(x\). At a relevant two-sided point, it must be nonzero. “Two-sided” means that some negative-weight and some positive-weight function survive; in the representation model, the point is neither in the prescribed upper-triangular locus nor in the lower-triangular locus. It need not be irreducible.</p>
+  <p>Let \(I\) be the model's defining equation ideal, and let \(\mathcal T\) be a finite collection of two-sided solutions of \(I\) meeting every such orbit of the grading action. The comparison to establish is</p>
   <div class="technical-equation">\[
-    a_\sigma(f)=\operatorname{tr}\rho_f(\sigma)-t_0(\sigma).
+    \lambda:=\operatorname{length}_{\mathcal O}C_{-1}
+       \le 2\sum_{f\in\mathcal T}v_\varpi\bigl(f(a)\bigr).
   \]</div>
-  <p>If this nonzero difference is divisible by \(\varpi^m\), the two traces agree modulo \(\varpi^m\). A larger valuation means a deeper congruence. To use these valuations as a finite bound, the source needs a \(\sigma\) for which the difference is nonzero at every relevant two-sided point, meaning a point outside both of the prescribed upper- and lower-triangular loci.</p>
-  <div class="technical-note"><p><strong>Why a trace calculation alone is insufficient.</strong> The matrices \(M(t)\) in §2.7.7 are off diagonal. Hence \(\operatorname{tr}(M(t)\rho_0(g))=0\): their first-order deformation does not change the trace. More generally, a triangular extension has the same trace as its split diagonal representation. The source does not inject cohomology into trace values. It relates cotangent length to trace valuations through a graded commutative-algebra theorem, using the point and rigidity hypotheses just described.</p></div>
-  <p>Let \(\mathcal T\) contain one representative for each of the relevant point orbits. The specialized graded estimate gives</p>
+  <p>This uses the source's particular smooth chart and equation counts, spanning of the relevant cotangent directions, finiteness of the degree-zero quotient, conditions controlling the base point and one-sided loci, and rigidity at two-sided points. The arithmetic application also retains its odd coefficient-prime and normalization hypotheses. A general deformation ring with a trace function need not satisfy this inequality.</p>
+
+  <h5 id="trace-orbits"><span class="note-number">2.7.13.2</span> Separate a change of basis from a genuine deformation.</h5>
+  <p>For a homogeneous function \(b\in A_j\), the grading torus acts by</p>
   <div class="technical-equation">\[
+    (t\cdot f)(b)=t^j f(b),\qquad t\in\overline E^\times.
+  \]</div>
+  <p>Trace has weight zero, so \(f(a)\) is constant along an orbit. The orbit itself has an infinitesimal direction: substitute \(t=1+\epsilon\), with \(\epsilon^2=0\), to obtain</p>
+  <div class="technical-equation">\[
+    (1+\epsilon)^j f(b)=f(b)+\epsilon\,j f(b),
+    \qquad D_{\mathrm{gr}}(b)=j f(b).
+  \]</div>
+  <p>The point-rigidity input says that permitted derivations killing the equations span at most one dimension. At a two-sided point, the displayed grading derivation is nonzero in characteristic zero. Thus the surviving direction is accounted for by this change of basis; there is no additional transverse infinitesimal motion.</p>
+  <p>This does not mean that traces directly detect the cocycles of §2.7.7. Those cocycles enter through off-diagonal matrices \(M(t)\), and</p>
+  <div class="technical-equation">\[
+    \operatorname{tr}\!\left((1+\epsilon M(t))\rho_0(g)\right)
+      =\operatorname{tr}\rho_0(g)
+        +\epsilon\,\operatorname{tr}\!\left(M(t)\rho_0(g)\right)
+      =\operatorname{tr}\rho_0(g).
+  \]</div>
+  <p>The first-order trace is unchanged. The proof instead compares the <em>total integral length</em> of these directions with how closely the other, rigid orbits approach the split trace.</p>
+
+  <h5 id="trace-determinant"><span class="note-number">2.7.13.3</span> See why a valuation measures a module's length.</h5>
+  <p>Start with a finite torsion-free domain \(D\) over \(\mathcal O\) and a nonzero \(b\in D\). A finite torsion-free module over a discrete valuation ring is free. In an \(\mathcal O\)-basis, multiplication \(m_b:D\to D\) is an injective square matrix. Smith normal form gives elementary divisors \(\varpi^{n_1},\ldots,\varpi^{n_d}\), up to units. Consequently,</p>
+  <div class="technical-equation">\[
+    D/bD\simeq\bigoplus_{i=1}^{d}\mathcal O/\varpi^{n_i}\mathcal O,
+    \qquad
+    \operatorname{length}_{\mathcal O}(D/bD)
+       =\sum_i n_i=v_\varpi(\det m_b).
+  \]</div>
+  <p>The determinant is the algebra norm of \(b\). Characteristic zero makes the generic field extension separable, so the norm becomes a product over its embeddings into \(\overline E\). Taking valuations turns that product into a sum:</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{\mathcal O}(D/bD)
+       =v_\varpi\!\left(N_{D/\mathcal O}(b)\right)
+       =\sum_{\tau:D\to\overline E}v_\varpi\!\left(\tau(b)\right).
+  \]</div>
+  <p>Each embedding is counted. In particular, repeated numerical values are not discarded. This elementary index calculation is the reason that trace valuations can eventually appear on the right side of a length bound. The remaining task is to construct a module to which this calculation can be applied with controlled multiplicities.</p>
+
+  <h5 id="trace-euler"><span class="note-number">2.7.13.4</span> Use the quotient length minus the kernel length.</h5>
+  <p>Let \(B=A_0\), the weight-zero ring. Multiplication by a degree-zero element \(a\) on a module \(N\) need not be injective. When its kernel and cokernel have finite length, define</p>
+  <div class="technical-equation">\[
+    N[a]=\{z\in N:az=0\},\qquad
+    \Theta_a(N)=\operatorname{length}_B(N/aN)
+                  -\operatorname{length}_B(N[a]).
+  \]</div>
+  <p>The subtraction makes this quantity additive in exact sequences. It also removes a misleading contribution from torsion. If \(T\) already has finite length, the multiplication sequence gives</p>
+  <div class="technical-equation">\[
+    0\longrightarrow T[a]\longrightarrow T
+       \xrightarrow{\ a\ }T\longrightarrow T/aT\longrightarrow0,
+    \qquad
+    \Theta_a(T)=0.
+  \]</div>
+  <p>For example, if \(aT=0\), both the kernel and the quotient are all of \(T\). Counting only the quotient would add \(\operatorname{length}T\), even though such torsion disappears in characteristic zero. The correction cancels it exactly.</p>
+  <p>For a list \(\mathbf t\) of homogeneous equations, the argument iterates this quotient-minus-kernel operation. Write \(\chi(\mathbf t;N)_{\mathbf n}\) for the resulting graded Euler characteristic. If \(t\) has multidegree \(\delta\), its recursion is</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \chi(\varnothing;N)_{\mathbf n}&=\operatorname{length}_B N_{\mathbf n},\\
+    \chi((\delta,t),\mathbf u;N)_{\mathbf n}
+      &=\chi(\mathbf u;N/tN)_{\mathbf n}
+        -\chi(\mathbf u;N[t](-\delta))_{\mathbf n}.
+    \end{aligned}
+  \]</div>
+  <p>Here \(N(-\delta)_{\mathbf n}=N_{\mathbf n-\delta}\) keeps the multiplication map homogeneous. This is the familiar Euler-characteristic bookkeeping behind <a href="sources.html#ref-koszul">Koszul complexes</a>. The source proves the finiteness, additivity, order-independence and eventual positivity needed in this setting. All comparisons below take place in sufficiently large multidegrees; one cannot freely drop kernel terms or assume positivity without those hypotheses.</p>
+
+  <h5 id="trace-graded-model"><span class="note-number">2.7.13.5</span> Organize the equations so both counts apply.</h5>
+  <p>We now describe the special model, rather than an arbitrary ring. Use \(u,v,\alpha,\beta\) for its coordinate counts; these are unrelated to the arithmetic twist parameter \(r\). After eliminating the weight-zero chart coordinates with their equations, the remaining formal coordinates and equations have this pattern:</p>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Weight</th><th>Chart coordinates</th><th>Equation family</th></tr></thead>
+    <tbody>
+      <tr><td>\(-1\)</td><td>\(u\), with \(u\ge1\)</td><td>\(F_1,\ldots,F_u,F_*\)</td></tr>
+      <tr><td>\(-2\)</td><td>\(\alpha\)</td><td>\(G_1,\ldots,G_\alpha\)</td></tr>
+      <tr><td>\(+1\)</td><td>\(v+1\)</td><td>\(E_1,\ldots,E_v\)</td></tr>
+      <tr><td>\(+2\)</td><td>\(\beta+1\)</td><td>\(H_1,\ldots,H_\beta\)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Let \(I\) denote the full equation ideal, including the eliminated weight-zero equations. Smith normal form changes the \(F\)-generators without changing \(I\), and gives</p>
+  <div class="technical-equation">\[
+    F_i\equiv\varpi^{c_i}y_i\pmod{J_A^{2,\mathrm{sat}}},
+    \quad F_*\in J_A^{2,\mathrm{sat}},\qquad
+    \lambda=\sum_{i=1}^{u}c_i.
+  \]</div>
+  <p>The extra equation \(F_*\) has zero linear part; its higher-order terms remain. Squaring the weight-one equations puts them in weights \(-2\) and \(+2\), where they can be counted together with \(G_j\) and \(H_j\).</p>
+  <p>To track the higher-order equation separately, introduce three \(B\)-modules and their multigraded Rees algebra:</p>
+  <div class="technical-equation">\[
+    \begin{gathered}
+    N_0=A_{-2},\quad N_1=A_2,\quad
+    N_2=B F_*^2+A_{-2}A_{-2}A_2,\\
+    \mathscr R=\bigoplus_{\mathbf n\in\mathbb N^3}
+       N_0^{n_0}N_1^{n_1}N_2^{n_2}\,\mathbf T^{\mathbf n}.
+    \end{gathered}
+  \]</div>
+  <p>The formal variables \(\mathbf T\) are labels recording how a product was formed. They add bookkeeping, not new arithmetic assumptions. The sections \(\mathbf t\) to cut are \(F_i^2,G_j\) in degree \(e_0\); \(E_i^2,H_j\) in degree \(e_1\); and \(F_*^2\) in degree \(e_2\), each with its corresponding formal label.</p>
+  <p>Why this third module? In the chart, a weight-\(-1\) function with no linear term starts with negative-weight contribution at least \(2\) and positive contribution at least \(1\). Its square therefore starts at \((4,2)\), the same pair as \(A_{-2}A_{-2}A_2\). The third degree keeps this extra order of vanishing visible.</p>
+
+  <h5 id="trace-leading-terms"><span class="note-number">2.7.13.6</span> Pass to leading terms while retaining integral depth.</h5>
+  <p>The smooth chart is a map \(\phi:A\to E[[\text{weighted coordinates}]]\). Let \(J\subseteq\mathscr R\) be the ideal of Rees expressions whose coefficients map to zero under \(\phi\). The source constructs a larger homogeneous ideal \(\mathfrak q\) that discards terms above the leading negative-weight contribution in each Rees degree.</p>
+  <p>In degree \(\mathbf n\), that leading contribution is \(2n_0+4n_2\), and the positive contribution is \(2n_1+2n_2\). The quotient \(\overline P=\mathscr R/\mathfrak q\) is torsion-free over \(\mathcal O\). It retains exactly the scalar depth needed here:</p>
+  <div class="technical-equation">\[
+    F_i^2=\varpi^{2c_i}y_i^2
+       \quad\text{in the leading quotient},\qquad
+    J\subseteq\mathfrak q.
+  \]</div>
+  <p>The degree-\(e_0\) Rees labels are understood in this equality. It uses the saturated quadratic congruence from the previous step and is a proved property of the leading-term construction. Weight-zero functions vanishing at \(x\) also map into \(\mathfrak q\); that fact will allow the trace cut to be compared with this quotient.</p>
+
+  <h5 id="trace-scalar-layers"><span class="note-number">2.7.13.7</span> Extract one contribution for each power of the uniformizer.</h5>
+  <p>Set</p>
+  <div class="technical-equation">\[
+    H(\mathbf n)=\operatorname{length}_B
+       (\overline P/\varpi\overline P)_{\mathbf n},
+    \qquad
+    \Delta_\delta H(\mathbf n)=H(\mathbf n)-H(\mathbf n-\delta).
+  \]</div>
+  <p>A finite difference is the counting effect of cutting a homogeneous direction. For example, quotienting a graded vector space by an injective multiplication map of degree \(\delta\) subtracts the dimension at \(\mathbf n-\delta\) from the dimension at \(\mathbf n\). Euler characteristics retain the same bookkeeping when kernels are present.</p>
+  <p>The source's scalar-factor identity says, under its finiteness conditions,</p>
+  <div class="technical-equation">\[
+    \chi((\delta,\varpi^n y),\mathbf u;\overline P)_{\mathbf n}
+      =n\,\Delta_{\deg\mathbf u}H(\mathbf n)
+        +\chi((\delta,y),\mathbf u;\overline P)_{\mathbf n}.
+  \]</div>
+  <p>In this formula \(n\) is a scalar exponent, \(\mathbf n\) is the multidegree, and \(\Delta_{\deg\mathbf u}\) is the product of differences for all remaining sections. Removing one factor of \(\varpi\) exposes one special-fiber layer. Removing \(n\) such factors exposes \(n\) layers, which explains addition of the exponents.</p>
+  <p>Apply this identity successively to the factors \(\varpi^{2c_i}\) in \(F_i^2\). Eventual positivity bounds the remaining Euler characteristic below by zero. There are \(u-1+\alpha\) remaining sections of degree \(e_0\), \(v+\beta\) of degree \(e_1\), and one of degree \(e_2\). Thus</p>
+  <div class="technical-equation">\[
+    \chi(\mathbf t;\overline P)_{\mathbf n}
+      \ge 2\Bigl(\sum_i c_i\Bigr)
+         \Delta_{e_0}^{\,u-1+\alpha}
+         \Delta_{e_1}^{\,v+\beta}
+         \Delta_{e_2}H(\mathbf n).
+  \]</div>
+  <p>The module's torsion depth now appears as the explicit factor \(2\lambda\). It remains to calculate the finite-difference factor.</p>
+
+  <h5 id="trace-monomial-count"><span class="note-number">2.7.13.8</span> Calculate the lower constant by counting monomials.</h5>
+  <p>The leading-term comparison identifies \(H(\mathbf n)\) with a monomial count. Put \(P=2n_0+4n_2\) and \(Q=2n_1+2n_2\). A variable of negative weight \(-1\) contributes \(1+U+U^2+\cdots\); one of weight \(-2\) contributes \(1+U^2+U^4+\cdots\). The positive variables are counted similarly with \(V\). Therefore</p>
+  <div class="technical-equation">\[
+    H(\mathbf n)=[U^P V^Q]\,\mathcal H(U,V),\qquad
+    \mathcal H(U,V)=
+    \frac{1}{(1-U)^u(1-U^2)^\alpha
+             (1-V)^{v+1}(1-V^2)^{\beta+1}}.
+  \]</div>
+  <p>The notation \([U^P V^Q]\) means “take that coefficient.” Decreasing \(n_0\) by one decreases \(P\) by two, so \(\Delta_{e_0}\) corresponds to multiplying the generating series by \(1-U^2\). Similarly, \(\Delta_{e_1}\) gives \(1-V^2\), and \(\Delta_{e_2}\) gives \(1-U^4V^2\). The series for the required differences simplifies to</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    &(1-U^2)^{u-1+\alpha}(1-V^2)^{v+\beta}
+        (1-U^4V^2)\mathcal H(U,V)\\
+    &\qquad=
+      \frac{(1+U)^{u-1}(1+V)^v(1-U^4V^2)}
+           {(1-U)(1-V)(1-V^2)}.
+    \end{aligned}
+  \]</div>
+  <p>Use \(1-U^4V^2=(1-V^2)+V^2(1-U^4)\) to split this expression into</p>
+  <div class="technical-equation">\[
+    \frac{(1+U)^{u-1}(1+V)^v}{(1-U)(1-V)}
+    +
+    \frac{V^2(1+U)^{u-1}(1+V)^v(1+U+U^2+U^3)}
+         {(1-V)(1-V^2)}.
+  \]</div>
+  <p>The second term is a polynomial in \(U\), so it contributes nothing once \(P\) exceeds its degree. In the first term, sufficiently large \(P,Q\) collect every coefficient of the numerator. Their sum is its value at \(U=V=1\), namely \(2^{u-1+v}\). Hence, for sufficiently large multidegrees,</p>
+  <div class="technical-equation">\[
+    \Delta_{e_0}^{\,u-1+\alpha}
+    \Delta_{e_1}^{\,v+\beta}\Delta_{e_2}H(\mathbf n)
+       =2^{u-1+v},
+    \qquad
+    \chi(\mathbf t;\overline P)_{\mathbf n}
+       \ge 2^{u+v}\lambda.
+  \]</div>
+  <p>This calculation explains the lower power of two. The parameters \(\alpha,\beta\) cancel because the weight-two equations take exactly the corresponding finite differences. The extra positive coordinates and the nonlinear section determine the constant that remains.</p>
+
+  <h5 id="trace-reorder"><span class="note-number">2.7.13.9</span> Compare cutting the trace first with cutting the equations first.</h5>
+  <p>A technical preparation prevents an unjustified injectivity assumption. The source can replace \(a\) by a weight-zero \(a'\) satisfying</p>
+  <div class="technical-equation">\[
+    a'-a\in I,\qquad x(a')=0,\qquad \phi(a')\ne0.
+  \]</div>
+  <p>Every solution \(f\) of \(I\) still has \(f(a')=f(a)\), so the final trace valuations are unchanged. Set \(\mathcal P=\mathscr R/J\) and \(\mathcal M=\mathcal P/(\mathbf t)\). Because the chart's power-series target is a domain and \(\phi(a')\ne0\), multiplication by \(a'\) is injective on \(\mathcal P\). This need not remain true on \(\mathcal M\).</p>
+  <p>Since \(a'\in\mathfrak q\), there is a surjection \(\mathcal P/a'\mathcal P\to\overline P\). The source's eventual Euler monotonicity, order-independence and positivity now give the complete middle comparison:</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    2^{u+v}\lambda
+      &\le \chi(\mathbf t;\overline P)_{\mathbf n}\\
+      &\le \chi(\mathbf t;\mathcal P/a'\mathcal P)_{\mathbf n}\\
+      &=\chi((a'),\mathbf t;\mathcal P)_{\mathbf n}\\
+      &=\chi(\mathbf t,(a');\mathcal P)_{\mathbf n}\\
+      &\le \chi((a');\mathcal M)_{\mathbf n}
+       =\Theta_{a'}(\mathcal M_{\mathbf n}).
+    \end{aligned}
+  \]</div>
+  <p>The first equality uses injectivity on \(\mathcal P\). The last inequality cuts all the equations and uses positivity to discard the accumulated kernel corrections with the correct sign. We have reached the same Euler quantity that can be evaluated at characteristic-zero points.</p>
+
+  <h5 id="trace-multiplicity"><span class="note-number">2.7.13.10</span> Bound the number of layers at each surviving point.</h5>
+  <p>For a character \(\tau:B\to\overline E\), write \(\mathfrak p_\tau=\ker\tau\). Localizing at this prime isolates the corresponding generic component. Its multiplicity in the graded piece is</p>
+  <div class="technical-equation">\[
+    m_\tau(\mathbf n)=
+      \operatorname{length}_{B_{\mathfrak p_\tau}}
+        \bigl((\mathcal M_{\mathbf n})_{\mathfrak p_\tau}\bigr).
+  \]</div>
+  <p>The finite degree-zero quotient and the conditions on one-sided points imply that, in large multidegrees, the surviving generic support comes from two-sided solutions of \(I\). More concretely, it disappears if the degree-zero equations fail or if \(\tau\) kills the ideal generated by all products \(fg\), with \(f\in A_{-2}\) and \(g\in A_2\). This is how the split and one-sided loci, where the trace difference can vanish, leave the generic sum. They are not simply deleted by fiat.</p>
+  <p>At a surviving point, rigidity transverse to the grading orbit gives, for every weight \(w\),</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{B_{\mathfrak p_\tau}}
+       \bigl(((A/I)_w)_{\mathfrak p_\tau}\bigr)\le1.
+  \]</div>
+  <p>Our auxiliary construction used squared equations. Let \(I_{\mathrm{sq}}\) be obtained from \(I\) by replacing each \(F_i,F_*,E_i\) by its square and retaining \(G_j,H_j,Z_j\). This is a selected replacement of generators, not the ideal \(I^2\).</p>
+  <p>One square can at most double a uniform bound on localized weight-piece lengths. Indeed, for a homogeneous \(t\) of weight \(q\) and a homogeneous ideal \(\mathfrak a\), there is an exact sequence</p>
+  <div class="technical-equation">\[
+    (A/(\mathfrak a,t))_{w-q}
+      \xrightarrow{\ \cdot t\ }(A/(\mathfrak a,t^2))_w
+      \longrightarrow(A/(\mathfrak a,t))_w
+      \longrightarrow0.
+  \]</div>
+  <p>The first arrow need not be injective. Its image nevertheless has length at most that of its source, so, after localization,</p>
+  <div class="technical-equation">\[
+    \ell_\tau(A/(\mathfrak a,t^2))_w
+      \le \ell_\tau(A/(\mathfrak a,t))_{w-q}
+         +\ell_\tau(A/(\mathfrak a,t))_w.
+  \]</div>
+  <p>Here \(\ell_\tau\) abbreviates length after localization at \(\mathfrak p_\tau\). Starting from the bound \(1\) and repeating for the \(u+1+v\) squared equations gives \(2^{u+1+v}\). The source compares the Rees graded piece with such a weight piece, yielding</p>
+  <div class="technical-equation">\[
+    m_\tau(\mathbf n)
+      \le \ell_\tau(A/I_{\mathrm{sq}})_{w(\mathbf n)}
+      \le 2^{u+1+v},
+    \qquad w(\mathbf n)=-2n_0+2n_1-2n_2.
+  \]</div>
+  <p>This is the upper power of two. Its extra factor comes from the additional equation \(F_*\), whose linear part vanished in the cotangent calculation but whose square still participates in this upper estimate.</p>
+
+  <h5 id="trace-final-bound"><span class="note-number">2.7.13.11</span> Sum trace valuations and cancel the common factor.</h5>
+  <p>A prime filtration breaks \(\mathcal M_{\mathbf n}\) into contributions from its components. The determinant calculation in §2.7.13.3 applies to each generic component. Finite-length components contribute zero by §2.7.13.4. Additivity therefore gives</p>
+  <div class="technical-equation">\[
+    \Theta_{a'}(\mathcal M_{\mathbf n})
+       =\sum_{\tau\in S}m_\tau(\mathbf n)\,
+          v_\varpi\bigl(\tau(a')\bigr).
+  \]</div>
+  <p>The finite set \(S\) consists of the degree-zero characters covering the surviving generic support, including the relevant embeddings. The source's coefficient-ring hypotheses identify the finite \(B\)-lengths here with \(\mathcal O\)-lengths: their residue fields agree. Thus no residue-degree factor has silently been omitted.</p>
+  <p>The values \(\tau(a')\) are nonzero and integral, so their valuations are nonnegative. Use the multiplicity bound, then lift the characters to the finite orbit-cover \(\mathcal T\). Enlarging the sum is allowed by nonnegativity, and \(f(a')=f(a)\). Hence</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    2^{u+v}\lambda
+      &\le\Theta_{a'}(\mathcal M_{\mathbf n})\\
+      &\le2^{u+1+v}\sum_{\tau\in S}v_\varpi(\tau(a'))\\
+      &\le2^{u+1+v}\sum_{f\in\mathcal T}v_\varpi(f(a)).
+    \end{aligned}
+  \]</div>
+  <p>Divide by the positive number \(2^{u+v}\). Then divide by the ramification index \(e_{\mathcal O}\), using \(v_\varpi=e_{\mathcal O}v_\ell\):</p>
+  <div class="technical-equation">\[
+    \boxed{\quad
     \frac{\operatorname{length}_{\mathcal O}C_{-1}}{e_{\mathcal O}}
-      \le 2\sum_{f\in\mathcal T}v_\ell(a_\sigma(f)).
+       \le2\sum_{f\in\mathcal T}
+          v_\ell\!\left(\operatorname{tr}\rho_f(\sigma)-t_0(\sigma)\right).
+    \quad}
   \]</div>
-  <p>Combining it with the lower comparison, and identifying the point representatives with pairwise nonisomorphic admissible representations, yields the decisive inequality</p>
+  <p>The representation-theoretic application chooses distinct orbit representatives and identifies their representations up to isomorphism. Combining this with \(L_\ell(\psi)\le\lambda/e_{\mathcal O}\) from §2.7.11 yields</p>
   <div class="technical-equation">\[
-    \boxed{\quad L_\ell(\psi)
-      \le 2\sum_{\rho\in\mathcal X_\psi}
-        v_\ell\!\left(\operatorname{tr}\rho(\sigma)-t_0(\sigma)\right).\quad}
+    L_\ell(\psi)\le
+       2\sum_{\rho\in\mathcal X_\psi}
+          v_\ell\!\left(\operatorname{tr}\rho(\sigma)-t_0(\sigma)\right).
   \]</div>
-  <p>The finite set \(\mathcal X_\psi\) records representation classes, rather than just distinct numerical traces. Distinct classes with the same trace must retain their multiplicity in this sum.</p>
+  <p>Distinct representation classes with the same numerical trace still contribute separately. The next subsection packages these nonzero differences into an integer whose total prime divisibility is bounded.</p>
   <details>
-    <summary>Where does the factor of two come from?</summary>
-    <p>The graded argument first uses the elementary-divisor expression \(\operatorname{length}C_{-1}=\sum_i a_i\). Its lower and upper graded growth estimates, with auxiliary model dimensions \(u,v\), give a comparison of the form</p>
+    <summary>A small model: rigid generic orbits can still leave integral torsion.</summary>
+    <p>This illustration explains the phenomenon; it does not prove the graded comparison or its factor of two. Let \(c=\varpi^n\), \(n\ge1\), and set</p>
     <div class="technical-equation">\[
-      2^{u+v}\sum_i a_i
-        \le 2^{u+1+v}\sum_{f\in\mathcal T}v_\varpi(a_\sigma(f)).
+      R_{\mathrm{toy}}=
+       \mathcal O[u_0,v_0]/
+       \bigl(u_0(u_0v_0-c),\,v_0(u_0v_0-c)\bigr),
+      \qquad \deg u_0=-1,\quad\deg v_0=1.
     \]</div>
-    <p>Cancel the positive common factor \(2^{u+v}\), then divide by \(e_{\mathcal O}\), using \(v_\varpi=e_{\mathcal O}v_\ell\). This gives the displayed factor \(2\). The graded growth estimates are a substantive commutative-algebra input; the factor does not come from choosing two auxiliary primes or from counting two copies of cohomology.</p>
+    <p>At the origin, the linearized equations are \(-cu_0\) and \(-cv_0\). The negative cotangent direction therefore has quotient \(\mathcal O/(c)\), of length \(n\). Over the fraction field, a solution is either the origin or satisfies \(u_0v_0=c\). The latter points form one grading orbit, with no transverse deformation. The invariant \(a_{\mathrm{toy}}=u_0v_0\) takes the value \(c\) there, so</p>
+    <div class="technical-equation">\[
+      \operatorname{length}_{\mathcal O}C_{\mathrm{toy},-1}
+        =n=v_\varpi(c).
+    \]</div>
+    <p>The invariant is not an actual Galois trace. It shows how the distance of a rigid orbit from the base value can remember integral torsion that disappears after inverting \(\varpi\).</p>
   </details>
+  <div class="technical-note"><p><strong>The remaining mathematical inputs.</strong> The scalar-layer, monomial, determinant and squaring calculations above make the numerical comparison explicit. The existence of the smooth graded model, its leading-term comparison, the admissibility and positivity results for Euler characteristics, the support calculation and the rigidity theorem are substantive inputs. The displayed bound uses them together; numerical trace calculations alone would not supply it.</p></div>
 
   <h4 id="galois-trace-integer"><span class="note-number">2.7.14</span> Turn trace differences into one nonzero integer.</h4>
   <p>The estimate still involves \(\ell\)-adic representations. To sum over many coefficient primes, the source uses the compatible automorphic trace data. Choose an auxiliary rational prime \(p\) away from \(30N|\operatorname{disc}K|\), a place \(w\) over it, and write \(q\ge7\) for the residue-field size. The source evaluates at \(\sigma=\operatorname{Frob}_w^{-1}\). For its chosen identification \(\iota:\overline{\mathbb Q}_\ell\simeq\mathbb C\), put \(B=q^r\) and \(z_\psi=\iota(\psi(q))^{-1}\). Then the complex realization of the reference trace is</p>
@@ -1168,7 +1437,7 @@
   \]</div>
   <p>Here \(\varphi\) is Euler's totient function. Counting the trace labels and controlling their heights therefore turn the cohomological sum into a polynomial arithmetic budget, independently of how many qualifying coefficient primes were initially put into \(P\).</p>
   <p>The remaining arithmetic assembly compares these character groups with the field-cohomology groups, tracks conductor and index losses, sums over twists, and adds the exceptional-prime estimates. The window selection in <a href="#arithmetic-exceptional-window">§2.6.6.2</a> makes those exceptional contributions affordable. Only after the theta and geometric comparisons does this budget become the prime-sum estimate used by Landau.</p>
-  <div class="technical-note"><p><strong>What has been supplied here.</strong> The cocycle normalization, its matrix embedding, the first-order representation law, the meaning of the cotangent quotient, and the valuation-to-integer summation are now explicit. The two major comparison inequalities are stated with their roles and hypotheses: cohomology length is bounded by the selected cotangent length, and graded rigidity bounds that length by trace valuations. Proving all the local lifting, automorphy, Selmer-vanishing and graded-growth inputs remains additional mathematical work; none is replaced by the existence of a Galois representation alone.</p></div>
+  <div class="technical-note"><p><strong>What has been supplied here.</strong> The passage from cocycles to the selected cotangent quotient is followed by an expanded <a href="#galois-trace-congruences">length-to-trace comparison</a>: elementary divisors, graded Euler characteristics, monomial counting, localized multiplicities and determinant valuations. The resulting local bounds then sum into the integer budget. Establishing all the local lifting, automorphy, Selmer-vanishing and graded-model inputs remains additional mathematical work; the existence of a Galois representation alone does not supply these estimates.</p></div>
   <p class="source-callout">Three selective source entry points: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/VlenLe.lean">the cohomology-to-cotangent comparison</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/OneCharOf.lean">the assembly of the one-character trace bound</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/AlgMemCoef.lean">the graded comparison behind the factor of two</a>. For the background language, see <a href="sources.html#ref-milne">Milne on cohomology and class field theory</a> and <a href="sources.html#ref-mazur">Mazur on deformation theory</a>.</p>
 </section>
 

@@ -48,6 +48,7 @@
 .landau-step-nav li{margin:0;padding-left:3px;font-size:15px;line-height:1.6}
 .landau-step-nav li::marker{color:var(--teal)}
 .landau-step-nav a{text-underline-offset:4px}
+.technical-numbered .trace-step-nav a{grid-template-columns:5.6em minmax(0,1fr)}
 .landau-figure{margin:30px 0;border:1px solid var(--line);border-radius:4px;background:#f2f5ed;padding:18px 20px}
 .landau-figure svg{display:block;width:100%;height:auto;max-width:680px;margin:auto}
 .landau-figure svg text{font:20px var(--sans)}

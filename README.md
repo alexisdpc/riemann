@@ -60,6 +60,9 @@ The current edition explains:
   normalized cocycles, constrained deformation rings, a graded cotangent quotient,
   integral lifts and length bounds, automorphic rigidity, and trace congruences
   leading to the cohomology budget.
+- **The cotangent-to-trace bound:** graded Euler characteristics with kernel
+  corrections, elementary-divisor layers, an explicit monomial count, localized
+  multiplicities, and the factor of two in the trace-valuation estimate.
 - **Theta matching:** convergent integrals, nonzero proportionality constants,
   test vectors, periods in a common lattice, correlation bounds, and mean slopes.
 - **Covolume estimates:** lattices, slopes, projection losses, and the absorption
