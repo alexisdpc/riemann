@@ -1207,26 +1207,442 @@
   <p>Intuitively, the local crystalline coordinates absorb the infinitesimal change. Fixed Hodge–Tate weights alone would not justify this step: it uses the local type ideal, the crystalline deformation result and the comparison for dual numbers. These local arguments establish membership in the Selmer space before any global vanishing theorem is used.</p>
 
   <h5 id="rigidity-type-one"><span class="note-number">2.7.12.6</span> Apply adjoint vanishing in the rank-three automorphic case.</h5>
-  <p>At a Type I point, the source places the twist
-    \(\rho_{\mathrm{aut}}=\rho_f\otimes\varepsilon_\ell^{-1}\)
-    in the required regular algebraic, polarized automorphic class over \(K\). Here \(\varepsilon_\ell\) denotes the cyclotomic character. It also proves the required irreducibility after restriction to its kernel. The polarization supplies the comparison at complex conjugation; for this rank-three twist its multiplier is \(\varepsilon_\ell^{-2}\).</p>
-  <p>These facts make the separate polarized adjoint-vanishing theorem applicable:</p>
+  <p>The idea is to compare two ways of describing an infinitesimal change: a Galois cocycle and a change in an automorphic system of Hecke eigenvalues. The difficult comparison theorem makes the automorphic action detect every allowed deformation. Once that detection is established, semisimplicity leaves no infinitesimal change to detect.</p>
+  <p>The released rank-three application invokes a separately packaged polarized adjoint-vanishing theorem. Below we distinguish its precise application from an explanation of the deformation-and-Hecke mechanism behind <a href="sources.html#ref-adjoint-selmer">Thorne's theorem</a>. The algebraic calculations spell out that mechanism; they are not a line-by-line reconstruction of its patching proof.</p>
+  <nav class="landau-step-nav adjoint-step-nav" aria-label="Why the rank-three polarized adjoint Selmer group vanishes">
+    <ol>
+      <li><a href="#adjoint-target"><span class="note-nav-number">2.7.12.6.1</span><span>State the exact target</span></a></li>
+      <li><a href="#adjoint-polarization"><span class="note-nav-number">2.7.12.6.2</span><span>Understand the minus sign</span></a></li>
+      <li><a href="#adjoint-irreducibility"><span class="note-nav-number">2.7.12.6.3</span><span>Exclude a hidden self-twist</span></a></li>
+      <li><a href="#adjoint-tangent"><span class="note-nav-number">2.7.12.6.4</span><span>Identify the tangent space</span></a></li>
+      <li><a href="#adjoint-hecke"><span class="note-nav-number">2.7.12.6.5</span><span>Separate the eigenvalue systems</span></a></li>
+      <li><a href="#adjoint-comparison"><span class="note-nav-number">2.7.12.6.6</span><span>See why comparison is hard</span></a></li>
+      <li><a href="#adjoint-patching"><span class="note-nav-number">2.7.12.6.7</span><span>Understand the auxiliary levels</span></a></li>
+      <li><a href="#adjoint-faithfulness"><span class="note-nav-number">2.7.12.6.8</span><span>Force the maximal ideal to vanish</span></a></li>
+      <li><a href="#adjoint-return"><span class="note-nav-number">2.7.12.6.9</span><span>Return to the original cocycle</span></a></li>
+    </ol>
+  </nav>
+
+  <h6 id="adjoint-target"><span class="note-number">2.7.12.6.1</span> State exactly which Selmer group must vanish.</h6>
+  <p>Write \(\rho=\rho_f:G_K\to\mathrm{GL}_3(\overline{\mathbb Q}_\ell)\) for the ordinary rank-three representation at our Type I point, and let \(\varepsilon=\varepsilon_\ell\) be the cyclotomic character. Automorphy lifting supplies the first identification below; the argument in §2.7.12.6.3 verifies the second condition:</p>
+  <div class="technical-equation">\[
+    r=\rho\otimes\varepsilon^{-1}\simeq r_{\pi,\iota},
+    \qquad
+    r|_{G_{K(\mu_{\ell^\infty})}}\ \text{irreducible},
+  \]</div>
+  <p>where \(\pi\) is cuspidal, regular algebraic and polarized over the imaginary quadratic field \(K\), and \(\iota:\overline{\mathbb Q}_\ell\simeq\mathbb C\) identifies coefficient fields. Regular algebraicity fixes the relevant algebraic weights; the local deformation conditions retain the prescribed ramification and crystalline behavior. The irreducibility condition is in characteristic zero, after restriction to the cyclotomic kernel. It is not a condition on the residual representation modulo \(\ell\).</p>
+  <p>Let \(V=\operatorname{ad}^{\mathrm{pol}}r\) denote the full nine-dimensional matrix space with its polarized \(G_{\mathbb Q}\)-action. The theorem gives</p>
+  <div class="technical-equation">\[
+    H^1_{\mathrm{BK}}(\mathbb Q,V)
+      =Z^1_{\mathrm{BK}}(\mathbb Q,V)/B^1(\mathbb Q,V)=0.
+  \]</div>
+  <p>Thus every cocycle satisfying the local conditions from §2.7.12.5 is a coboundary. The assertion concerns the polarized adjoint over \(\mathbb Q\); replacing it by the ordinary adjoint over \(K\) would change the Selmer problem.</p>
+
+  <h6 id="adjoint-polarization"><span class="note-number">2.7.12.6.2</span> Derive the polarized action, including its minus sign.</h6>
+  <p>Let \(c\) be the chosen complex conjugation and \(J\) the symmetric pairing matrix, with \(J^{-1}=J\). The source checks the identity</p>
+  <div class="technical-equation">\[
+    r(g)^tJr(cgc^{-1})=\varepsilon(g)^{-2}J,
+    \qquad g\in G_K.
+  \]</div>
+  <p>The exponent \(-2=1-3\) is the required multiplier in dimension three. On matrices the action is</p>
+  <div class="technical-equation">\[
+    g\cdot X=r(g)Xr(g)^{-1}\quad(g\in G_K),
+    \qquad c\cdot X=-JX^tJ.
+  \]</div>
+  <p>The minus sign comes from differentiating inverse transpose. Indeed, for \(\epsilon^2=0\),</p>
+  <div class="technical-equation">\[
+    (1+\epsilon X)^{-1}=1-\epsilon X,
+    \qquad
+    J\bigl((1+\epsilon X)^{-1}\bigr)^tJ
+       =1-\epsilon JX^tJ.
+  \]</div>
+  <p>This is the linearized condition for preserving the polarization. It changes even the scalar matrices: \(g\cdot(aI)=aI\) for \(g\in G_K\), but \(c\cdot(aI)=-aI\). The scalar line is the quadratic character \(\eta_{K/\mathbb Q}\), not a trivial \(G_{\mathbb Q}\)-representation. We retain this line; we are not silently replacing the full adjoint by trace-zero matrices.</p>
+
+  <h6 id="adjoint-irreducibility"><span class="note-number">2.7.12.6.3</span> Check that irreducibility survives the cyclotomic restriction.</h6>
+  <p>An irreducible representation can become reducible on a smaller group. Here the source rules that out using the specified inertia eigenvalues. Put \(H=\ker\varepsilon\) and \(\Psi=\varepsilon^e\psi\), where \(e>0\) and \(\psi\) has finite order. If \(\rho|_H\) were reducible, the relevant Clifford-theory argument would produce a nontrivial self-twist:</p>
+  <div class="technical-equation">\[
+    \varphi\ne1,\qquad H\subseteq\ker\varphi,\qquad
+    \varphi^3=1,\qquad \rho\simeq\rho\otimes\varphi.
+  \]</div>
+  <p>A self-twist means that multiplying every matrix by the character \(\varphi\) leaves its isomorphism class unchanged. In particular, it leaves its trace unchanged. On the inertia group \(I_\ell\), the imposed local condition gives</p>
+  <div class="technical-equation">\[
+    \det(T-\rho(s))
+      =(T-\Psi(s))(T-1)(T-\Psi(s)^{-1}),
+    \qquad s\in I_\ell.
+  \]</div>
+  <p>Comparing traces with the self-twist therefore yields</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    (\varphi(s)-1)\bigl(\Psi(s)+1+\Psi(s)^{-1}\bigr)&=0,\\
+    \varphi(s)\ne1
+      &\Longrightarrow \Psi(s)^2+\Psi(s)+1=0\\
+      &\Longrightarrow \Psi(s)^3=1.
+    \end{aligned}
+  \]</div>
+  <p>This would force a varying cyclotomic character to behave like a root of unity on too much inertia. The hypotheses make \(K/\mathbb Q\) unramified at \(\ell\), so the rational inertia group lies in \(G_K\), with cyclotomic image \(\mathbb Z_\ell^\times\). Since \(\varphi\) factors through \(\varepsilon\), choose \(s\in I_\ell\) with \(\varphi(s)\ne1\), and \(t\in I_\ell\) with \(\varepsilon(t)=1+\ell\).</p>
+  <p>If \(\varphi(t)\ne1\), the displayed implication gives \(\Psi(t)^3=1\). If \(\varphi(t)=1\), apply it to \(s\) and \(st\); dividing their equalities gives the same conclusion. Choose a positive integer \(d\) killing the finite-order character \(\psi\). Then</p>
+  <div class="technical-equation">\[
+    1=\Psi(t)^{3d}=(1+\ell)^{3ed},
+    \qquad e,d>0,
+  \]</div>
+  <p>which is impossible: these are unequal rational integers embedded in a characteristic-zero field. This is not an argument about the \(\ell\)-adic norm, since \(|1+\ell|_\ell=1\). It proves \(\rho|_H\) irreducible. On \(H\), the twist by \(\varepsilon^{-1}\) is trivial, so \(r|_H\) is irreducible as required.</p>
+
+  <h6 id="adjoint-tangent"><span class="note-number">2.7.12.6.4</span> Translate Selmer classes into genuine infinitesimal deformations.</h6>
+  <p>Work over a sufficiently large finite coefficient field \(E/\mathbb Q_\ell\), with a model \(V_E\) of \(V\). Consider the local deformation problem at \(r\), with its fixed polarization multiplier and the local conditions corresponding to the Bloch–Kato space. We now quotient by changes of basis. This is the <em>unframed</em> problem, in contrast to retaining all matrix coordinates as in §2.7.12.2.</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    r_\epsilon(g)&=(1+\epsilon z(g))r(g)
+       &&(g\in G_K,\ \epsilon^2=0),\\
+    z(gh)&=z(g)+g\cdot z(h)
+       &&(g,h\in G_{\mathbb Q}).
+    \end{aligned}
+  \]</div>
+  <p>Changing basis by \(1+\epsilon X\) changes \(z\) by the coboundary \(X-g\cdot X\). Thus a nonzero Selmer class means a permitted first-order change which no change of basis removes.</p>
+  <p>The cited proof makes auxiliary field reductions before the comparison. Write \(F\) for the CM field at that stage, \(F^+\) for its totally real subfield, and \(W_E\) for the corresponding polarized adjoint over \(E\). Lemma 5.2 initially compares a Selmer group with de Rham local conditions, denoted \(H^1_{g,S}\), to a cotangent dual. After passing to the completed characteristic-zero local algebra \(R_{\mathrm{def}}\), with maximal ideal \(\mathfrak m\), the identification has the form</p>
+  <div class="technical-equation">\[
+    H^1_{g,S}(F^+,W_E)
+       \simeq
+       \operatorname{Hom}_E(\mathfrak m/\mathfrak m^2,E).
+  \]</div>
+  <p>Automorphic local compatibility supplies the local Weil–Deligne genericity needed to identify \(H^1_{g,S}(F^+,W_E)=H^1_{\mathrm{BK}}(F^+,W_E)\). This matching is substantive: a deformation ring with fewer local constraints could have a larger tangent space. To see why \(\mathfrak m/\mathfrak m^2\) appears, a lift \(\lambda+\epsilon D\) of the residue map \(\lambda:R_{\mathrm{def}}\to E\) satisfies \(D(ab)=\lambda(a)D(b)+\lambda(b)D(a)\). For \(a,b\in\mathfrak m\), both residue values vanish, so \(D(\mathfrak m^2)=0\).</p>
+
+  <h6 id="adjoint-hecke"><span class="note-number">2.7.12.6.5</span> Understand what semisimple Hecke action rules out.</h6>
+  <p>A Hecke operator acts on a space of automorphic forms; an eigenform records its eigenvalue. Collect the commuting operators relevant to the comparison into a commutative algebra \(\mathbb T_E\). For a finite-dimensional semisimple action, after extending the coefficient field to split the eigensystems, the image acts by simultaneous scalars:</p>
+  <div class="technical-equation">\[
+    M=\bigoplus_i M_{\lambda_i},
+    \qquad Tm=\lambda_i(T)m
+       \quad(m\in M_{\lambda_i}).
+  \]</div>
+  <p>The same eigenvalue system may occur with multiplicity: \(\dim_E M_{\lambda_i}\) need not be one. What is excluded is a nontrivial Jordan block connecting eigenvectors. At a selected eigensystem \(\lambda\), an element whose eigenvalue is zero acts as zero on the entire localized space.</p>
+  <p>Here is an elementary model of the infinitesimal consequence. If a Hecke generator \(T\) satisfies a polynomial with distinct roots, then a proposed eigenvalue \(\alpha+\epsilon u\) must satisfy</p>
+  <div class="technical-equation">\[
+    P(\alpha+\epsilon u)
+      =P(\alpha)+\epsilon P'(\alpha)u=0.
+    \qquad
+    P'(\alpha)\ne0\ \Longrightarrow\ u=0.
+  \]</div>
+  <p>Once the eigenvalue \(\alpha\) is fixed, it cannot move infinitesimally. Equivalently, a split finite reduced eigenvalue algebra is a product of fields; localizing at one eigensystem selects one field, whose maximal ideal is zero.</p>
+
+  <h6 id="adjoint-comparison"><span class="note-number">2.7.12.6.6</span> Explain why an automorphic quotient alone is insufficient.</h6>
+  <p>Knowing that automorphic representations give points of a deformation space does not show that they detect its infinitesimal structure. Even a surjection from a deformation ring to a reduced eigenvalue algebra is insufficient. For example,</p>
+  <div class="technical-equation">\[
+    E[u]/(u^2)\twoheadrightarrow E,\qquad u\longmapsto0,
+    \qquad
+    (u)/(u^2)\simeq E.
+  \]</div>
+  <p>The quotient sees one rigid eigenvalue system, while the source still has the tangent direction \(u\mapsto\epsilon\). This is the precise gap that a comparison theorem must close. It must rule out deformation directions invisible to the automorphic module, rather than merely produce an automorphic point.</p>
+  <p>For a surjection \(R\to\mathbb T\), tangent spaces run in the opposite direction:</p>
+  <div class="technical-equation">\[
+    \operatorname{Hom}_E(\mathfrak m_{\mathbb T}/\mathfrak m_{\mathbb T}^2,E)
+       \hookrightarrow
+    \operatorname{Hom}_E(\mathfrak m_R/\mathfrak m_R^2,E).
+  \]</div>
+  <p>A zero space on the left places no upper bound on the right. The additional control supplied by patching is therefore essential.</p>
+
+  <h6 id="adjoint-patching"><span class="note-number">2.7.12.6.7</span> See what the auxiliary-level argument contributes.</h6>
+  <p>An auxiliary prime does two things at once: it permits one controlled direction of ramification in the deformation problem, and it imposes an additional equation on the dual Selmer group. The primes are chosen so those equations detect every direction that could grow with the coefficient precision. A bounded amount of torsion may remain.</p>
+  <p>This expands the auxiliary-prime stage of the adjoint-vanishing theorem discussed above. It follows the mathematical comparison argument, while the selective Lean links at the end of §2.7.12.6 continue to document its application to the rank-three point.</p>
+  <nav class="landau-step-nav auxiliary-step-nav" aria-label="Auxiliary primes and dual Selmer control">
+    <ol>
+      <li><a href="#auxiliary-dual"><span class="note-nav-number">2.7.12.6.7.1</span><span>Define the dual problem</span></a></li>
+      <li><a href="#auxiliary-orthogonal"><span class="note-nav-number">2.7.12.6.7.2</span><span>Trade ramification for a test</span></a></li>
+      <li><a href="#auxiliary-projector"><span class="note-nav-number">2.7.12.6.7.3</span><span>Choose an integral block operator</span></a></li>
+      <li><a href="#auxiliary-local-test"><span class="note-nav-number">2.7.12.6.7.4</span><span>Compute the local trace test</span></a></li>
+      <li><a href="#auxiliary-detection"><span class="note-nav-number">2.7.12.6.7.5</span><span>Detect a surviving global class</span></a></li>
+      <li><a href="#auxiliary-finite-tests"><span class="note-nav-number">2.7.12.6.7.6</span><span>Select finitely many tests</span></a></li>
+      <li><a href="#auxiliary-prime-choice"><span class="note-nav-number">2.7.12.6.7.7</span><span>Realize the tests at primes</span></a></li>
+      <li><a href="#auxiliary-uniformity"><span class="note-nav-number">2.7.12.6.7.8</span><span>Keep the error bounded</span></a></li>
+      <li><a href="#auxiliary-model"><span class="note-nav-number">2.7.12.6.7.9</span><span>Work through a small model</span></a></li>
+      <li><a href="#auxiliary-cotangent"><span class="note-nav-number">2.7.12.6.7.10</span><span>Feed the bound into patching</span></a></li>
+    </ol>
+  </nav>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-dual"><span class="note-number">2.7.12.6.7.1</span> Define the dual Selmer problem and the bound we need.</div>
+  <p>Continue over the auxiliary CM field \(F\), with real subfield \(F^+\). Choose a coefficient field \(E/\mathbb Q_\ell\), its valuation ring \(\mathcal O\), and a uniformizer \(\varpi\). Let \(S\) contain the coefficient-prime places and all ramified places. In this passage, \(\rho:G_F\to\mathrm{GL}_3(\mathcal O)\) denotes the integral automorphic representation at the comparison stage. Its polarized adjoint lattice is \(W_{\mathcal O}\), and</p>
+  <div class="technical-equation">\[
+    W_m=W_{\mathcal O}/\varpi^mW_{\mathcal O},
+    \qquad
+    W_{E/\mathcal O}=W_{\mathcal O}\otimes_{\mathcal O}(E/\mathcal O).
+  \]</div>
+  <p>The invariant trace pairing \((X,Y)\mapsto\operatorname{tr}(XY)\) identifies the full matrix lattice with its dual. Local Tate duality therefore pairs \(W_m\) with \(W_m(1)\), where \((1)\) denotes a cyclotomic twist. This is why the dual Selmer group has a twist even though the original deformation tangent uses \(W_m\).</p>
+  <p>If \(\mathcal L_{v,m}\subseteq H^1(F_v^+,W_m)\) is an allowed local deformation condition, define its annihilator by</p>
+  <div class="technical-equation">\[
+    \mathcal L_{v,m}^{\perp}
+      =\{z:\langle x,z\rangle_v=0
+          \text{ for every }x\in\mathcal L_{v,m}\}.
+  \]</div>
+  <p>The global dual Selmer group consists of classes satisfying all these annihilator conditions:</p>
+  <div class="technical-equation">\[
+    H^1_{\mathcal L^\perp}(F^+,W_m(1))
+      =\ker\!\left(
+        H^1(F^+,W_m(1))
+        \longrightarrow
+        \prod_v H^1(F_v^+,W_m(1))/\mathcal L_{v,m}^{\perp}
+      \right).
+  \]</div>
+  <p>It is a cohomology group with dual local conditions, not simply the vector-space dual of the original Selmer group. Global duality makes it the term controlling the excess in the deformation count. Our goal is to choose sets \(Q_N\), all of the same size, such that</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{\mathcal O}
+       H^1_{\mathcal L(Q_N)^\perp}(F^+,W_N(1))
+       \le C_{\mathrm{dual}},
+    \qquad C_{\mathrm{dual}}\ \text{independent of }N.
+  \]</div>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-orthogonal"><span class="note-number">2.7.12.6.7.2</span> Understand why allowing ramification can shrink a dual group.</div>
+  <p>At a new prime \(v\), the original representation is unramified. Initially, the allowed local tangent classes are unramified too. Enlarge this condition by permitting one selected ramified direction. Orthogonality reverses the inclusion:</p>
+  <div class="technical-equation">\[
+    \mathcal L^{\mathrm{old}}_{v,m}
+       \subseteq\mathcal L^{\mathrm{new}}_{v,m}
+    \quad\Longrightarrow\quad
+    (\mathcal L^{\mathrm{new}}_{v,m})^\perp
+       \subseteq(\mathcal L^{\mathrm{old}}_{v,m})^\perp.
+  \]</div>
+  <p>The elementary reason is that a functional which vanishes on a larger set has more equations to satisfy. In a vector-space model, if \(U'=U+Ea\), then</p>
+  <div class="technical-equation">\[
+    (U')^\perp
+       =\{\lambda\in U^\perp:\lambda(a)=0\}.
+  \]</div>
+  <p>One added primal direction can remove one dual direction, provided the resulting test is nonzero on it. The choice of prime and Frobenius block is what makes that test useful. Arbitrary new primes would not guarantee any improvement.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-projector"><span class="note-number">2.7.12.6.7.3</span> Separate a Frobenius block without dividing modulo \(\varpi^m\).</div>
+  <p>Let \(v\) split in \(F\), choose a place \(\widetilde v\) above it, and put \(U_v=\rho(\mathrm{Frob}_{\widetilde v})\). Choose monic factors \(f_{v,1},f_{v,2}\in\mathcal O[T]\) of its characteristic polynomial that are coprime in \(E[T]\), equivalently with no common root in an algebraic closure of \(E\):</p>
+  <div class="technical-equation">\[
+    \det(T-U_v)=f_{v,1}(T)f_{v,2}(T),
+    \qquad
+    \delta_v=\operatorname{Res}(f_{v,1},f_{v,2})\ne0.
+  \]</div>
+  <p>The second factor selects the generalized eigenspaces on which ramification will be allowed. A Bézout identity gives integral polynomials \(A_v,B_v\) satisfying \(A_vf_{v,1}+B_vf_{v,2}=\delta_v\). Consequently</p>
+  <div class="technical-equation">\[
+    P_v=\delta_v^{-1}A_v(U_v)f_{v,1}(U_v),
+    \qquad
+    D_v=\delta_vP_v=A_v(U_v)f_{v,1}(U_v)
+        \in M_3(\mathcal O).
+  \]</div>
+  <p>On the first block \(f_{v,1}(U_v)=0\), so \(P_v=0\). On the second, the Bézout identity gives \(P_v=1\). Thus \(P_v\) is a projector over \(E\). The integral operator \(D_v\) is the one we can safely reduce modulo \(\varpi^m\); it need not be idempotent:</p>
+  <div class="technical-equation">\[
+    P_v^2=P_v,\qquad D_v^2=\delta_vD_v.
+  \]</div>
+  <p>For example, \(f_{v,1}=T-\alpha\) and \(f_{v,2}=(T-\beta)^2\), with \(\alpha\ne\beta\), give \(\delta_v=(\alpha-\beta)^2\). Repeated eigenvalues inside the selected block are allowed. If \(\alpha-\beta\) is divisible by \(\varpi\), division by \(\delta_v\) is unavailable over \(\mathcal O/\varpi^m\). Keeping that factor is how the argument records the integral loss.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-local-test"><span class="note-number">2.7.12.6.7.4</span> Compute the extra equation imposed on a dual class.</div>
+  <p>For a Taylor–Wiles prime of level \(N\), the residue-field size satisfies \(q_v\equiv1\pmod{\ell^N}\). Fix \(m\le N\), and let \(t_v:I_{\widetilde v}\to\mathbb Z_\ell\) be a surjective tame character. The modified local condition permits inertia cocycles of the form</p>
+  <div class="technical-equation">\[
+    x(\tau)=a\,t_v(\tau)D_v\pmod{\varpi^m},
+    \qquad a\in\mathcal O/\varpi^m,\quad \tau\in I_{\widetilde v}.
+  \]</div>
+  <p>More precisely, \(\mathcal L_{v,m}\) is the inverse image of the cyclic submodule generated by this inertia map. It includes every unramified class, since those restrict to zero on inertia. Its annihilator therefore consists of unramified dual classes with one additional constraint. Local Tate duality turns orthogonality to the displayed inertia direction into</p>
+  <div class="technical-equation">\[
+    \mathcal L_{v,m}^{\perp}
+      =\left\{[z]\in H^1_{\mathrm{unr}}(F_v^+,W_m(1)):
+          \operatorname{tr}\!\left(D_vz(\mathrm{Frob}_{\widetilde v})\right)
+            =0\pmod{\varpi^m}\right\}.
+  \]</div>
+  <p>This is the detecting equation. It samples the cocycle at Frobenius, then measures its component on the selected block. Only its vanishing matters, so harmless unit factors from the normalization of local duality do not change the condition.</p>
+  <p>The test depends on the cohomology class, rather than on a chosen cocycle representative. Indeed, \(D_v\) commutes with \(U_v\), and the cyclotomic action of Frobenius is trivial modulo \(\varpi^m\). Adding a coboundary changes the trace by</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \operatorname{tr}\!\left(D_v(U_v XU_v^{-1}-X)\right)
+      &=\operatorname{tr}\!\left((U_v^{-1}D_vU_v-D_v)X\right)\\
+      &=0.
+    \end{aligned}
+  \]</div>
+  <p>Notice that the condition is \(\operatorname{tr}(D_vz)=0\), with \(D_v=\delta_vP_v\). Cancelling a nonunit \(\delta_v\) here would incorrectly discard torsion classes.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-detection"><span class="note-number">2.7.12.6.7.5</span> Show why some block detects every surviving divisible direction.</div>
+  <p>Set \(F_\infty=F(\mu_{\ell^\infty})\) and \(H=\rho(G_{F_\infty})\). The cyclotomic irreducibility proved earlier supplies absolute irreducibility of this characteristic-zero image. After a suitable coefficient extension, semisimple elements of \(H\) span the full matrix algebra. This is the relevant form of the image-control argument.</p>
+  <p>Here is its linear-algebra content. If a nonzero matrix subspace \(U\subset M_3(E)\) were invisible to every generalized-eigenspace projector, then for \(Y\in U\),</p>
+  <div class="technical-equation">\[
+    \operatorname{tr}(P_{h,\alpha}Y)=0\ \text{for all }h,\alpha
+    \quad\Longrightarrow\quad
+    \operatorname{tr}(h^{\mathrm{ss}}Y)
+      =\sum_\alpha\alpha\,\operatorname{tr}(P_{h,\alpha}Y)=0.
+  \]</div>
+  <p>Spanning would then give \(\operatorname{tr}(AY)=0\) for every \(A\in M_3(E)\). Taking matrix units for \(A\) forces every entry of \(Y\) to vanish, a contradiction. Thus an appropriate block projector detects some nonzero component. No assumption of irreducibility modulo \(\ell\) enters this calculation.</p>
+  <p>Passing from matrices to global cocycles requires another input. A cohomological restriction lemma, using automorphic purity, ensures that a nonzero divisible family \(\kappa:E/\mathcal O\to H^1(G_{F^+,S},W_{E/\mathcal O}(1))\) remains nonzero on a subgroup with trivial adjoint and cyclotomic action. On that subgroup cocycles are homomorphisms and coboundaries vanish. Put \(T_{\mathcal O}=W_{\mathcal O}(1)\). Evaluation of the restricted family at \(\tau\) can be written</p>
+  <div class="technical-equation">\[
+    \kappa(x)(\tau)=xY_\tau\bmod T_{\mathcal O},
+    \qquad Y_\tau\in T_{\mathcal O},
+    \qquad x\in E/\mathcal O.
+  \]</div>
+  <p>The \(Y_\tau\) have a nonzero invariant \(E\)-span. Apply the matrix argument to these lattice elements, then clear denominators <em>before</em> evaluating a quotient-valued cocycle. For the resulting integral operator \(D=\delta P_{\sigma,\alpha}\),</p>
+  <div class="technical-equation">\[
+    \operatorname{tr}(DY_\tau)\ne0
+      \quad\Longrightarrow\quad
+    \left[x\longmapsto
+      \operatorname{tr}\!\left(D\kappa(x)(\tau)\right)\right]
+       \ne0.
+  \]</div>
+  <p>A nonzero element of \(\mathcal O\) acts nontrivially on the divisible module \(E/\mathcal O\), although it can kill particular finite-order values. This is why clearing denominators preserves a detecting family. An unscaled rational projector would not, in general, define an operator on \(W_{E/\mathcal O}(1)\).</p>
+  <p>One final cocycle calculation puts the detected value and the chosen block at the same group element. Let \(z\) represent a class from the family, with \(\operatorname{tr}(Dz(\tau))\ne0\). If \(\operatorname{tr}(Dz(\sigma))=0\), use</p>
+  <div class="technical-equation">\[
+    z(\tau\sigma)=z(\tau)+\tau\cdot z(\sigma)
+                =z(\tau)+z(\sigma).
+  \]</div>
+  <p>Trivial adjoint action only says \(\rho(\tau)=aI\), not necessarily \(I\). Here \(a\in\mathcal O^\times\), because the representation is integral and invertible. Thus \(\rho(\tau\sigma)=a\rho(\sigma)\): the generalized eigenspaces and their projectors stay the same, while the eigenvalue \(\alpha\) becomes \(a\alpha\). The resultant-weighted operator changes only by a unit, so the trace test at \(\tau\sigma\) is still nonzero. If the test at \(\sigma\) was already nonzero, no replacement was needed.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-finite-tests"><span class="note-number">2.7.12.6.7.6</span> Reduce the global problem to finitely many detecting equations.</div>
+  <p>Let \(S\) contain the coefficient-prime places and all ramified places. Write \(G_{F^+,S}\) for the Galois group unramified outside \(S\), and consider the larger group</p>
+  <div class="technical-equation">\[
+    \mathcal D_\infty
+       =H^1(G_{F^+,S},W_{E/\mathcal O}(1)).
+  \]</div>
+  <p>Using this larger group avoids needing to predict which local Selmer restrictions will survive later. It is cofinitely generated over \(\mathcal O\): noncanonically it has a divisible part \((E/\mathcal O)^r\) and a finite-length remainder. The integer \(r\) is its corank.</p>
+  <p>Start with a nonzero divisible direction in the kernel of the tests already chosen. The preceding step finds another test which is nonzero on that direction. A nonzero endomorphism of \(E/\mathcal O\) is multiplication by a nonzero element of \(\mathcal O\); it is surjective with finite kernel. Thus each successful test lowers the remaining corank. After at most \(r\) such steps, the common kernel has finite length.</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \Lambda:\mathcal D_\infty&\longrightarrow(E/\mathcal O)^q,\\
+    [z]&\longmapsto
+       \bigl(\operatorname{tr}(D_i z(\sigma_i))\bigr)_{i=1}^q,
+       \qquad q\ge r,\\
+    \operatorname{length}_{\mathcal O}\ker\Lambda&<\infty.
+    \end{aligned}
+  \]</div>
+  <p>The \(\sigma_i\) lie in \(G_{F_\infty}\); this makes the cyclotomic twist trivial at these elements. The same trace calculation as in §2.7.12.6.7.4 makes each functional well-defined on classes. The number \(q\), the group elements, and their block factorizations are fixed before the precision \(N\) grows.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-prime-choice"><span class="note-number">2.7.12.6.7.7</span> Replace the detecting group elements by Frobenius elements.</div>
+  <p>At each sufficiently large level \(N\), Chebotarev supplies distinct primes \(v_{N,1},\ldots,v_{N,q}\) outside \(S\), split in \(F\), whose Frobenius elements approximate the selected \(\sigma_i\). Their cyclotomic component is prescribed as well, giving</p>
+  <div class="technical-equation">\[
+    q_{v_{N,i}}\equiv1\pmod{\ell^N},
+    \qquad
+    \rho(\mathrm{Frob}_{\widetilde v_{N,i}})
+        \equiv\rho(\sigma_i)\pmod{\varpi^N}.
+  \]</div>
+  <p>The first congruence provides a large tame \(\ell\)-power quotient of the residue-field units, on which the auxiliary inertia character can vary. The second approximates the matrix used in the detecting test. These are different coefficient scales: if \(e_E=v_\varpi(\ell)\), then</p>
+  <div class="technical-equation">\[
+    \ell^N\mathcal O=\varpi^{e_EN}\mathcal O.
+  \]</div>
+  <p>To explain the cocycle tests, retain more than matrix data in the finite Galois quotient used for Chebotarev. At a fixed level, the relevant global cohomology group is finite, so one can retain representatives of its finitely many classes together with the representation and cyclotomic character. Compatible choices of Frobenius representatives then reproduce the trace tests modulo \(\varpi^N\). Equal representation matrices alone would not imply equal cocycle evaluations.</p>
+  <p>The approximation is chosen sufficiently fine that Hensel's lemma also gives matching block factorizations,</p>
+  <div class="technical-equation">\[
+    f_{v_{N,i},j}(T)\equiv f_{i,j}(T)\pmod{\varpi^N},
+    \qquad j=1,2.
+  \]</div>
+  <p>When the resultant is a nonunit, obtaining these factor congruences can require extra initial precision. The proof absorbs that fixed loss before making the choice. The primes may change with \(N\); their number and the original detecting tests stay fixed.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-uniformity"><span class="note-number">2.7.12.6.7.8</span> Explain why the residual kernel stays bounded as \(N\) grows.</div>
+  <p>For the fixed factorization at \(\sigma_i\), let \(\delta_i\ne0\) be its resultant, and choose \(C_{\mathrm{res}}\ge\max_i v_\varpi(\delta_i)\). Since the resultant is polynomial in the coefficients, the factor congruences imply</p>
+  <div class="technical-equation">\[
+    \delta_{N,i}\equiv\delta_i\pmod{\varpi^N},
+    \qquad N>C_{\mathrm{res}}
+    \quad\Longrightarrow\quad
+    v_\varpi(\delta_{N,i})=v_\varpi(\delta_i)\le C_{\mathrm{res}}.
+  \]</div>
+  <p>Thus the projectors never demand a growing number of denominators. The finite-coefficient control argument also gives a bound independent of \(m\) for the kernels of the fixed tests</p>
+  <div class="technical-equation">\[
+    \Lambda_m:H^1(G_{F^+,S},W_m(1))
+       \longrightarrow(\mathcal O/\varpi^m)^q.
+  \]</div>
+  <p>This passage includes the cohomology of the coefficient sequence; it is not a claim that \(H^1(G,W_m(1))\) automatically equals the \(\varpi^m\)-torsion in \(H^1(G,W_{E/\mathcal O}(1))\). The invariant terms and the finite kernel left by the chosen tests contribute bounded errors.</p>
+  <p>A dual Selmer class for \(Q_N\) is unramified at each new prime, and its local condition is exactly the zero trace test computed above. After matching Frobenius and cocycle data, it therefore lies in the controlled kernel of \(\Lambda_N\). Retaining the other local conditions can only make the group smaller. Hence</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{\mathcal O}
+       H^1_{\mathcal L(Q_N)^\perp}(F^+,W_N(1))
+       \le C_{\mathrm{dual}}.
+  \]</div>
+  <p>The conclusion is bounded length, not exact vanishing at every level. It says that increasing \(N\) does not uncover indefinitely many additional dual Selmer layers.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-model"><span class="note-number">2.7.12.6.7.9</span> See bounded torsion in a two-dimensional model.</div>
+  <p>Consider two tests on \(D_N=(\mathcal O/\varpi^N)^2\):</p>
+  <div class="technical-equation">\[
+    \Lambda_N(x,y)=(x,\varpi^a y),
+    \qquad a\ge0\ \text{fixed}.
+  \]</div>
+  <p>The first equation forces \(x=0\). The second permits those \(y\) killed by \(\varpi^a\). Therefore</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \operatorname{length}_{\mathcal O}D_N&=2N,\\
+    \operatorname{length}_{\mathcal O}\ker\Lambda_N&=\min(a,N)\le a.
+    \end{aligned}
+  \]</div>
+  <p>The underlying matrix \(\operatorname{diag}(1,\varpi^a)\) is invertible over \(E\), but one test has a fixed integral loss. This is the pattern the resultants allow. A second test \(y\mapsto0\) would leave \(N\) uncontrolled layers; a test \(y\mapsto\varpi^N y\) would do the same. Detecting every divisible direction and bounding the denominators are separate requirements, and the argument establishes both.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="auxiliary-cotangent"><span class="note-number">2.7.12.6.7.10</span> Turn dual control into a fixed number of deformation variables.</div>
+  <p>Each new local ramification condition adds a cyclic module of length at most \(m\) at level \(m\). The Greenberg–Wiles comparison, with the fixed original local conditions and their genericity hypotheses, gives an inequality of the form</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{\mathcal O}
+       H^1_{\mathcal L(Q_N)}(F^+,W_m)
+      \le C_0+
+       \operatorname{length}_{\mathcal O}
+       H^1_{\mathcal L(Q_N)^\perp}(F^+,W_m(1))
+       +mq,\qquad 1\le m\le N.
+  \]</div>
+  <p>The \(mq\) term accounts for the controlled directions deliberately introduced at the \(q\) auxiliary primes. Finite-level compatibility strengthens this length estimate to a generator statement:</p>
+  <div class="technical-equation">\[
+    \mathcal O^q\longrightarrow
+       H^1_{\mathcal L(Q_N)}(F^+,W_N),
+    \qquad
+    \operatorname{length}_{\mathcal O}\operatorname{coker}
+       \le C_1+C_{\mathrm{dual}}.
+  \]</div>
+  <p>One needs that compatibility argument: a total length bound alone would not identify \(q\) generators. Next, let \(R_N\) be the enhanced deformation algebra at level \(Q_N\) and \(P_N=\ker(R_N\to\mathcal O)\) its ideal at the chosen integral representation. The trace comparison relates Selmer classes to</p>
+  <div class="technical-equation">\[
+    \operatorname{Hom}_{\mathcal O}
+       (P_N/P_N^2,\mathcal O/\varpi^N).
+  \]</div>
+  <p>Its kernel and cokernel are killed by a fixed power of \(\varpi\) times a power of the least common multiple of the resultants. In rank three that resultant exponent is \(3+3!=9\). The uniform resultant bound therefore makes this error uniform too. A separate uniform generator bound converts the bounded exponent into bounded length.</p>
+  <p>The resulting cotangent statement is</p>
   <div class="technical-equation">\[
     \begin{gathered}
-    \rho_{\mathrm{aut}}\text{ has the required automorphy and polarization},\\
-    \rho_{\mathrm{aut}}|_{G_{K(\mu_{\ell^\infty})}}
-       \text{ is irreducible}
+    \mathcal O[[x_1,\ldots,x_q]]\longrightarrow R_N,
+       \qquad x_i\longmapsto y_{N,i}\in P_N,\\
+    \operatorname{length}_{\mathcal O}
+       \frac{P_N}{P_N^2+(y_{N,1},\ldots,y_{N,q})}
+       \le C_{\mathrm{cot}},
+       \qquad C_{\mathrm{cot}}\ \text{independent of }N.
     \end{gathered}
-    \quad\Longrightarrow\quad
-    H^1_{\mathrm{BK}}(\mathbb Q,V_f)=0.
   \]</div>
-  <p>This is not a formal consequence of calling a representation automorphic. The vanishing theorem is a substantive arithmetic input, with continuity, field, polarization and irreducibility hypotheses. Related results are discussed in the <a href="sources.html#ref-adjoint-selmer">adjoint Selmer reference</a>.</p>
-  <p>Why can a twist provide information about the original adjoint? A scalar character cancels out of conjugation:</p>
+  <p>This supplies the fixed number of variables and bounded errors needed for patching. It does not yet prove the automorphic module is free: the module comparison and patching argument still produce that later input. Once freeness is available, <a href="#adjoint-faithfulness">§2.7.12.6.8</a> explains why semisimplicity forces the characteristic-zero Selmer group to vanish.</p>
+  <div class="technical-note"><p><strong>The role of the auxiliary primes.</strong> They turn selected Frobenius trace measurements into local dual Selmer equations. Image control makes the measurements detect every divisible direction; Chebotarev places them at actual primes; bounded resultants keep the integral losses fixed. The remaining dual group has bounded length, which gives uniform control of the deformation variables.</p></div>
+  <p class="source-callout">For the mathematical comparison theorem: <a href="sources.html#ref-selmer-duality">Newton–Thorne, §2.4</a>, for dual local conditions and finite-level control; <a href="https://arxiv.org/html/2207.04925v1#S5">Thorne, Lemma 5.5 and Proposition 5.6</a>, for detecting elements and the bounded cotangent conclusion.</p>
+
+  <h6 id="adjoint-faithfulness"><span class="note-number">2.7.12.6.8</span> Show explicitly how freeness and semisimplicity force vanishing.</h6>
+  <p>The algebraic conclusion can now be checked directly. After the proof's reductions, let \((R,\mathfrak m,E)\) be the completed local algebra at the chosen characteristic-zero eigensystem, and let \(M\) be its automorphic module. The comparison supplies</p>
   <div class="technical-equation">\[
-    (\chi(g)\rho_f(g))X(\chi(g)\rho_f(g))^{-1}
-       =\rho_f(g)X\rho_f(g)^{-1}.
+    M\simeq R^d,\qquad d>0.
   \]</div>
-  <p>The twist adjusts the automorphic normalization while preserving this action on matrices. The source also checks the polarized action outside \(G_K\). Thus the Selmer group that vanishes is the one containing our tangent class, rather than a different adjoint group with a similar name.</p>
+  <p>This makes the action faithful: if \(a\in R\) kills \(M\), apply \(a\) to the first basis vector of \(R^d\); its first coordinate is \(a\), so \(a=0\). Thus</p>
+  <div class="technical-equation">\[
+    \operatorname{Ann}_R(M)=0.
+  \]</div>
+  <p>On the other hand, semisimplicity at the selected eigensystem says that \(R\) acts on every simple constituent through the residue character \(\lambda:R\to E\). Every \(a\in\mathfrak m=\ker\lambda\) therefore kills every constituent, hence all of \(M\). Combining the two conclusions gives</p>
+  <div class="technical-equation">\[
+    \mathfrak mM=0
+       \ \Longrightarrow\
+    \mathfrak m\subseteq\operatorname{Ann}_R(M)=0
+       \ \Longrightarrow\
+    R=E.
+  \]</div>
+  <p>There is no maximal-ideal direction left in which to deform. Using the tangent comparison,</p>
+  <div class="technical-equation">\[
+    H^1_{\mathrm{BK}}(F^+,W_E)
+      \simeq\operatorname{Hom}_E(\mathfrak m/\mathfrak m^2,E)
+      =0.
+  \]</div>
+  <p>These implications explain the role of each ingredient. Automorphy provides the module; patching proves that it detects the deformation algebra faithfully; semisimplicity makes the maximal ideal act trivially. Faithfulness and trivial action are compatible only when that ideal is zero. We have used the substantive comparison theorem, not assumed the desired Galois rigidity in advance.</p>
+
+  <h6 id="adjoint-return"><span class="note-number">2.7.12.6.9</span> Transfer the conclusion to the tangent used in the trace bound.</h6>
+  <p>Vanishing after the auxiliary field reductions descends to the original field. For a finite extension \(F^+/\mathbb Q\), restriction preserves the local Selmer conditions and corestriction satisfies</p>
+  <div class="technical-equation">\[
+    \operatorname{cor}\circ\operatorname{res}
+       =[F^+:\mathbb Q]\operatorname{id}
+       \quad\text{on }H^1(\mathbb Q,V_E).
+  \]</div>
+  <p>The degree is invertible in \(E\), so restriction is injective; a class whose restriction vanishes was already zero. Together with the coefficient-field comparison, this gives vanishing over \(\overline{\mathbb Q}_\ell\). We must still identify \(V\) with the original polarized adjoint \(V_f\). On \(G_K\), a scalar twist cancels:</p>
+  <div class="technical-equation">\[
+    (\varepsilon(g)^{-1}\rho(g))X
+      (\varepsilon(g)^{-1}\rho(g))^{-1}
+       =\rho(g)X\rho(g)^{-1}.
+  \]</div>
+  <p>The pairing calculation in §2.7.12.6.2 also matches the action at \(c\). Since \(G_K\) and \(c\) generate \(G_{\mathbb Q}\), this identifies the full polarized representations, and hence their local conditions. For our original tangent cocycle \(\gamma\),</p>
+  <div class="technical-equation">\[
+    [\gamma]\in H^1_{\mathrm{BK}}(\mathbb Q,V_f)=0
+      \quad\Longrightarrow\quad
+    \exists X,\ \gamma(g)=X-g\cdot X
+      \quad\text{for all }g\in G_{\mathbb Q}.
+  \]</div>
+  <p>The same \(X\) works globally. This is exactly the change-of-basis statement needed in <a href="#rigidity-normalization">§2.7.12.8</a>, where normalization restricts \(X\) to the grading direction. Vanishing of the unframed tangent does not remove those basis-change directions from a framed parameter space.</p>
+  <div class="technical-note"><p><strong>What has vanished?</strong> The characteristic-zero Selmer space measuring permitted deformations up to change of basis. Integral congruence layers can remain: \(\mathcal O/\varpi^m\mathcal O\) becomes zero after tensoring with \(E\), despite having length \(m\). That is why the later cotangent-to-trace estimate still has work to do.</p></div>
+  <p class="source-callout">Selective source checks: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/TypeIIrrCyc.lean">the cyclotomic irreducibility argument</a> and <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/LiftingTheory.lean">the rank-three application, including the twist and polarized action</a>.</p>
 
   <h5 id="rigidity-type-two"><span class="note-number">2.7.12.7</span> Control all four pieces in the rank-two case.</h5>
   <p>A Type II point is not covered by the preceding irreducible rank-three argument. Its outer block extends to an odd rank-two representation \(W\) of \(G_{\mathbb Q}\), while the middle line is fixed. The source's modularity input supplies a newform \(h\) of weight \(2e+1\), with \(e\ge1\), such that \(W\otimes\varepsilon_\ell^{-e}\) is attached to \(h\). The determinant of \(W\) is the quadratic character \(\eta\).</p>

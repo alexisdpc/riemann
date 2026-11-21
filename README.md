@@ -66,6 +66,12 @@ The current edition explains:
 - **Automorphy and rigidity:** tangent cocycles, the polarized adjoint, local
   Selmer conditions, separate rank-three and rank-two vanishing arguments,
   normalized basis changes, and the slice giving multiplicity at most one.
+- **Why rank-three adjoint Selmer vanishes:** the cyclotomic self-twist
+  contradiction, the deformation–Hecke comparison, and how faithful automorphic
+  modules with semisimple action force the characteristic-zero tangent to vanish.
+- **Auxiliary primes and dual Selmer control:** local trace tests, integral block
+  operators, detection of divisible classes, Chebotarev choices, uniform torsion
+  bounds, and the resulting control of cotangent generators.
 - **Theta matching:** convergent integrals, nonzero proportionality constants,
   test vectors, periods in a common lattice, correlation bounds, and mean slopes.
 - **Covolume estimates:** lattices, slopes, projection losses, and the absorption

@@ -85,8 +85,9 @@
 .technical-numbered .technical-part-release .note-number{color:#b7d3c6}
 .technical-numbered .technical-section h3{font-size:43px;line-height:1.12;letter-spacing:-.7px;color:var(--ink);margin:0 0 25px}
 .technical-numbered .technical-section h4{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.25;letter-spacing:-.2px;margin:32px 0 15px;color:var(--ink)}
-.technical-numbered .technical-section h5{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.4;margin:25px 0 10px;color:var(--ink)}
-.technical-numbered :is(h3,h4,h5)[id]{scroll-margin-top:32px}
+.technical-numbered .technical-section :is(h5,h6){font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.4;margin:25px 0 10px;color:var(--ink)}
+.technical-numbered :is(h3,h4,h5,h6)[id]{scroll-margin-top:32px}
+.technical-numbered .technical-substep{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.4;margin:28px 0 12px;color:var(--ink);scroll-margin-top:32px}
 .technical-numbered-toc ol{counter-reset:none}
 .technical-numbered-toc li{counter-increment:none}
 .technical-numbered-toc a.toc-numbered{grid-template-columns:3.1em minmax(0,1fr);gap:8px}
@@ -95,6 +96,8 @@
 .technical-numbered .landau-step-nav ol{list-style:none;padding:0}
 .technical-numbered .landau-step-nav li{padding:0}
 .technical-numbered .landau-step-nav a{display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:8px}
+.technical-numbered .adjoint-step-nav a{grid-template-columns:6.8em minmax(0,1fr)}
+.technical-numbered .auxiliary-step-nav a{grid-template-columns:7.6em minmax(0,1fr)}
 .technical-section table{border-collapse:collapse;width:100%;font-size:14px;margin:25px 0}
 .technical-section th,.technical-section td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .technical-section th{font-weight:600;color:var(--ink)}
@@ -105,4 +108,4 @@
 @media(max-width:600px){.technical-part-banner{padding:22px 20px;margin-bottom:32px}.technical-part-banner h2{font-size:35px}.technical-part-banner p:last-child{font-size:14px}.technical-hero-actions{gap:16px}.technical-hero-actions .button{gap:20px;font-size:13px}.proof-technical-figure figcaption{padding:15px 17px;font-size:12px}.proof-scope-chips>span{font-size:10px}.technical-toc details[open] nav{max-height:60vh}}
 @media print{.technical-toc,.technical-roadmap,.technical-meta,.technical-hero-actions{display:none}.technical-layout{display:block;margin:20px 0}.technical-hero{padding:15px 0}.technical-hero h1{font-size:42px}.technical-section{break-inside:auto}.technical-section h2{font-size:30px;break-after:avoid}.technical-article{font-size:11pt}.technical-equation{font-size:10pt;overflow:visible;break-inside:avoid}.technical-note{break-inside:avoid}.technical-part-banner{background:#eef2e8;color:#183c34;break-inside:avoid}.technical-part-banner h2,.technical-part-banner .technical-kicker{color:#183c34}.proof-scope-chips>span{color:#183c34}.proof-technical-figure{max-width:430px;break-inside:avoid}}
 @media(max-width:600px){.technical-numbered .technical-section h3{font-size:36px}.technical-numbered .technical-section h4{font-size:28px}}
-@media print{.technical-numbered .technical-section h3{font-size:30px}.technical-numbered .technical-section h4{font-size:23px}.technical-numbered :is(h2,h3,h4,h5){break-after:avoid}.technical-numbered .technical-part-release .note-number{color:#183c34}}
+@media print{.technical-numbered .technical-section h3{font-size:30px}.technical-numbered .technical-section h4{font-size:23px}.technical-numbered :is(h2,h3,h4,h5,h6,.technical-substep){break-after:avoid}.technical-numbered .technical-part-release .note-number{color:#183c34}}
