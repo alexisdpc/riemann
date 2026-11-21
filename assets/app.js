@@ -9,7 +9,7 @@
   });
   nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { closeMenu(); toggle.focus(); } });
-  matchMedia('(min-width: 601px)').addEventListener('change', closeMenu);
+  matchMedia('(min-width: 901px)').addEventListener('change', closeMenu);
   const progress = document.querySelector('#reading-progress');
   let scheduled = false;
   const updateProgress = () => {

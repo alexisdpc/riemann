@@ -18,7 +18,7 @@
       toggle.focus();
     }
   });
-  window.matchMedia('(min-width: 601px)').addEventListener('change', closeMenu);
+  window.matchMedia('(min-width: 901px)').addEventListener('change', closeMenu);
 
   const contents = document.querySelector('.technical-toc details');
   const compact = window.matchMedia('(max-width: 850px)');

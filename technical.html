@@ -32,7 +32,8 @@
       <a href="index.html">Overview</a>
       <a href="index.html#proof-map">Proof map</a>
       <a href="technical.html" aria-current="page">Technical notes</a>
-      <a href="sources.html">Sources</a>
+      <a href="sources.html#references">References</a>
+      <a href="https://alexisdpc.github.io/yang-mills/">Yang–Mills</a>
     </nav>
   </header>
   <div class="author-strip page-width">
@@ -90,7 +91,7 @@
               <li><a class="toc-numbered" href="#lean"><span class="note-nav-number">3.3</span><span>Following the Lean source</span></a></li>
               <li><a class="toc-numbered" href="#scope"><span class="note-nav-number">3.4</span><span>What this establishes</span></a></li>
             </ol>
-            <a class="toc-sources" href="sources.html">Source records &amp; references</a>
+            <a class="toc-sources" href="sources.html#references">References &amp; source records</a>
           </nav>
         </details>
         <a class="toc-back" href="index.html">Back to the overview</a>
@@ -686,7 +687,7 @@
   <div class="technical-equation">\[
     \log|N_p|\le|\mathcal O|\,|S|\,(2r\log q+1).
   \]</div>
-  <p>The substantive deformation comparison bounds the sum of the relevant normalized character lengths by \(2v_\ell(N_p)\), for the qualifying generic primes \(\ell\ne p\). Here \(v_\ell(\ell)=1\); normalized length means length over the coefficient discrete valuation ring divided by its ramification index. One obtains these bounds through a cotangent module of a deformation ring and trace congruences. They are not a consequence of the integer construction alone.</p>
+  <p>The substantive deformation comparison bounds the sum of the relevant normalized character lengths by \(2v_\ell(N_p)\), for the qualifying generic primes \(\ell\ne p\). Here \(v_\ell(\ell)=1\); normalized length means length over the coefficient discrete valuation ring divided by its ramification index. The <a href="#galois-cohomology-bridge">expanded deformation argument in §2.7.6–2.7.15</a> explains the intervening cocycles, cotangent module, rigidity results and trace comparison. They are what justify using the integer to bound cohomology.</p>
   <p>Choose a second auxiliary prime \(p'\ne p\) to cover the omitted coefficient prime. For any finite set \(P\) of qualifying primes, unique factorization now yields</p>
   <div class="technical-equation">\[
     \begin{aligned}
@@ -870,7 +871,7 @@
         <section class="technical-section" id="nv-galois" aria-labelledby="nv-galois-title">
   <p class="technical-kicker">From automorphic forms to arithmetic</p>
   <h3 id="nv-galois-title"><span class="note-number">2.7</span> Build a representation that remembers the arithmetic.</h3>
-  <p>The cohomology estimates need a connection between automorphic forms and field symmetries. The Galois-representation theorem supplies that connection, with precise local restrictions. It is useful to separate what the representation is, what information it must retain, and how the source constructs it.</p>
+  <p>The cohomology estimates need a connection between automorphic forms and field symmetries. The Galois-representation theorem supplies that connection, with precise local restrictions. We first separate what the representation is, what information it must retain, and how the source constructs it. Then <a href="#galois-cohomology-bridge">§2.7.6–2.7.15</a> follows the quantitative passage through deformation rings, cotangent modules and trace congruences.</p>
 
   <h4 id="galois-objects"><span class="note-number">2.7.1</span> Turn field symmetries into linear algebra.</h4>
   <p>An automorphic representation \(\pi\) organizes symmetries of automorphic forms. A Galois representation assigns an invertible matrix to each automorphism of an algebraic closure, preserving composition:</p>
@@ -922,6 +923,253 @@
   \]</div>
   <p>The degree-zero restriction matters: it is not a blanket equality for arbitrary Frobenius powers. These are the local comparisons available for subsequent arithmetic arguments.</p>
   <p class="source-callout">Selective source links: <a href="sources.html#nv-row-definition">representation, weight, and local conditions</a>; <a href="sources.html#nv-galois-construction">geometry, congruences, trace limits, and descent</a>.</p>
+
+  <h4 id="galois-cohomology-bridge"><span class="note-number">2.7.6</span> Specify the cohomology that the deformation argument measures.</h4>
+  <p>A Galois representation does not, by its existence alone, bound a cohomology group. The source uses a particular character module, embeds its classes into a three-dimensional deformation problem, and then controls that problem using automorphy and commutative algebra. This expansion follows the <em>generic odd-prime branch</em> of that argument. The exceptional-prime estimates and the later selection of arithmetic windows remain separate steps.</p>
+  <nav class="landau-step-nav" aria-label="From Galois representations to cohomology bounds">
+    <ol>
+      <li><a href="#galois-normalized-cocycles"><span class="note-nav-number">2.7.7</span><span>Make each cohomology class visible</span></a></li>
+      <li><a href="#galois-infinitesimal"><span class="note-nav-number">2.7.8</span><span>Turn cocycles into deformations</span></a></li>
+      <li><a href="#galois-deformation-ring"><span class="note-nav-number">2.7.9</span><span>Put the deformations into one ring</span></a></li>
+      <li><a href="#galois-cotangent"><span class="note-nav-number">2.7.10</span><span>Identify the cotangent quotient</span></a></li>
+      <li><a href="#galois-length-bound"><span class="note-nav-number">2.7.11</span><span>Bound all torsion layers</span></a></li>
+      <li><a href="#galois-automorphic-rigidity"><span class="note-nav-number">2.7.12</span><span>Use automorphy and rigidity</span></a></li>
+      <li><a href="#galois-trace-congruences"><span class="note-nav-number">2.7.13</span><span>Measure congruences by traces</span></a></li>
+      <li><a href="#galois-global-budget"><span class="note-nav-number">2.7.15</span><span>Sum over coefficient primes</span></a></li>
+    </ol>
+  </nav>
+  <p>Let \(\ell\) be the coefficient prime, let \(\mathcal O\) be the ring of integers of a finite extension \(E_\ell/\mathbb Q_\ell\), and write \(\varpi\) for a uniformizer. Fix a positive twist \(r\) and a finite-order character \(\psi\) of level \(N\), viewed as a Galois character with values in \(\mathcal O^\times\). Put</p>
+  <div class="technical-equation">\[
+    \Psi=\chi_{\mathrm{cyc}}^{\,r}\psi,\qquad
+    D=E_\ell/\mathcal O,\qquad
+    g\cdot t=\Psi(g)^{-1}t\quad\text{on }D(\Psi^{-1}).
+  \]</div>
+  <p>The relevant group, denoted here by \(\mathcal S_{\ell,r,\psi}\), consists of classes that are trivial on decomposition groups at primes dividing \(\ell N\), and trivial on inertia at every finite prime. With \(G_q\) and \(I_q\) denoting those local subgroups, its defining restriction map is</p>
+  <div class="technical-equation">\[
+    \mathcal S_{\ell,r,\psi}
+      =\ker\!\left[
+      H^1(G_{\mathbb Q},D(\Psi^{-1}))
+      \longrightarrow
+      \prod_{q\mid\ell N}H^1(G_q,D(\Psi^{-1}))
+      \times\prod_q H^1(I_q,D(\Psi^{-1}))
+      \right].
+  \]</div>
+  <p>Restriction to inertia being zero means <em>unramified as a cohomology class</em>; vanishing on a decomposition group is stronger. These are character-cohomology groups with specified local conditions. The earlier field-cohomology problem reaches them through character decomposition and comparison results; it is not being identified with the full adjoint cohomology of an arbitrary automorphic representation.</p>
+  <details>
+    <summary>Which hypotheses delimit this branch?</summary>
+    <p>The source fixes an auxiliary imaginary quadratic field \(K\), takes \(N\) even and \(r\ge1\), and requires \(\ell\ne2\), \(\ell\nmid\operatorname{ord}(\psi)\), \(\psi(-1)=(-1)^r\), \(\ell\nmid|\operatorname{disc}K|h_K\), and \(\gcd(|\operatorname{disc}K|,N)=1\). Its good-data condition additionally imposes a square-one condition on a derived character, a residual independence condition involving \(K\), and \(\ell-1\nmid2r\). Here \(h_K\) is the class number. These restrictions enable the markings, local comparisons and automorphy statements used below. The displayed bound is asserted only when that full condition holds; the separate exceptional branches handle other cases.</p>
+  </details>
+
+  <h4 id="galois-normalized-cocycles"><span class="note-number">2.7.7</span> Choose a faithful representative of each torsion class.</h4>
+  <p>Write \(\alpha=\Psi^{-1}\). A continuous cocycle \(z:G_{\mathbb Q}\to D\) satisfies</p>
+  <div class="technical-equation">\[
+    z(gh)=z(g)+\alpha(g)z(h).
+  \]</div>
+  <p>Two cocycles represent the same class when their difference is \((\alpha(g)-1)t\) for a fixed \(t\in D\). Thus simply counting cocycles would count changes of representative as new arithmetic information. A marking chooses \(g_1\) with \(\alpha(g_1)-1\) a unit and replaces \(z\) by</p>
+  <div class="technical-equation">\[
+    \widetilde z(g)=z(g)
+      -(\alpha(g)-1)(\alpha(g_1)-1)^{-1}z(g_1),
+    \qquad \widetilde z(g_1)=0.
+  \]</div>
+  <p>This normalization is independent of the representative: adding a coboundary changes both terms by the same amount. A normalized coboundary is zero, because evaluating it at \(g_1\) forces its defining \(t\) to vanish. Consequently distinct classes give distinct normalized cocycles.</p>
+  <p>Now take a class killed by a nonzero \(b\in\mathcal O\). Normalization commutes with multiplication by \(b\), so \(b\widetilde z=0\). Its values therefore lie in a finite coefficient module:</p>
+  <div class="technical-equation">\[
+    \mathcal O/b\mathcal O\simeq D[b]=b^{-1}\mathcal O/\mathcal O,
+    \qquad t\bmod b\longmapsto t/b\bmod\mathcal O.
+  \]</div>
+  <p>On \(G_K\), the split reference representation is \(\rho_0=\operatorname{diag}(\Psi,1,\Psi^{-1})\). Embed a scalar value into a matrix by</p>
+  <div class="technical-equation">\[
+    M(t)=\begin{pmatrix}0&amp;0&amp;0\\t&amp;0&amp;0\\0&amp;-t&amp;0\end{pmatrix},
+    \qquad
+    \rho_0(g)M(t)\rho_0(g)^{-1}=M(\Psi(g)^{-1}t).
+  \]</div>
+  <p>The two off-diagonal positions transform by exactly the character acting on our coefficients. The minus sign makes this line compatible with the conjugate-self-dual extension of the construction from \(G_K\) to \(G_{\mathbb Q}\). The source consequently injects \(\mathcal S_{\ell,r,\psi}[b]\) into a specified collection of normalized matrix cocycles. Their local vanishing and local coboundary conditions are retained. This explicit injection is the reason this particular cohomology group can enter the deformation problem.</p>
+
+  <h4 id="galois-infinitesimal"><span class="note-number">2.7.8</span> Read the cocycle equation as a first-order representation law.</h4>
+  <p>Introduce a formal infinitesimal \(\epsilon\) with \(\epsilon^2=0\). For matrix coefficients \(c(g)\), consider</p>
+  <div class="technical-equation">\[
+    \rho_\epsilon(g)=(1+\epsilon c(g))\rho_0(g).
+  \]</div>
+  <p>On \(G_K\), multiplying two such matrices gives</p>
+  <div class="technical-equation">\[
+    \rho_\epsilon(g)\rho_\epsilon(h)
+      =\bigl[1+\epsilon\{c(g)+\rho_0(g)c(h)\rho_0(g)^{-1}\}\bigr]\rho_0(gh).
+  \]</div>
+  <p>The representation law holds precisely when \(c(gh)=c(g)+\operatorname{Ad}(\rho_0(g))c(h)\): the matrix cocycle equation. Conjugating by \(1+\epsilon X\) replaces \(c(g)\) by \(c(g)+X-\operatorname{Ad}(\rho_0(g))X\), a coboundary change. This explains the familiar link between first cohomology and infinitesimal deformations.</p>
+  <p>For torsion coefficients the source uses the square-zero algebra \(\mathcal O\oplus\epsilon(\mathcal O/b\mathcal O)\), whose multiplication is</p>
+  <div class="technical-equation">\[
+    (a,\epsilon u)(a',\epsilon u')
+       =(aa',\epsilon(au'+a'u)).
+  \]</div>
+  <p>That retains the coefficient ring and the depth of the torsion. It also retains the conjugate-self-dual structure and the selected local conditions. The unrestricted slogan “the tangent space is \(H^1\)” would lose those restrictions and would not by itself give the bound we need.</p>
+
+  <h4 id="galois-deformation-ring"><span class="note-number">2.7.9</span> Encode all admissible deformations in one ring.</h4>
+  <p>A deformation ring \(R\) organizes lifts of the fixed residual representation into complete local coefficient algebras. After the source's basis normalizations and local conditions are fixed, its universal property has the form</p>
+  <div class="technical-equation">\[
+    \{\text{admissible normalized lifts to }B\}
+       \simeq\operatorname{Hom}^{\mathrm{cont}}_{\mathcal O,\mathrm{loc}}(R,B),
+    \qquad \rho_B=f_*\rho_R.
+  \]</div>
+  <p>The matrix entries of \(\rho_R\) serve as coordinates. Relations express the group law, the conjugate-self-dual symmetry, ramification restrictions and the chosen local deformation condition above \(\ell\). The marking removes specified changes of basis. Thus a cohomology class now gives a map from one fixed ring to a square-zero algebra, instead of a separately constructed representation.</p>
+  <p>The split representation determines a base map \(x_0:R\to\mathcal O\). A map reducing to \(x_0\) has the form \(f(a)=x_0(a)+\epsilon\delta(a)\). Multiplicativity is equivalent to the derivation rule</p>
+  <div class="technical-equation">\[
+    \delta(aa')=x_0(a)\delta(a')+x_0(a')\delta(a),
+    \qquad \delta|_{\mathcal O}=0.
+  \]</div>
+  <p>This turns the deformation question into linear algebra on a module of differentials at the base point. No identification of \(R\) with a Hecke algebra is asserted in this passage; the source uses a more specific graded model and comparison theorem.</p>
+
+  <h4 id="galois-cotangent"><span class="note-number">2.7.10</span> Identify the exact cotangent quotient being measured.</h4>
+  <p>First recall the elementary construction. If \(J=\ker x_0\), a derivation vanishes on \(J^2\), since both factors have zero base value. Hence</p>
+  <div class="technical-equation">\[
+    \operatorname{Der}_{\mathcal O,x_0}(R,Q)
+       \simeq\operatorname{Hom}_{\mathcal O}(J/J^2,Q).
+  \]</div>
+  <p>The quotient \(J/J^2\) is the cotangent module: it keeps linear changes and discards their products. The source refines this construction. It presents the constrained ring through a graded model algebra \(A\), a base map \(x:A\to\mathcal O\), and homogeneous equations. Diagonal conjugation gives weights \(-2,-1,0,1,2\) on matrix entries; the cocycles from §2.7.7 occupy weight \(-1\).</p>
+  <p>Set \(J_A=\ker x\). The source first saturates the square with respect to nonzero coefficients:</p>
+  <div class="technical-equation">\[
+    J_A^{2,\mathrm{sat}}
+      =\{a\in A:\exists d\in\mathcal O\setminus\{0\},\ da\in J_A^2\},
+    \qquad
+    \Lambda_{-1}=\operatorname{im}\bigl(A_{-1}\cap J_A\longrightarrow A/J_A^{2,\mathrm{sat}}\bigr).
+  \]</div>
+  <p>This forms a lattice of linear directions, with coefficient torsion removed. Let \(F_1,\ldots,F_m\) be the weight \(-1\) equations in the model, and let \(\overline F_i\) be their linear images in \(\Lambda_{-1}\). The module that enters the estimate is</p>
+  <div class="technical-equation">\[
+    C_{-1}=\Lambda_{-1}/\langle\overline F_1,\ldots,\overline F_m\rangle_{\mathcal O}.
+  \]</div>
+  <p>Its torsion measures how far the integral equations are from spanning the full lattice of relevant directions. Saturating the square did not discard this information: the torsion here comes from the <em>index of the equation lattice</em>. It is this selected quotient, rather than the whole ordinary cotangent module, whose length controls the character cohomology.</p>
+
+  <h4 id="galois-length-bound"><span class="note-number">2.7.11</span> Measure the depth of every torsion layer.</h4>
+  <p>A tangent-space dimension records how many directions remain modulo \(\varpi\). It does not record how long they survive. For example, \(\mathcal O/\varpi\mathcal O\) and \(\mathcal O/\varpi^{100}\mathcal O\) both have a one-dimensional quotient modulo \(\varpi\), but their lengths are \(1\) and \(100\).</p>
+  <p>Under the model's spanning hypotheses, elementary divisors put its equation lattice in diagonal form. After changing generators, with \(d\) the rank of \(\Lambda_{-1}\), its nonzero linear generators have the following form; any redundant linear generators can be taken to be zero:</p>
+  <div class="technical-equation">\[
+    \overline F_i=\varpi^{a_i}y_i,\qquad
+    C_{-1}\simeq\bigoplus_{i=1}^{d}\mathcal O/\varpi^{a_i}\mathcal O,
+    \qquad \operatorname{length}_{\mathcal O}C_{-1}=\sum_{i=1}^{d}a_i.
+  \]</div>
+  <p>To see why this quotient controls cohomology, take a normalized cocycle with coefficients in \(\mathcal O/b\mathcal O\). The universal property produces a derivation on \(R\); composing with the model map \(A\to R\) produces a derivation \(\delta:A\to\mathcal O/b\mathcal O\) that kills the defining equations. The source's local lifting result supplies an integral, weight \(-1\) derivation \(\widetilde\delta:A\to\mathcal O\) reducing to \(\delta\).</p>
+  <p>This lift explains why the saturation causes no loss. If \(da\in J_A^2\) for \(d\ne0\), the derivation rule gives</p>
+  <div class="technical-equation">\[
+    0=\widetilde\delta(da)=d\,\widetilde\delta(a)
+      \quad\Longrightarrow\quad\widetilde\delta(a)=0.
+  \]</div>
+  <p>The implication uses that the target \(\mathcal O\) is torsion-free. It would not be justified directly in \(\mathcal O/b\mathcal O\). Reduction now shows that \(\delta\) kills the saturated square; it already kills the equations \(F_i\). It therefore descends to a linear functional on \(C_{-1}\). The normalization and weight condition preserve injectivity of the original encoding, giving</p>
+  <div class="technical-equation">\[
+    \mathcal S_{\ell,r,\psi}[b]\hookrightarrow
+       \operatorname{Hom}_{\mathcal O}(C_{-1},\mathcal O/b\mathcal O).
+  \]</div>
+  <p>For \(b=\varpi^n\), the elementary-divisor description makes the size comparison explicit:</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{\mathcal O}
+       \operatorname{Hom}_{\mathcal O}(C_{-1},\mathcal O/\varpi^n\mathcal O)
+      =\sum_i\min(a_i,n)\le\sum_i a_i
+      =\operatorname{length}_{\mathcal O}C_{-1}.
+  \]</div>
+  <p>Since finite \(\mathcal O\)-modules have cardinality \(|\mathcal O/\varpi|^{\operatorname{length}}\), an injection gives the corresponding length inequality, even without asserting that our chosen encoding is \(\mathcal O\)-linear. For every nonzero \(b\in\mathcal O\), this yields</p>
+  <div class="technical-equation">\[
+    \operatorname{length}_{\mathcal O}\mathcal S_{\ell,r,\psi}[b]
+       \le\operatorname{length}_{\mathcal O}C_{-1}.
+  \]</div>
+  <p>The local lifting property is essential to the comparison; the universal property of \(R\) alone would not imply this inequality. Every continuous cocycle from the compact profinite group \(G_{\mathbb Q}\) into the discrete module \(D\) has finite image. A common nonzero denominator kills that image, so every class is torsion. The subgroups killed by \(\varpi^n\) therefore increase to the whole group, and a bound independent of \(n\) gives</p>
+  <div class="technical-equation">\[
+    \mathcal S_{\ell,r,\psi}=\bigcup_{n\ge1}\mathcal S_{\ell,r,\psi}[\varpi^n],
+    \qquad
+    \operatorname{length}_{\mathcal O}\mathcal S_{\ell,r,\psi}
+       \le\operatorname{length}_{\mathcal O}C_{-1}.
+  \]</div>
+  <p>This also establishes finiteness once the cotangent length is finite. Write \(e_{\mathcal O}=v_\varpi(\ell)\) for the ramification index and normalize by</p>
+  <div class="technical-equation">\[
+    L_\ell(\psi)=\frac{\operatorname{length}_{\mathcal O}\mathcal S_{\ell,r,\psi}}{e_{\mathcal O}}
+       \le\frac{\operatorname{length}_{\mathcal O}C_{-1}}{e_{\mathcal O}}.
+  \]</div>
+  <p>This is the normalization used with \(v_\ell(\ell)=1\). In particular, a factor \(\varpi^{a_i}\) contributes \(a_i/e_{\mathcal O}\) units of \(\ell\)-adic depth.</p>
+
+  <h4 id="galois-automorphic-rigidity"><span class="note-number">2.7.12</span> Use automorphy to control the characteristic-zero points.</h4>
+  <p>The split reference representation was easy to write down. The hard arithmetic enters when studying the other points of the deformation ring. A characteristic-zero specialization \(f:R\to\overline{\mathbb Q}_\ell\) produces a representation \(\rho_f\). For the relevant points, the source's lifting results place it in a controlled class: either an admissible rank-three automorphic representation, or a rank-two modular constituent in the second case.</p>
+  <p>These statements do three jobs. They supply finiteness of the weight-zero algebra, place the resulting Frobenius traces in a finite list with arithmetic bounds, and supply the rigidity needed for the length comparison. The construction of Galois representations and their local compatibility is used together with these lifting and vanishing theorems.</p>
+  <p>At a characteristic-zero point, a permitted infinitesimal deformation again gives an adjoint cocycle. The local conditions place it in the appropriate Bloch–Kato Selmer problem. The source then uses the relevant adjoint vanishing theorem, or the corresponding modular and auxiliary vanishing input, to show that the deformation is a change of basis. In the cases covered by that vanishing theorem, the logical step is</p>
+  <div class="technical-equation">\[
+    [c_f]\in H^1_{\mathcal L}(G,\operatorname{ad}\rho_f),\qquad
+    H^1_{\mathcal L}(G,\operatorname{ad}\rho_f)=0
+    \quad\Longrightarrow\quad
+    c_f\text{ is a coboundary}.
+  \]</div>
+  <p>Here \(\mathcal L\) denotes the prescribed local conditions; this is not a vanishing assertion about unrestricted \(H^1\). The source separately treats the diagonal base point and the one-sided degeneracies. These are the hypotheses that make the graded comparison applicable.</p>
+  <p>Rigidity over a field does not force integral torsion to vanish. Two distinct characteristic-zero points may still become congruent modulo a high power of \(\varpi\). That remaining integral proximity is precisely what the next estimate measures.</p>
+
+  <h4 id="galois-trace-congruences"><span class="note-number">2.7.13</span> Bound the cotangent length by trace congruences.</h4>
+  <p>Choose a suitable element \(\sigma\in G_K\). The split reference trace is</p>
+  <div class="technical-equation">\[
+    t_0(\sigma)=\Psi(\sigma)+1+\Psi(\sigma)^{-1}.
+  \]</div>
+  <p>The universal trace difference defines a weight-zero function on the deformation space, vanishing at the split point. At a specialization it evaluates to</p>
+  <div class="technical-equation">\[
+    a_\sigma(f)=\operatorname{tr}\rho_f(\sigma)-t_0(\sigma).
+  \]</div>
+  <p>If this nonzero difference is divisible by \(\varpi^m\), the two traces agree modulo \(\varpi^m\). A larger valuation means a deeper congruence. To use these valuations as a finite bound, the source needs a \(\sigma\) for which the difference is nonzero at every relevant two-sided point, meaning a point outside both of the prescribed upper- and lower-triangular loci.</p>
+  <div class="technical-note"><p><strong>Why a trace calculation alone is insufficient.</strong> The matrices \(M(t)\) in §2.7.7 are off diagonal. Hence \(\operatorname{tr}(M(t)\rho_0(g))=0\): their first-order deformation does not change the trace. More generally, a triangular extension has the same trace as its split diagonal representation. The source does not inject cohomology into trace values. It relates cotangent length to trace valuations through a graded commutative-algebra theorem, using the point and rigidity hypotheses just described.</p></div>
+  <p>Let \(\mathcal T\) contain one representative for each of the relevant point orbits. The specialized graded estimate gives</p>
+  <div class="technical-equation">\[
+    \frac{\operatorname{length}_{\mathcal O}C_{-1}}{e_{\mathcal O}}
+      \le 2\sum_{f\in\mathcal T}v_\ell(a_\sigma(f)).
+  \]</div>
+  <p>Combining it with the lower comparison, and identifying the point representatives with pairwise nonisomorphic admissible representations, yields the decisive inequality</p>
+  <div class="technical-equation">\[
+    \boxed{\quad L_\ell(\psi)
+      \le 2\sum_{\rho\in\mathcal X_\psi}
+        v_\ell\!\left(\operatorname{tr}\rho(\sigma)-t_0(\sigma)\right).\quad}
+  \]</div>
+  <p>The finite set \(\mathcal X_\psi\) records representation classes, rather than just distinct numerical traces. Distinct classes with the same trace must retain their multiplicity in this sum.</p>
+  <details>
+    <summary>Where does the factor of two come from?</summary>
+    <p>The graded argument first uses the elementary-divisor expression \(\operatorname{length}C_{-1}=\sum_i a_i\). Its lower and upper graded growth estimates, with auxiliary model dimensions \(u,v\), give a comparison of the form</p>
+    <div class="technical-equation">\[
+      2^{u+v}\sum_i a_i
+        \le 2^{u+1+v}\sum_{f\in\mathcal T}v_\varpi(a_\sigma(f)).
+    \]</div>
+    <p>Cancel the positive common factor \(2^{u+v}\), then divide by \(e_{\mathcal O}\), using \(v_\varpi=e_{\mathcal O}v_\ell\). This gives the displayed factor \(2\). The graded growth estimates are a substantive commutative-algebra input; the factor does not come from choosing two auxiliary primes or from counting two copies of cohomology.</p>
+  </details>
+
+  <h4 id="galois-trace-integer"><span class="note-number">2.7.14</span> Turn trace differences into one nonzero integer.</h4>
+  <p>The estimate still involves \(\ell\)-adic representations. To sum over many coefficient primes, the source uses the compatible automorphic trace data. Choose an auxiliary rational prime \(p\) away from \(30N|\operatorname{disc}K|\), a place \(w\) over it, and write \(q\ge7\) for the residue-field size. The source evaluates at \(\sigma=\operatorname{Frob}_w^{-1}\). For its chosen identification \(\iota:\overline{\mathbb Q}_\ell\simeq\mathbb C\), put \(B=q^r\) and \(z_\psi=\iota(\psi(q))^{-1}\). Then the complex realization of the reference trace is</p>
+  <div class="technical-equation">\[
+    t_0=B^{-1}z_\psi+1+Bz_\psi^{-1}.
+  \]</div>
+  <p>The automorphic input supplies a finite conjugation-stable family of algebraic trace labels \(t_s\), with \(|t_s|\le3\) at every complex embedding and \(Bt_s\) integral. Their \(\ell\)-adic realizations cover the representations needed in the preceding estimate. For a conjugation-stable character orbit \(\mathscr O\), the product is</p>
+  <div class="technical-equation">\[
+    N_p=\prod_{\psi\in\mathscr O}\prod_s
+      B\bigl(t_s-B^{-1}z_\psi-1-Bz_\psi^{-1}\bigr)\in\mathbb Z\setminus\{0\}.
+  \]</div>
+  <p>The <a href="#arithmetic-congruence-integer">calculation in §2.6.6.1</a> proves integrality, conjugation invariance, nonvanishing and the height bound. Its key nonvanishing observation is that \(B^2z_\psi^{-1}\) is too large in complex absolute value to be canceled by the other terms: \(B^2&gt;4B+1\). This supplies the trace separation required in §2.7.13.</p>
+  <p>For \(\ell\ne p\), the denominator-clearing factor \(B\) is an \(\ell\)-adic unit. In the valuation formula below the algebraic trace labels and character values are transported back through \(\iota^{-1}\); we keep the same symbols for those \(\ell\)-adic realizations. All the resulting factors are integral, so their valuations are nonnegative. We can enlarge the finite representation lists to the common trace family without decreasing the bound, then use additivity of valuation on the product:</p>
+  <div class="technical-equation">\[
+    \sum_{\psi\in\mathscr O}L_\ell(\psi)
+      \le2\sum_{\psi\in\mathscr O}\sum_s
+        v_\ell\bigl(B(t_s-t_{0,\psi})\bigr)
+      =2v_\ell(N_p).
+  \]</div>
+  <p>This explains both sides of the construction. Complex absolute values ensure that the integer is nonzero and bound its size. Its \(\ell\)-adic valuations pay for the possible depth of the integral deformations.</p>
+
+  <h4 id="galois-global-budget"><span class="note-number">2.7.15</span> Sum the local bounds and return to the arithmetic window.</h4>
+  <p>A nonzero integer has only a finite amount of prime divisibility. For any finite set \(P\) of qualifying coefficient primes,</p>
+  <div class="technical-equation">\[
+    \sum_{\ell\in P}v_\ell(N_p)\log\ell\le\log|N_p|.
+  \]</div>
+  <p>Choose a second auxiliary prime \(p'\ne p\). The integer built using \(p'\) also covers the coefficient prime \(\ell=p\), where the first argument could not discard its denominator. Using both nonnegative budgets gives</p>
+  <div class="technical-equation">\[
+    \sum_{\ell\in P}\log\ell
+       \sum_{\psi\in\mathscr O_\ell}L_\ell(\psi)
+      \le2\log|N_p|+2\log|N_{p'}|.
+  \]</div>
+  <p>The subscript on \(\mathscr O_\ell\) allows the coefficient realization of the same finite character orbit to vary with \(\ell\). The two integers and their size bounds are chosen before that coefficient prime. This uniformity is what makes the sum useful.</p>
+  <p>More precisely, the source obtains constants \(c_5,A\), depending on the fixed auxiliary field, such that for a character orbit associated to a subgroup \(H\subseteq(\mathbb Z/N\mathbb Z)^\times\),</p>
+  <div class="technical-equation">\[
+    \log|N_p|\le c_5\,\varphi([ (\mathbb Z/N\mathbb Z)^\times:H ])
+       \bigl(N(r+1)\bigr)^A\log p.
+  \]</div>
+  <p>Here \(\varphi\) is Euler's totient function. Counting the trace labels and controlling their heights therefore turn the cohomological sum into a polynomial arithmetic budget, independently of how many qualifying coefficient primes were initially put into \(P\).</p>
+  <p>The remaining arithmetic assembly compares these character groups with the field-cohomology groups, tracks conductor and index losses, sums over twists, and adds the exceptional-prime estimates. The window selection in <a href="#arithmetic-exceptional-window">§2.6.6.2</a> makes those exceptional contributions affordable. Only after the theta and geometric comparisons does this budget become the prime-sum estimate used by Landau.</p>
+  <div class="technical-note"><p><strong>What has been supplied here.</strong> The cocycle normalization, its matrix embedding, the first-order representation law, the meaning of the cotangent quotient, and the valuation-to-integer summation are now explicit. The two major comparison inequalities are stated with their roles and hypotheses: cohomology length is bounded by the selected cotangent length, and graded rigidity bounds that length by trace valuations. Proving all the local lifting, automorphy, Selmer-vanishing and graded-growth inputs remains additional mathematical work; none is replaced by the existence of a Galois representation alone.</p></div>
+  <p class="source-callout">Three selective source entry points: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/VlenLe.lean">the cohomology-to-cotangent comparison</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/OneCharOf.lean">the assembly of the one-character trace bound</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/AlgMemCoef.lean">the graded comparison behind the factor of two</a>. For the background language, see <a href="sources.html#ref-milne">Milne on cohomology and class field theory</a> and <a href="sources.html#ref-mazur">Mazur on deformation theory</a>.</p>
 </section>
 
 <section class="technical-section" id="nv-local-global" aria-labelledby="nv-local-global-title">

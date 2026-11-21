@@ -19,13 +19,19 @@ step leads to the next. Selective Lean references support the explanations.
 | --- | --- |
 | [Overview](https://alexisdpc.github.io/riemann/) | The problem, an interactive reflection diagram, and a five-layer proof map. |
 | [Technical notes](https://alexisdpc.github.io/riemann/technical.html) | Mathematical foundations and step-by-step arguments, from arithmetic windows to the critical line. |
-| [Source companion](https://alexisdpc.github.io/riemann/sources.html) | Selected declarations, exact line excerpts, original module paths, and source provenance. |
+| [References and sources](https://alexisdpc.github.io/riemann/sources.html#references) | A numbered bibliography with reading guidance, followed by selected declarations and source provenance. |
 
 For a first visit, start with the overview and then read the
 [final reflection argument](https://alexisdpc.github.io/riemann/technical.html#reflection).
 It shows exactly why nonvanishing to the right of one half forces zeros in the
 critical strip onto its middle line. The rest of the technical companion follows
 the deeper inputs supplying that nonvanishing theorem.
+
+The [reference list](https://alexisdpc.github.io/riemann/sources.html#references)
+separates the released source and Mathlib from background reading in DLMF,
+Milne’s *Class Field Theory*, and Mazur’s *Deforming Galois Representations*.
+Each entry links to the relevant sections of the guide. The main menu on every page
+also links to the companion [Yang–Mills proof guide](https://alexisdpc.github.io/yang-mills/).
 
 ## The mathematical route
 
@@ -50,7 +56,10 @@ The current edition explains:
 - **The prime-sum comparison:** finite character orthogonality, cancellation of
   main terms, and four normalized costs balanced by a square-root chain length.
 - **Galois and local compatibility:** representations, characteristic polynomials,
-  Hodge weights, local parameters, and the hypotheses on their comparisons.
+  Hodge weights, local parameters, and the hypotheses on their comparisons;
+  normalized cocycles, constrained deformation rings, a graded cotangent quotient,
+  integral lifts and length bounds, automorphic rigidity, and trace congruences
+  leading to the cohomology budget.
 - **Theta matching:** convergent integrals, nonzero proportionality constants,
   test vectors, periods in a common lattice, correlation bounds, and mean slopes.
 - **Covolume estimates:** lattices, slopes, projection losses, and the absorption
