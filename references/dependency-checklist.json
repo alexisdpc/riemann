@@ -1,0 +1,2175 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-23",
+  "notesBaseCommit": "4bff7ae323c4a3ecdcf21064e9293ff9d6ce7821",
+  "archiveSha256": "9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc",
+  "sourceRoot": "alpo-proof/extracted/lean/src",
+  "sourceMirror": "https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/",
+  "reviewScope": "Selected proof bodies, explicit hypotheses and immediate input packages compared with the website exposition. Not an exhaustive dependency graph, complete mathematical audit, Lean build or final-theorem axiom audit. Related-input links are an explanatory dependency map; unlisted inputs remain in the source descriptions.",
+  "statusDefinitions": {
+    "explained": "Fully explained at the explicitly stated scope, given its named inputs. This does not rate the entire transitive proof chain.",
+    "summarized": "The statement, role or main mechanism is present, but important constructions or deductions remain compressed.",
+    "missing": "The argument itself is not explained in the guide. It may be named or invoked; this does not mean its Lean proof is absent."
+  },
+  "branches": [
+    {
+      "id": "analysis",
+      "title": "Analysis and nonvanishing",
+      "description": "Separate the windowed Landau contradiction from the deeper analytic estimates used to choose the auxiliary characters."
+    },
+    {
+      "id": "arithmetic",
+      "title": "Arithmetic windows",
+      "description": "Track how exceptional twists, a compatible prime pair and finite-character averaging produce the usable window estimate."
+    },
+    {
+      "id": "galois",
+      "title": "Galois representations and deformation theory",
+      "description": "The integral and graded length calculations are much more developed than the construction and automorphy inputs that make them applicable."
+    },
+    {
+      "id": "local",
+      "title": "Local representation theory",
+      "description": "Distinguish the restricted local-parameter construction from its classification inputs and the weighted multiplicity bound."
+    },
+    {
+      "id": "theta",
+      "title": "Theta integrals and test vectors",
+      "description": "The quantitative comparisons have explicit calculations. Constructing the required vectors and a single separating pair remains a substantial task."
+    },
+    {
+      "id": "geometry",
+      "title": "Arithmetic geometry and covolumes",
+      "description": "Using a finite-degree bound is a different argument from proving it. The determinant, arithmetic-volume and positivity inputs need separate explanations."
+    },
+    {
+      "id": "assembly",
+      "title": "Final assembly",
+      "description": "Keep the same mathematical family throughout the comparisons, fix loss exponents before epsilon, and identify where the final theorem obtains its input packages."
+    }
+  ],
+  "priorities": [
+    {
+      "title": "Prove the modular-family and propagation inputs.",
+      "why": "The point-specialization and automorphy-transfer argument is now expanded. The largest remaining input in this branch is the ordinary modular-family theorem with its seeds, local propagation and dimension conditions, followed by arithmetic-point classicality. The construction of the constrained deformation model also needs its own proof.",
+      "items": [
+        "coverage-galois-point-automorphy",
+        "coverage-galois-deformation-model"
+      ]
+    },
+    {
+      "title": "Finish the geometric seed and its local properties.",
+      "why": "Explain how the required rank is extracted from a larger geometric representation, then why fixed-weight crystalline and Frobenius conditions survive the trace limit. An annihilating polynomial and convergent traces alone do not supply these conclusions.",
+      "items": [
+        "coverage-galois-rank-seed",
+        "coverage-galois-local-closedness"
+      ]
+    },
+    {
+      "title": "Construct the theta vectors and the shared family.",
+      "why": "Show how nonzero local vectors form a global tensor, why one selected pair separates every needed row, and how the common grid and field extension make all comparisons apply to the same family. This connects the analytic estimates to actual compatible arithmetic data.",
+      "items": [
+        "coverage-theta-test-vectors",
+        "coverage-theta-separation",
+        "coverage-common-host"
+      ]
+    },
+    {
+      "title": "Prove the finite-degree geometric estimate.",
+      "why": "The current notes explain how to use the Hilbert–Samuel inequality. The next chapter should derive it from a filtration, short independent columns and a determinant, keeping the positivity and arithmetic-volume inputs explicit. Those deeper inputs are substantial projects of their own.",
+      "items": [
+        "coverage-geometry-hs-determinant",
+        "coverage-geometry-mean-volume",
+        "coverage-geometry-positivity"
+      ]
+    },
+    {
+      "title": "Connect the cohomology budget to every local and exceptional contribution.",
+      "why": "Derive the finite exceptional-twist set from tower cohomology and explain the five prime classes in the weighted local divisibility estimate. These are the remaining arithmetic steps between the developed trace budget and the window used by Landau.",
+      "items": [
+        "coverage-exceptional-tower",
+        "coverage-local-divisibility"
+      ]
+    },
+    {
+      "title": "Derive the auxiliary-character analytic inputs.",
+      "why": "The interval and prime-pair selection are explained given their estimates. Fill in the squarefree-correlation mean square, mollifier zero detection and shifted-contour tail argument; each deserves its own bounded derivation with the stated constants and ranges.",
+      "items": [
+        "coverage-quadratic-mean-square",
+        "coverage-zero-density",
+        "coverage-contour-tail"
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "coverage-transform-poles",
+      "title": "Smoothed prime errors, transforms and noncancelling poles",
+      "branch": "analysis",
+      "status": "explained",
+      "scope": "The passage from the fixed positively weighted character family to a meromorphic transform whose poles record its zeros.",
+      "notes": [
+        {
+          "anchor": "prime-smoothing",
+          "label": "2.3.2 Smoothing the prime sum"
+        },
+        {
+          "anchor": "landau-transform",
+          "label": "2.4.2 The transform"
+        },
+        {
+          "anchor": "landau-residues",
+          "label": "2.4.3 Positive weighted residues"
+        }
+      ],
+      "coverage": "The notes derive the smoothing kernel, the logarithmic-derivative transform, the cancellation of the apparent pole at 1, and the pairing with inverse characters. They compute the residue as a common factor times a strictly positive weighted sum of zero multiplicities.",
+      "next": "This is explained given analytic continuation, the Mellin identities and standard nonvanishing on Re(s) ≥ 1 for each character. It does not reproduce the complete construction of Dirichlet L-functions or their continuation.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/poleData.lean",
+          "declaration": "Deduction.poleData_char",
+          "line": 137,
+          "kind": "proof",
+          "inputs": "An admissible character: modulus 1 or a nonprincipal character. The proof treats zeta through the removable extension of (s−1)ζ(s), and otherwise uses the character Mellin identity.",
+          "sha256": "78fb8ae795a01ad687440b035c377a9fde71088c726d1ac862ba0fd8bb1fc3c0",
+          "lineText": "theorem poleData_char {N : ℕ} [NeZero N] (χ : DirichletCharacter ℂ N) (adm : N = 1 ∨ χ ≠ 1) :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/poleData.lean",
+          "declaration": "Deduction.poleData",
+          "line": 248,
+          "kind": "proof",
+          "inputs": "CharFamily, including strictly positive weights. The body constructs the paired transform and proves positivity of the multiplicity sum; standard single-character analytic results remain upstream.",
+          "sha256": "78fb8ae795a01ad687440b035c377a9fde71088c726d1ac862ba0fd8bb1fc3c0",
+          "lineText": "theorem poleData (F : CharFamily) : ∃ Φ : ℂ → ℂ, PoleData (gm F) Φ (zeroSet F) := by"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-landau-windows",
+      "title": "One-sided windows exclude poles",
+      "branch": "analysis",
+      "status": "explained",
+      "scope": "Landau's pole contradiction from arbitrarily late power windows, the stated meromorphic-transform and residue properties, and a crude global growth bound.",
+      "notes": [
+        {
+          "anchor": "landau-one-sided",
+          "label": "2.4.6 Using an upper bound"
+        },
+        {
+          "anchor": "landau-tails",
+          "label": "2.4.7 The two tails"
+        },
+        {
+          "anchor": "landau-isolation",
+          "label": "2.4.8 Pole isolation"
+        },
+        {
+          "anchor": "landau-contradiction",
+          "label": "2.4.9 Growth contradiction"
+        }
+      ],
+      "coverage": "The notes explain why |g|+g ≤ 2R, retain the real-center derivative term, localize a factorially normalized derivative kernel, control both tails, and separate shifted-center and positive real-pole cases before comparing exponential growth rates.",
+      "next": "No additional expansion is needed for this bounded mechanism. Its remaining inputs are the transform/pole package and the arithmetic construction of the windows; the argument does not turn a one-sided bound into an absolute-value bound.",
+      "dependsOn": [
+        "coverage-transform-poles"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/landauWindowIneq.lean",
+          "declaration": "Deduction.landau_window_ineq",
+          "line": 27,
+          "kind": "conditional-proof",
+          "inputs": "Measurable real g, |g(u)| ≤ C₀ exp(2u), and a nonnegative integrable window majorant R. The body splits the integral into the window and its complement.",
+          "sha256": "e3d5d760bcefe1242d4f5b0ced44fc055f1fa8dfe048a2222cf2c39ae812e59c",
+          "lineText": "theorem landau_window_ineq {g R : ℝ → ℝ} (hg : Measurable g) {C₀ : ℝ}"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/landauWindow.lean",
+          "declaration": "Deduction.landau_window",
+          "line": 83,
+          "kind": "conditional-proof",
+          "inputs": "PoleData, 0 < θ < 1, δ > 0 and WindowHypU. The proof invokes the constructed derivative estimate and performs both pole-isolation cases.",
+          "sha256": "57f49606e6ffd8cab45672d8d4b9c7ded6c0b6b0d140821cc51b5baeb4f67ab5",
+          "lineText": "theorem landau_window {g : ℝ → ℝ} {Φ : ℂ → ℂ} {Z : Set ℂ} (hP : PoleData g Φ Z) {θ δ : ℝ}"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-reflection-euler",
+      "title": "Euler-factor restoration and critical-line reflection",
+      "branch": "analysis",
+      "status": "explained",
+      "scope": "Extending primitive nonvanishing to imprimitive characters and excluding zeros off the critical line in the open critical strip.",
+      "notes": [
+        {
+          "anchor": "nv-imprimitive",
+          "label": "2.5 Finite Euler factors"
+        },
+        {
+          "anchor": "reflection",
+          "label": "3.1 Conditional critical-line theorem"
+        },
+        {
+          "anchor": "proof-reflection",
+          "label": "3.2.4 Reflecting the zero"
+        },
+        {
+          "anchor": "proof-remove-completion",
+          "label": "3.2.5 Removing completion"
+        }
+      ],
+      "coverage": "The notes show that each omitted Euler factor is nonzero by its norm, track the inverse primitive character through the functional equation, and check the gamma factors and excluded endpoints.",
+      "next": "The bounded deduction is complete given right-half-plane nonvanishing and the classical functional equation. Proofs of the functional equation and the gamma-function facts themselves remain standard upstream background.",
+      "dependsOn": [
+        "coverage-fixed-exponents"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/CharacterBoxes/Imprimitive.lean",
+          "declaration": "UpperTheory.Top.imprimitive",
+          "line": 5,
+          "kind": "conditional-proof",
+          "inputs": "ZeroFreeAll for primitive characters; Re(s) > 1/2 and the character/point exception χ ≠ 1 or s ≠ 1. The proof uses change of level and a strict norm bound for each factor.",
+          "sha256": "8de85415d0d139f23b2b50ba56c18ab3b3e29740f41e2d86eaf99b95765f512e",
+          "lineText": "theorem UpperTheory.Top.imprimitive :"
+        },
+        {
+          "path": "Formalism/GammaFactorNonvanishing/CritLine.lean",
+          "declaration": "Formalism.VW.critLine",
+          "line": 11,
+          "kind": "conditional-proof",
+          "inputs": "UpperTheory.EveryCharacter, a primitive character, and 0 < Re(s) < 1. The proof reflects the left-side case using the inverse character; gamma nonvanishing is proved at line 6.",
+          "sha256": "5b1552ac13442150f6900f37b9b44eff1491fad1bebe2ec07a959eecb9bcfe02",
+          "lineText": "theorem Formalism.VW.critLine (h : UpperTheory.EveryCharacter) (N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N) (hχ : χ.IsPrimitive) (s : ℂ)"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-exceptional-tower",
+      "title": "Tower bounds produce only finitely many exceptional twists",
+      "branch": "arithmetic",
+      "status": "missing",
+      "scope": "The missing explanation between cohomology in a cyclotomic tower and a uniformly bounded exceptional set of twist indices, including the separate prime-2 input.",
+      "notes": [
+        {
+          "anchor": "arithmetic-construction",
+          "label": "2.6.6 The arithmetic construction"
+        },
+        {
+          "anchor": "arithmetic-exceptional-window",
+          "label": "2.6.6.2 Where the uniform bound R is used"
+        }
+      ],
+      "coverage": "The website names the duality and tower inputs and explains how a finite exceptional set would be used, but does not derive that set. The inspected source contains the intermediate mechanism: cohomology length becomes a twisted cokernel length, finitely many ℓ-adic centers control that length, and at most one integer in [1,Z] lies sufficiently close to each center.",
+      "next": "Explain how descent identifies cohomology length with a twisted cokernel length, how finitely many ℓ-adic centers control that length, and why ultrametric separation gives at most R exceptional twist indices. Then explain which fixed-prime and prime-2 tower estimates supply R and the separate layer-growth bound. Keep Poitou–Tate, local finiteness, local Tate duality, Ferrero–Washington and the generator-count estimate as explicit inputs until separately traced.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/AdditiveValuationNorms/ABoundOfDescends.lean",
+          "declaration": "UpperTheory.V.PropA.aBound_of_descends",
+          "line": 36,
+          "kind": "conditional-proof",
+          "inputs": "PoitouTateDuality, LocalFinitenessK, LocalTateDualityK, IsTower, a cyclotomic level condition and Descends. The body obtains ℓ-adic centers and a separate layer-growth bound.",
+          "sha256": "30d198e1610fb4ce9152eec6d4baa3c1bfd5ac30c3e9fdc7fa33a4d4445b09e6",
+          "lineText": "theorem aBound_of_descends (hP : GlobalTheory.Published.PoitouTateDuality) (hF : LocalFinitenessK) (hT : LocalTateDualityK) {R c : ℕ}"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/LayeredIsomorphisms/Exc.lean",
+          "declaration": "UpperTheory.V.Win.exc",
+          "line": 7,
+          "kind": "conditional-proof",
+          "inputs": "ABound l R L₀. The proof forms the union of integers close to each center and uses near1 to bound each part by one.",
+          "sha256": "7bb13ceb4141dea9a35e93dbba8b71b06e44b172584e06c886b0c5a518146cfe",
+          "lineText": "theorem UpperTheory.V.Win.exc :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/LayeredIsomorphisms/ThmBabOfLemmaK.lean",
+          "declaration": "UpperTheory.V.Win.thmBab_of_lemmaK",
+          "line": 9,
+          "kind": "conditional-proof",
+          "inputs": "The three duality/finiteness packages, FerreroWashington and an existential LemmaK bound; the assembly uses fixedIn and twoIn. This entry point does not itself prove those upstream packages.",
+          "sha256": "8c18862cdb0e969e14e8e7bb0b429a60f3be96587f907194d6604276d692a3ca",
+          "lineText": "theorem thmBab_of_lemmaK (hP : GlobalTheory.Published.PoitouTateDuality) (hF : LocalFinitenessK) (hT : LocalTateDualityK)"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-exceptional-window",
+      "title": "A single window avoids expensive exceptional twists",
+      "branch": "arithmetic",
+      "status": "explained",
+      "scope": "Selecting an arbitrarily late power window once a uniform bound on the number of exceptional twist indices is given.",
+      "notes": [
+        {
+          "anchor": "arithmetic-exceptional-window",
+          "label": "2.6.6.2 Logarithmic interval selection"
+        }
+      ],
+      "coverage": "The notes convert k ≤ x^Ct ⇒ k ≤ x^α into avoidance of logarithmic intervals, explain the endpoint reduction that removes one obstruction at a time, and derive the uniform exponent J = 2^(R+2)(Ct/α)^R.",
+      "next": "The elementary selection is explained; the uniform exceptional-count input belongs to the separate tower-bound row. The indices may vary with the outer cutoff even though their number is uniformly bounded.",
+      "dependsOn": [
+        "coverage-exceptional-tower"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/LayeredIsomorphisms/Window1.lean",
+          "declaration": "UpperTheory.V.Win.window1",
+          "line": 6,
+          "kind": "proof",
+          "inputs": "A finite set of at most R real obstructions, B ≥ 1 and U > 0. The body inducts on R and reduces U to U/(2B) after deleting one obstruction.",
+          "sha256": "9b80fe0dd466a58b0fae61b8d875bce2c40be17d56341c072a95462c41778d88",
+          "lineText": "theorem UpperTheory.V.Win.window1 :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/LayeredIsomorphisms/Window.lean",
+          "declaration": "UpperTheory.V.Win.window",
+          "line": 7,
+          "kind": "conditional-proof",
+          "inputs": "0 < α ≤ Ct, X > 1 and #Exc ≤ R. It applies window1 to the image log(k)/Ct and exponentiates the resulting interval.",
+          "sha256": "354e0ad1b87c54c46a40486a037d0a10b598ffc1b1d8e840e4f80560090a50be",
+          "lineText": "theorem UpperTheory.V.Win.window :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-quadratic-mean-square",
+      "title": "Quadratic correlations behind the mean-square estimate",
+      "branch": "analysis",
+      "status": "summarized",
+      "scope": "The proof of Σq |S(q,y)|² ≤ C y log y · #P for arbitrary bounded coefficients, uniformly over the admissible prime progression.",
+      "notes": [
+        {
+          "anchor": "auxiliary-mean-square",
+          "label": "2.6.7.2 The finite quadratic mean square"
+        }
+      ],
+      "coverage": "The notes expand the square, describe the different pair types and state the uniform estimate. They do not derive the prime-progressions correlation estimate or explain how its possible exceptional square class is isolated and paid for.",
+      "next": "Expand the reduction by quadratic reciprocity to squarefree parts outside m₀; show how Page-type exceptional-character uniqueness leaves at most one exceptional square class; then combine the diagonal, exceptional, remainder and generic contributions. The finite-sum expansion and decomposition provide a manageable first subargument.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/MeanSqAbs.lean",
+          "declaration": "QH.meanSq_abs",
+          "line": 8,
+          "kind": "conditional-proof",
+          "inputs": "8 divides m₀, coprime progression, primes q > floor(Z)², bounded coefficients, prime-power coefficient bounds, and squarefree Jacobi-correlation estimates except at nstar. The body expands and splits the square.",
+          "sha256": "331ad7dd6ac920f63867e410f15bea712f6ce6f9b536aaf4f6dc2b436fabf17d",
+          "lineText": "theorem meanSq_abs :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/twistK.lean",
+          "declaration": "QH.twistK",
+          "line": 148,
+          "kind": "proof",
+          "inputs": "Positive exponents and the admitted scale/progression conditions. The body invokes relative prime-counting, zero-free-region and exceptional-character bounds, proves uniqueness of the exceptional square class, and estimates all other correlations.",
+          "sha256": "bf88793e05cdaac2af8d254b870970085afe1fbc0188a4bab6a04d99a488c4ac",
+          "lineText": "theorem twistK :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/meanSqK.lean",
+          "declaration": "QH.meanSqK",
+          "line": 51,
+          "kind": "proof",
+          "inputs": "Admitted scales and the small-or-above-Z condition on prime divisors of m₀. It combines meanSq_abs with the correlation and coefficient estimates; no multiplicativity of the bounded coefficient sequence is required.",
+          "sha256": "f7494b0eef8faebb957323f568505dc965332e0e239e9ef866acf502721a97aa",
+          "lineText": "theorem meanSqK :"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-interval-mean-square",
+      "title": "Pointwise averages control an entire interval",
+      "branch": "analysis",
+      "status": "explained",
+      "scope": "Turning a pointwise quadratic mean-square bound, valid for every bounded coefficient sequence, into a small fraction of primes that fail anywhere on [Y,Y^K].",
+      "notes": [
+        {
+          "anchor": "auxiliary-whole-interval",
+          "label": "2.6.7.3 Derivatives, dyadic blocks and bad primes"
+        }
+      ],
+      "coverage": "The notes derive yD(y) as a new finite sum with truncated bounded coefficients, use Cauchy–Schwarz on each dyadic block, allow a separate bad point for each prime, apply Markov's inequality, and sum the geometric dyadic tail with constant 32C/[τ(1−2^−τ)].",
+      "next": "The interval mechanism is explained conditional on the mean-square estimate; it does not independently establish the quadratic-correlation input. The cutoff Z stays fixed while y varies.",
+      "dependsOn": [
+        "coverage-quadratic-mean-square"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/BadShare.lean",
+          "declaration": "bs_mul_D_eq_S",
+          "line": 83,
+          "kind": "proof",
+          "inputs": "The finite sum S and its derivative sum; the identity reuses the mean-square estimate with coefficients cut off at n > y.",
+          "sha256": "99627325726fc52c2dd21e5058991f05d6d20f56267ff45d03d5774073f1c469",
+          "lineText": "private theorem bs_mul_D_eq_S (Z : ℝ) (y : ℝ) (q : ℕ) (κ : ℕ → ℂ) :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/BadShare.lean",
+          "declaration": "bs_block",
+          "line": 163,
+          "kind": "conditional-proof",
+          "inputs": "MeanSq on a dyadic block and independently selected points for the primes. It combines the derivative-integral bound with the pointwise mean square.",
+          "sha256": "99627325726fc52c2dd21e5058991f05d6d20f56267ff45d03d5774073f1c469",
+          "lineText": "private theorem bs_block {C Z Y W : ℝ} {P : Finset ℕ} (hC : 0 ≤ C) (hY : 1 ≤ Y) (hYW : Y ≤ W)"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/BadShare.lean",
+          "declaration": "QH.bad_share",
+          "line": 251,
+          "kind": "conditional-proof",
+          "inputs": "C ≥ 0, τ > 0, a fixed interval exponent and a desired positive discarded fraction. The body partitions the bad primes into dyadic blocks and sums their bounds.",
+          "sha256": "99627325726fc52c2dd21e5058991f05d6d20f56267ff45d03d5774073f1c469",
+          "lineText": "theorem bad_share :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-zero-density",
+      "title": "A zero near 1 forces a detectable large Dirichlet block",
+      "branch": "analysis",
+      "status": "missing",
+      "scope": "The upstream near-one zero-density argument that bounds the number of bad primitive characters by O(Q^(1/4)).",
+      "notes": [
+        {
+          "anchor": "auxiliary-zero-box",
+          "label": "2.6.7.4 The zero-free-box exclusion"
+        }
+      ],
+      "coverage": "The notes state the box Re(s) > 1−1/400, |Im(s)| ≤ Q and explain why the resulting bad-prime count is negligible, but do not explain the zero-detection or block-counting proof. In the inspected proof a zero makes a truncated L-series small; multiplication by a Möbius mollifier then forces a dyadic remainder block to be large.",
+      "next": "Start with the exact mollifier identity P·M = 1+D, derive |D| ≥ 1/2 at a zero, and select a block of size at least 1/(2J). Then explain the duality/pair estimates and coefficient-square bound that limit how many characters can have such a block, and the injection from bad primes to primitive characters distinguished by their conductors.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Formalism/GL3MeanSquares/GenusMeanAsymptotics/JacobiCharacterSums/CountZDetect.lean",
+          "declaration": "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_detection",
+          "line": 43,
+          "kind": "conditional-proof",
+          "inputs": "The mollifier identity packaged as DetectOf's input; a primitive nonprincipal character with a zero in the specified near-one box. The body proves the large remainder and dyadic-block conclusion.",
+          "sha256": "e59ff678e421c71682fc577679f29a048aa33aa884d1ee23711288b30c53f5ee",
+          "lineText": "theorem zero_detection : DetectOf := by"
+        },
+        {
+          "path": "Formalism/GL3MeanSquares/GenusMeanAsymptotics/JacobiCharacterSums/CountZAll.lean",
+          "declaration": "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box",
+          "line": 13,
+          "kind": "proof",
+          "inputs": "The assembly supplies coefficient-square, mollifier, zero-detection, duality, pair-sum and numerical estimates. These are actual imported theorems; this short assembly is not itself their explanation.",
+          "sha256": "682e0fc4791a75d11dc4e35aed0a6008fc599db38825f50d2332ef11e1e8a5a3",
+          "lineText": "theorem zero_density_box : Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZeroDensityBox :="
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/CountBadCore.lean",
+          "declaration": "QH.count_bad_core",
+          "line": 18,
+          "kind": "proof",
+          "inputs": "Bad primes q > F with primitive conductor f q, f ≤ F, conductor ≤ Q, and failure of the box. The body injects these primes into bad primitive characters and applies zero_density_box.",
+          "sha256": "6fd10096d015d9c2d6fbd8c3eb10a9f0d1cb3e4b6118b9d60c2040b570b1cde8",
+          "lineText": "theorem count_bad_core :"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-contour-tail",
+      "title": "A zero-free box controls the discarded analytic tail",
+      "branch": "analysis",
+      "status": "missing",
+      "scope": "The contour argument supplying the tail estimate and the logarithmic-derivative bound used after the exact finite-sum split.",
+      "notes": [
+        {
+          "anchor": "auxiliary-finite-tail",
+          "label": "2.6.7.5 From the finite sum to Gχ"
+        },
+        {
+          "anchor": "auxiliary-prime-pair",
+          "label": "2.6.7.6 The required derivative bound"
+        }
+      ],
+      "coverage": "The notes give the exact identity expressing Gχ as minus the finite sum minus y times the analytic tail, the truncation scale and the required output bounds. They do not derive the contour displacement, its residue, or the left-edge/horizontal/truncation errors that justify replacing the analytic tail.",
+      "next": "Draw and evaluate the rectangle from Re(s)=2 to 1−1/400+δ at height Q/2; subtract the two smoothed integrals at z and z+zη so the left-edge contribution gains η. Track the bound K log Q[(log Q)η z^(1−1/400+δ)+z²/Q], then substitute z=(Y^K)^400 and η=(Y^K)^−2 and explain the separate Mertens/log-log step.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Formalism/GL3MeanSquares/GenusMeanAsymptotics/JacobiCharacterSums/TailContour.lean",
+          "declaration": "Formalism.HermitianLattices.Ext.BoxTail.tail_contour",
+          "line": 14,
+          "kind": "conditional-proof",
+          "inputs": "0 < δ ≤ 1/800, a nonprincipal character of conductor ≤ Q, Q ≥ 2, the specified zero-free box, z ≥ 1 and 0 < η ≤ 1. The body shifts two contour integrals and bounds all edges and tails.",
+          "sha256": "d25a759e5ada7e18a9c61e575a030e29739014163c3cbd3fee0c5f7e2a3e335f",
+          "lineText": "theorem tail_contour (δ : ℝ) (hδ : 0 < δ) (hδ' : δ ≤ 1 / 800) : ∃ K : ℝ, 0 ≤ K ∧"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/TailKExp.lean",
+          "declaration": "QH.tailK",
+          "line": 92,
+          "kind": "conditional-proof",
+          "inputs": "GoodC, 0 < ε ≤ 1, K ≥ 1 and Y^(ε/6) ≤ log Q ≤ Y^(ε/4). The body combines the contour estimate with tail_diff_schi and scale inequalities to obtain |Y^K tailL((Y^K)^400)| ≤ Y^ε.",
+          "sha256": "ec34c0192482c34f29623e8495f3c39a66d608fef1a26b266c980117b4ec3e87",
+          "lineText": "theorem tailK :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/Kappa4Loglog.lean",
+          "declaration": "QH.kappa4",
+          "line": 126,
+          "kind": "conditional-proof",
+          "inputs": "GoodC and the displayed conductor/height scale range. It turns the earlier logarithmic-derivative estimate in log log Q into the required 4 log Y bound.",
+          "sha256": "f6843aa21e6f9fafaabb3a627f5bb3c3cdf20153e52ca441da6d64d5871154e3",
+          "lineText": "theorem kappa4 :"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-compatible-prime-pair",
+      "title": "Choose one compatible pair of auxiliary primes",
+      "branch": "analysis",
+      "status": "explained",
+      "scope": "Combining small bad fractions, progression constraints and the arithmetic window so the same q,d work for every relevant character and every point in the final interval.",
+      "notes": [
+        {
+          "anchor": "auxiliary-zero-box",
+          "label": "2.6.7.4 Combining exclusions"
+        },
+        {
+          "anchor": "auxiliary-prime-pair",
+          "label": "2.6.7.6 The two prime choices"
+        },
+        {
+          "anchor": "auxiliary-common-window",
+          "label": "2.6.7.7 One common window"
+        },
+        {
+          "anchor": "auxiliary-total-error",
+          "label": "2.6.7.8 The total character error"
+        }
+      ],
+      "coverage": "The notes explain both stages of the prime choice, the second-stage change to 6ε/5, the two character families, use of τ=ε/2, and the order in which the pair and arithmetic window are selected. They also count the relevant averaged characters to bound the discarded sum by 4o x^(1/2+ε).",
+      "next": "This assembly is explained given the mean-square, zero-density, tail and prime-progression inputs. It is not a transitive verification of their proofs, and the near-one zero-free input must not be replaced by an assumed RH-strength zero-free region.",
+      "dependsOn": [
+        "coverage-interval-mean-square",
+        "coverage-zero-density",
+        "coverage-contour-tail",
+        "coverage-exceptional-window"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/StagePow.lean",
+          "declaration": "QH.stage",
+          "line": 41,
+          "kind": "proof",
+          "inputs": "The admitted scales, prime-factor restrictions, bounded conductor F ≤ sqrt(U) and a bounded finite family of primitive characters. The body budgets bad boxes and bad finite sums separately.",
+          "sha256": "0664861db51e1c2c2ada99121d6988d15f47c2ecab5a6b3bc62b127c32ae75d1",
+          "lineText": "theorem stage :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/MeanSquareBounds/pairEx.lean",
+          "declaration": "pairEx",
+          "line": 112,
+          "kind": "proof",
+          "inputs": "The proof supplies UpperTheory.Top.PairEx from pair_exists at τ=ε/2 and kappa4, including the progression and real-character box conditions.",
+          "sha256": "8af18345e99c599e185472a0221b84acf33455b19ea1d77fe5bed311236f9890",
+          "lineText": "theorem pairEx :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/CharacterBoxes/WinPairs.lean",
+          "declaration": "winPairs",
+          "line": 5,
+          "kind": "conditional-proof",
+          "inputs": "VWinAt ψ 401 and PairEx, with ε < 1/52 and the host scale constant. The pair is chosen first, then the arithmetic window is rescaled; the spare exponent 401 handles the 400 cutoff.",
+          "sha256": "41c1edf737bb6e1a4791d4440488a885889209db750698359ab4d1e237dc2f6e",
+          "lineText": "theorem UpperTheory.Top.winPairs :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/PrimitiveCosets/SigALe.lean",
+          "declaration": "sigA_le",
+          "line": 38,
+          "kind": "conditional-proof",
+          "inputs": "EAtH and the host character compatibility hypotheses. The proof reads each discarded primitive character estimate and bounds the relevant character-set size by 4o.",
+          "sha256": "88689d3064a0a824da4109d4c183a4cffed8953acffe6eeacb75b088b4f78f55",
+          "lineText": "theorem UpperTheory.Comparison₂.sigA_le :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-fourier-square-root",
+      "title": "Fourier averaging converts the host error into square-root scale",
+      "branch": "arithmetic",
+      "status": "explained",
+      "scope": "The finite-character averaging and normalization of the four error terms, after the host, size, character and geometric comparison hypotheses have been supplied.",
+      "notes": [
+        {
+          "anchor": "arithmetic-absorption",
+          "label": "2.6.8 Absorbing the cohomology contribution"
+        },
+        {
+          "anchor": "arithmetic-fourier",
+          "label": "2.6.9.1 Character orthogonality"
+        },
+        {
+          "anchor": "arithmetic-square-root",
+          "label": "2.6.9.2 The four normalized costs"
+        }
+      ],
+      "coverage": "The notes spell out character orthogonality and inertia averaging, the ramp-to-smoothed-sum identity, and the division by the positive comparison scale. They individually estimate the four normalized costs, making the appearance of x^(1/2+O(ε)) visible.",
+      "next": "This bounded calculation takes the compatible host and all its size/geometric inequalities as inputs. It does not construct those objects or prove that the separately derived estimates hold for one host; those are distinct dependency rows.",
+      "dependsOn": [
+        "coverage-compatible-prime-pair",
+        "coverage-galois-trace-budget",
+        "coverage-common-host",
+        "coverage-local-divisibility",
+        "coverage-theta-main-cancellation"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/DedekindLFunctions/LandauTheorems/ChCore.lean",
+          "declaration": "Deduction.ch_core",
+          "line": 343,
+          "kind": "conditional-proof",
+          "inputs": "HostFactsS, SizesA, ThinScales, CostWindows, RestSize, character bounds and a gap bound. The body uses one_char, character orthogonality, the core averaging inequality and proposition_size_bound.",
+          "sha256": "80ceae1e3c5728267fe7e7848342ca2d754c5363e9b6d8ae2d628c70f26772e0",
+          "lineText": "theorem ch_core (C ε CE Ko c M : ℝ) (hC : 0 ≤ C) (hε : 0 < ε) (hc : |c| ≤ 1) : ∃ x1 : ℝ, ∀ x ≥ x1,"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/PrimitiveCosets/CoreGm.lean",
+          "declaration": "UpperTheory.Comparison₂.core_gm",
+          "line": 12,
+          "kind": "conditional-proof",
+          "inputs": "EAtH and CoreAtH for the same host and parameters. The body combines ch_top, ch_core, gmA_eq and sigA_le; construction of these input packages is separate.",
+          "sha256": "73abeaad38ed40bde0c2f974f53cae9d851e72d23ae389dea129b2bbddc58bc8",
+          "lineText": "theorem UpperTheory.Comparison₂.core_gm :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-rank-seed",
+      "title": "Extract the required rank from geometric cohomology",
+      "branch": "galois",
+      "status": "missing",
+      "scope": "Pass from a larger geometric representation and its annihilating Frobenius polynomials to a continuous semisimple representation of exactly the required odd rank, with the seed's stated local properties.",
+      "notes": [
+        {
+          "anchor": "galois-geometric-piece",
+          "label": "Geometric eigenspaces and the dimension problem"
+        },
+        {
+          "anchor": "galois-geometric-normalization",
+          "label": "Normalization and seed hypotheses"
+        }
+      ],
+      "coverage": "The notes explain Galois-stability of the selected eigenspace and character twisting, and correctly say that an annihilating polynomial does not determine multiplicities. They do not yet explain the division/extraction argument that resolves this obstruction. The checked Lean bodies do perform a division step and then assemble the finite-place seed; this is an exposition gap, not evidence that the declaration is absent.",
+      "next": "Explain how dense Frobenius data, determinant control, separated roots and Hodge/lacunarity conditions produce an actual rank-a constituent, then transfer local data. Begin with the rank-extraction argument and its use in constructing the finite-place seed. Keep the initial geometric representation theorem and the deeper rank-extraction inputs explicit until their own proofs are traced.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/ZetaCharacterDivisibility/PDivOne.lean",
+          "declaration": "UpperTheory.Gal.Int.Div.divOne_of",
+          "line": 35,
+          "kind": "conditional-proof",
+          "inputs": "DivSet, DenseUs, DetFrob, InFacts and SepPin. The body obtains the smaller representation from DivSet, then uses determinant and separability information to identify its Frobenius polynomial.",
+          "sha256": "e91b7f1d64fb5cced8dbfb3f0ec25f669d376ee6622de93e93d5e114f7ff3eae",
+          "lineText": "theorem UpperTheory.Gal.Int.Div.divOne_of :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/ZetaCharacterDivisibility/SeedFinOddOf.lean",
+          "declaration": "seedFinOdd_of",
+          "line": 44,
+          "kind": "conditional-proof",
+          "inputs": "DivAll, the conjugacy/type/lacunarity and genericity packages, and GeoOne; constructs the finite-place seed and transports its local comparisons.",
+          "sha256": "6c4bc54f5cad05fed395e4c656d07f17bd9dc7d42128dffe2977268c2f7a6a51",
+          "lineText": "theorem seedFinOdd_of (hD : DivAll) (hC : CplMem) (hS : SameOr) (hSat : SatConj) (hTy : TyConj) (hLac : LacConj) (hGap : GapLac)"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/ZetaCharacterDivisibility/DivisionOneGeometricRepresentation.lean",
+          "declaration": "divAll_holds",
+          "line": 54,
+          "kind": "proof",
+          "inputs": "No proposition argument in this declaration; assembles previously named determinant, division, uniqueness, Frobenius, jump and local-subrepresentation results. Their full transitive proofs are outside this check.",
+          "sha256": "eed32eba03725a35078f291f7b535aded082563fa4a5ba1231681e889ebe9199",
+          "lineText": "theorem divAll_holds : DivAll :="
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-trace-limit",
+      "title": "Recover a representation from polynomially approximated traces",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "Given the seed and congruence inputs, explain the dense-trace limit, preservation of pseudocharacter identities, semisimple realization and continuity.",
+      "notes": [
+        {
+          "anchor": "galois-polynomial-approximation",
+          "label": "Polynomial approximation"
+        },
+        {
+          "anchor": "galois-dense-trace",
+          "label": "Continuous trace on the whole group"
+        },
+        {
+          "anchor": "galois-pseudocharacter",
+          "label": "Trace identities and realization"
+        }
+      ],
+      "coverage": "The notes give the finite-intersection density condition, uniform approximation estimate, completeness argument, alternating trace identities and the reason polynomial relations survive. They explicitly identify semisimple realization and continuity as separate theorem inputs. The checked realization proof follows this sequence rather than taking a limit of representation matrices.",
+      "next": "The bounded mechanism is covered. A deeper treatment would prove the approximation/congruence input and characteristic-zero pseudocharacter realization themselves; neither is claimed to follow from density alone.",
+      "dependsOn": [
+        "coverage-galois-rank-seed"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/TraceLimits/LimFinOddOf.lean",
+          "declaration": "limWU4_of",
+          "line": 16,
+          "kind": "conditional-proof",
+          "inputs": "The relevant SeedWU4 and CongUW4 packages; constructs joint finite-place test data, obtains the trace limit and then a representation.",
+          "sha256": "53121e3f450929f34643bdbaf7615a845a3aa0929e1e0c609f07c902bf7db72d",
+          "lineText": "theorem limWU4_of : ∀ (Rk : ℕ → Prop) (Ty : UnitaryAutomorphicTypeClass) (Gen : ℕ → ℕ → Multiset ℂˣ → Prop) (Wt : SeedWtU),"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/ExistsLimitRep.lean",
+          "declaration": "exists_limit_rep",
+          "line": 14,
+          "kind": "proof",
+          "inputs": "Compact topological group, dense arithmetic indices, continuous seed representations, finite coefficient extension and polynomial approximation. Uses local Cauchy extension, pseudocharacter identities, semisimple realization and continuity-from-trace.",
+          "sha256": "ff068895d4f55a66ba8b7e4ae3707e3d04454cfe38d3e6ba3f382484aefcb0da",
+          "lineText": "theorem exists_limit_rep : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] (a : ℕ) (J : Type) (x : J → Γ), DenseRange x → ∀ (θ : J → PadicAlgCl l) (L : IntermediateField ℚ_[l] (PadicAlgCl l)), FiniteDimensional ℚ_[l] L → (∀ j, θ j ∈ L) → ∀ (C : Set (Γ →* GL (Fin a) (PadicAlgCl l))), (∀ ρ ∈ C, Continuous ρ) → PolyApprox θ ((fun ρ j => trc ρ (x j)) '' C) → ∃ r : Γ →* GL (Fin a) (PadicAlgCl l), Continuous r ∧ IsSSRep r ∧ (∀ j, trc r (x j) = θ j) ∧ PolyApprox (trc r) (trc '' C) := by"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-local-closedness",
+      "title": "Preserve crystalline and local Frobenius data through limits",
+      "branch": "galois",
+      "status": "missing",
+      "scope": "Justify the fixed-weight crystalline/de Rham closedness and local operator-trace comparison required to attach local conclusions to the global trace-limit representation.",
+      "notes": [
+        {
+          "anchor": "galois-local-limit",
+          "label": "Local information through the limit"
+        },
+        {
+          "anchor": "galois-local-restrictions",
+          "label": "Exact strength of local compatibility"
+        }
+      ],
+      "coverage": "The notes explain Newton identities and why traces do not determine monodromy, but invoke closedness and comparison results without explaining their mechanism. The inspected local closedness proof constructs and pulls back covers parametrizing representations with prescribed traces, passes to finite coefficient models and applies a closed-cover theorem with fixed Hodge multiplicities. A further comparison adds operator models and trace limits; Newton identities are only the final polynomial reconstruction.",
+      "next": "Expand one fixed place: what the representation cover parametrizes, why bounded fixed Hodge data define the needed closed condition, how crystalline status descends from that cover, and how compatible operators pass local Frobenius traces to the limit. State which operator and cover existence results remain inputs, and do not infer arbitrary monodromy convergence.",
+      "dependsOn": [
+        "coverage-galois-trace-limit"
+      ],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/SatakeParameters/ClosedAtL.lean",
+          "declaration": "closedAtL",
+          "line": 25,
+          "kind": "proof",
+          "inputs": "A trace-approximated family satisfying the stated fixed-jump and local comparison conditions; the body uses cover_exists, cover_pull and closed_of_cover. The closed-cover theorem's own proof is not audited here.",
+          "sha256": "ecce68f830300dbdcea6dda0187c7d1e5a1ab6597fe199d0ababfac488a207f1",
+          "lineText": "theorem closedAtL : ClosedAtL := by"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ClosedPhiFunctoriality/ClosedPhiOfClosedTr.lean",
+          "declaration": "closedTr_of",
+          "line": 13,
+          "kind": "conditional-proof",
+          "inputs": "CoverJ, FrEx, OpEx2, FixOf, Tie2 and TrLim. Combines closedAtL with compatible operator models to pass local traces.",
+          "sha256": "6b562e98c56de000585cbbac9219365371efacd4f05458bbc2c7d0e5fc2f151f",
+          "lineText": "theorem closedTr_of (h1 : CoverJ) (h2 : FrEx) (h3 : OpEx2) (h4 : FixOf) (h5 : Tie2) (h6 : TrLim) : ClosedTr := by"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ClosedPhiFunctoriality/ClosedPhiOfClosedTr.lean",
+          "declaration": "congPhi_of_closedTr",
+          "line": 72,
+          "kind": "conditional-proof",
+          "inputs": "ClosedTr and PowTr; recovers the required local polynomial comparison from power sums.",
+          "sha256": "6b562e98c56de000585cbbac9219365371efacd4f05458bbc2c7d0e5fc2f151f",
+          "lineText": "theorem congPhi_of_closedTr (H : ClosedTr) (hp : PowTr) : GlobalTheory.CongPhi.ClosedPhi := by"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-theta-descent",
+      "title": "Change rank and remove auxiliary field conditions",
+      "branch": "galois",
+      "status": "summarized",
+      "scope": "Use theta lifts with removable character summands, then compatible field descent, to reach the ranks and fields required by the final Galois representation theorem.",
+      "notes": [
+        {
+          "anchor": "galois-theta-rank",
+          "label": "Two lifts and character removal"
+        },
+        {
+          "anchor": "galois-field-descent",
+          "label": "Compatible descent"
+        },
+        {
+          "anchor": "galois-construction-output",
+          "label": "Conditional construction boundary"
+        }
+      ],
+      "coverage": "The notes explain disjoint auxiliary characters and why semisimplicity supplies stable summands before polynomial factors are canceled. They give only schematic overlap compatibility for descent. The checked assembly takes the specified theta-lifting theorem explicitly, while the descent proof assembles base change, uniqueness, bounds and rigidity from named results. Neither short assembly proves its entire input theory on its own.",
+      "next": "Give a bounded two-extension descent argument: identify overlap representations, construct compatible intertwining maps and explain the consistency needed for a global action. Separately identify the exact character and weight conditions ensuring the theta lifts exist; keep the specified theta-lifting theorem explicit until its construction is traced.",
+      "dependsOn": [
+        "coverage-galois-trace-limit",
+        "coverage-galois-local-closedness"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/IntegralStructures/CrystallineDescent/ToCoreK.lean",
+          "declaration": "toCoreK",
+          "line": 7,
+          "kind": "conditional-proof",
+          "inputs": "TLiftK, ClosedPhi, DescOffT and LimFinOdd; obtains the two-lift condition and invokes the rank/field assembly.",
+          "sha256": "86cc3aa5f49853a1ef31b857e05508730a987ffad91a820e8429a1f8e7da12ae",
+          "lineText": "theorem toCoreK (hT : UpperTheory.TP.TLiftK) :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/BaseChangeDescent/BcBackOffT.lean",
+          "declaration": "descOffT",
+          "line": 31,
+          "kind": "proof",
+          "inputs": "No proposition argument in this declaration. Its local desc theorem assembles base change, compUnique, oneFactor, Jacquet–Shalika, cuspidal multiplicity one, split rigidity and weak descent. Those transitive proofs are not all audited here.",
+          "sha256": "eecf2f98834f098f5c20b839a36ee2078014b7a25a2c90f88481831bd73f8eb2",
+          "lineText": "theorem descOffT : GlobalTheory.Cong.DescOffT := GlobalTheory.Cong.descOffT_of_desc desc"
+        }
+      ],
+      "priority": "later",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-galois-normalized-cocycles",
+      "title": "Turn arithmetic cocycles into normalized infinitesimal deformations",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "For the stated generic odd-prime character branch, inject locally trivial torsion cohomology into normalized matrix cocycles and interpret them over a square-zero coefficient ring.",
+      "notes": [
+        {
+          "anchor": "galois-cohomology-bridge",
+          "label": "The precise cohomology group"
+        },
+        {
+          "anchor": "galois-normalized-cocycles",
+          "label": "Normalization and matrix embedding"
+        },
+        {
+          "anchor": "galois-infinitesimal",
+          "label": "Square-zero multiplication"
+        }
+      ],
+      "coverage": "The notes state the coefficient module and local restrictions, give normalization at the marked element, identify fixed-denominator torsion with O/b, and display the lower-weight matrix entries. The cocycle equation is checked through square-zero multiplication, and coboundaries are interpreted as basis changes. The source's cohomology-to-cocycle injection applies the general injection theorem after checking the local conditions at and away from ℓ.",
+      "next": "This mechanism is covered under the listed good-data and marking hypotheses. Extending it to exceptional primes or all arithmetic branches requires separate comparisons and is not included in this row.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ShaInj.lean",
+          "declaration": "UpperTheory.V.U3.sha_inj",
+          "line": 29,
+          "kind": "proof",
+          "inputs": "The specified Dat, marking and nonzero denominator; applies sha_inj_gen with dat_facts, shaInj_away and shaInj_loc to produce an additive injection.",
+          "sha256": "d470db450cee722ccb013d5a0cf9efd844176bee05767058fbbe9fc80bd4dacd",
+          "lineText": "theorem UpperTheory.V.U3.sha_inj :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ModelLower.lean",
+          "declaration": "ex_lift",
+          "line": 144,
+          "kind": "proof",
+          "inputs": "A normalized cocycle, continuity and the prescribed killed subgroup; constructs the square-zero representation and checks the deformation conditions.",
+          "sha256": "62d02785345a5ed037dd8f782831d6074f39653c81f60fe800c14aab89015ad4",
+          "lineText": "private theorem ex_lift (hΨ : ∀ j : ℤ, AdicCont (maximalIdeal O) fun g => ((Ψ g ^ j : Oˣ) : O))"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-deformation-model",
+      "title": "Construct the constrained ring and relative graded model",
+      "branch": "galois",
+      "status": "summarized",
+      "scope": "Existence of a deformation ring with the prescribed local condition and a relative graded presentation suitable for the two length comparisons.",
+      "notes": [
+        {
+          "anchor": "galois-deformation-ring",
+          "label": "Constrained universal ring"
+        },
+        {
+          "anchor": "galois-cotangent",
+          "label": "The selected cotangent quotient"
+        },
+        {
+          "anchor": "galois-lift-relative-presentation",
+          "label": "How the relative presentation is used"
+        }
+      ],
+      "coverage": "The notes explain the universal property, equations and the role of the ambient presentation. The integral-lift section explains what one can do with that presentation. They do not yet derive representability, the finite-generation condition for the relevant Galois quotient, or the precise equation and weight counts. In the checked proofs, constructing the ring uses global finiteness and the required local deformation condition; constructing the model additionally uses a presentation theorem and a relative local presentation.",
+      "next": "Explain why finite first cohomology gives the required finite generation, how the local ideal is imposed without losing representability, and how the relative obstruction/presentation calculation produces the model's generators and equations. Keep the cohomological input package and the presentation theorem visible until their supplying proofs are followed.",
+      "dependsOn": [
+        "coverage-galois-normalized-cocycles"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/RingEx.lean",
+          "declaration": "UpperTheory.V.U3.exists_ring",
+          "line": 109,
+          "kind": "conditional-proof",
+          "inputs": "CohInp, Dat, a local object and marking. Builds PhiCond using global finiteness and ramification bounds, then applies exists_univ and exists_sRing with LocGood.",
+          "sha256": "aca0e53827e70ff14a7e1fac1cac25ea2c7e8d8b67467fda225929a88320551c",
+          "lineText": "theorem UpperTheory.V.U3.exists_ring :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ModelEx.lean",
+          "declaration": "UpperTheory.V.U3.exists_model",
+          "line": 156,
+          "kind": "conditional-proof",
+          "inputs": "CohInp and LemmaP, with the marked constrained ring. Uses exists_locPres, boxPres and model_of_pres; these are substantive construction inputs rather than consequences of the notation Model.",
+          "sha256": "698767d92062997aa8f9c533c7996a38e75684901f46d3b3a37174d853ef8df1",
+          "lineText": "theorem UpperTheory.V.U3.exists_model :"
+        }
+      ],
+      "priority": "later",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-integral-lift",
+      "title": "Lift the local derivative and obtain the integral length bound",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "Given the constrained ring, the required local deformation condition and the relative graded model, lift the needed ambient weight-minus-one derivation integrally, factor through saturated cotangent space and bound the torsion cohomology length.",
+      "notes": [
+        {
+          "anchor": "galois-length-bound",
+          "label": "Expanded cohomology-to-length argument"
+        },
+        {
+          "anchor": "galois-lift-integral-matrix",
+          "label": "Integral local matrix lift"
+        },
+        {
+          "anchor": "galois-lift-saturation",
+          "label": "Saturation and cancellation"
+        },
+        {
+          "anchor": "galois-lift-length",
+          "label": "Finite-depth and full-length bounds"
+        }
+      ],
+      "coverage": "The ten substeps explain the local coboundary, integral matrix lift and local conjugation, compatible global derivative modulo b, relative power-series presentation, lifting linear coefficients, saturation, injectivity and elementary-divisor length formula. The distinction between an ambient integral derivative and a global integral lift of the torsion representation is explicit. The checked source chain performs exactly these different tasks.",
+      "next": "This bounded comparison is covered. Its remaining boundary is the existence of the required local deformation condition and relative graded model, recorded separately; it does not assert that every torsion representation lifts globally over O.",
+      "dependsOn": [
+        "coverage-galois-normalized-cocycles",
+        "coverage-galois-deformation-model"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ModelLower.lean",
+          "declaration": "main_der",
+          "line": 296,
+          "kind": "conditional-proof",
+          "inputs": "SRing, Model, LocGood, marking/continuity conditions and a locally trivial normalized cocycle. Uses lift_X and loc_pt, then the model's lift property to obtain the ambient integral derivative.",
+          "sha256": "62d02785345a5ed037dd8f782831d6074f39653c81f60fe800c14aab89015ad4",
+          "lineText": "private theorem main_der (S : SRing N hι U I cc g₁) (M : Model S K) (hc : Ψ cc = 1) (hU : LocGood U I)"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ExistsBasePointDerivationOfWeightHomogeneous.lean",
+          "declaration": "UpperTheory.exists_base_pointDerivation_of_weight_homogeneous",
+          "line": 48,
+          "kind": "proof",
+          "inputs": "The stated relative homogeneous power-series presentation, compatible derivative on old variables and surjective coefficient reduction; lifts new variable values, kills the old relations and factors the derivative.",
+          "sha256": "055f84817fa97ff70b48320c182184fa642aa1d34fe7ca288f137d1b700edb30",
+          "lineText": "theorem UpperTheory.exists_base_pointDerivation_of_weight_homogeneous :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/Mprime.lean",
+          "declaration": "UpperTheory.V.Alg.M.mprime_holds",
+          "line": 38,
+          "kind": "proof",
+          "inputs": "Proves LemmaM′ from the stated integral-derivation and injectivity hypotheses; der_satSq gives saturation, followed by the hom-module length comparison.",
+          "sha256": "0ccf8b1a76567e60008369daa6dce72ea5d4019fbfad153d4a10bd222ae9367a",
+          "lineText": "theorem UpperTheory.V.Alg.M.mprime_holds :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/VlenLe.lean",
+          "declaration": "UpperTheory.V.U3.vlen_le",
+          "line": 52,
+          "kind": "conditional-proof",
+          "inputs": "CohInp, LemmaM′ and the marked Model; assembles sha_inj and model_lower, then passes from finite torsion depths to the cohomology-length bound.",
+          "sha256": "c52a30320988ce20b653bb6bc17d23ed2cd58105982cd5b50bfae048392c6fb7",
+          "lineText": "theorem UpperTheory.V.U3.vlen_le :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-point-automorphy",
+      "title": "Prove automorphy for the deformation points used in rigidity",
+      "branch": "galois",
+      "status": "summarized",
+      "scope": "Establish finite weight-zero coefficients and Type I automorphy or Type II modularity through the ordinary modular locus, integral specialization and exact transport to the original point.",
+      "notes": [
+        {
+          "anchor": "automorphy-target",
+          "label": "§§2.7.12.1.1–16: automorphy at deformation points"
+        },
+        {
+          "anchor": "automorphy-modular-locus",
+          "label": "Modular support and component propagation"
+        },
+        {
+          "anchor": "automorphy-rescaling",
+          "label": "The valuation rescaling calculation"
+        },
+        {
+          "anchor": "automorphy-residual-contradiction",
+          "label": "Irreducibility by residual traces"
+        }
+      ],
+      "coverage": "The notes now trace the route used by the final window theorem: modular ideals and seeds, propagation through the required components, exact ideal annihilation at integral points, arithmetic classicality, two auxiliary places, and descent. They derive finite invariants from special-fibre curve tests, make the rescaled coordinates topologically small, factor formal evaluation, construct the ordinary integral model, and prove open-subgroup irreducibility by a residual trace contradiction. Separate conjugation arguments transfer rank-three automorphy and rank-two newform attachment back to the original point. The final route directly uses the strengthened interface and its matching one-character theorem; conversion to the older interface is not needed.",
+      "next": "Prove the ordinary modular-family and seed inputs, then the local propagation and dimension hypotheses and arithmetic-point classicality used by the expanded assembly. The local deformation and solvable-descent theories also remain supplied results. The entire automorphy branch is therefore summarized, although the integral-model and point-transfer mechanisms are now explained in detail.",
+      "dependsOn": [
+        "coverage-galois-deformation-model",
+        "coverage-galois-theta-descent"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/AutomorphyU3OfEndoscopy.lean",
+          "declaration": "UpperTheory.V.Pr.automorphyUnramified_of_locPrints_kisin_gdEnd",
+          "line": 27,
+          "kind": "conditional-proof",
+          "inputs": "LocalPublishedTheorems and GdEndAlt. Obtains one marking, FinA and an exact ordinary integral model; checks open-subgroup irreducibility for Type I and corner/trace conditions for Type II, then transports the two strengthened automorphy conclusions by conjugacy.",
+          "sha256": "4a55e2d7b75713a4d0b1694ff789def5f1d7090c8e450a1b8e82136c1be64e92",
+          "lineText": "theorem UpperTheory.V.Pr.automorphyUnramified_of_locPrints_kisin_gdEnd :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CurveDVRSpecialization/WeightZeroAlgebraLeEntryAlgebra.lean",
+          "declaration": "UpperTheory.V.Pr.exists_ordPt_of_point",
+          "line": 316,
+          "kind": "conditional-proof",
+          "inputs": "LocalPublishedTheorems, marked datum, constrained ring, FinA and an entry-algebra point. Compares completed weight-zero coefficients, invokes the finite-point rescaling/factorization theorem, embeds its image in a finite DVR and checks ordinary conditions and exact conjugacy.",
+          "sha256": "dcf4068e2329b2dc16487c0c3ea8deaa7d8b2a43a54d61e9589b5aa6f4fd5e6c",
+          "lineText": "theorem UpperTheory.V.Pr.exists_ordPt_of_point :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CurveDVRSpecialization/AbsMain.lean",
+          "declaration": "UpperTheory.V.Pr.absMain",
+          "line": 12,
+          "kind": "proof",
+          "inputs": "Proves the quantified AbsMain contract for linked rank-two/rank-three setups whose modular ideals satisfy the modular-family conditions. Propagates good components in rank two and then rank three; GoodPtOf obtains exact modular-ideal annihilation at eligible irreducible integral points. The modular-family, seed, dimension and local-propagation inputs remain explicit.",
+          "sha256": "357fe8e7fd1a9bc53aed59add4e3d200b66fd02d2a166a58270fd6f6619c3c18",
+          "lineText": "theorem UpperTheory.V.Pr.absMain :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TwoRuns.lean",
+          "declaration": "UpperTheory.Gal.projectedFormsSystemPart.twoRuns_alt",
+          "line": 80,
+          "kind": "conditional-proof",
+          "inputs": "Artin reciprocity, the ordinary modular-family and weight-algebra inputs, linked data, seed conditions and two selectable auxiliary realizations. Constructs the two modular ideals, applies absMain and arithmetic-point classicality, then repeats at different places and glues the local witnesses.",
+          "sha256": "d888ad5b5ee39ec969e5b3483a913fdcddf920dba37a4990f228a8596acea13e",
+          "lineText": "theorem UpperTheory.Gal.projectedFormsSystemPart.twoRuns_alt (hA : GlobalTheory.Published.GlobalArtinReciprocity) (hMod : _root_.UpperTheory.V.W.ModUAlt) (hLam : W.LamEx)"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CurveDVRSpecialization/MatIrrOpenGd.lean",
+          "declaration": "UpperTheory.V.Pr.matIrr_open_gd",
+          "line": 342,
+          "kind": "conditional-proof",
+          "inputs": "Good arithmetic datum, finite ordinary DVR model and Type I irreducibility. A cyclotomic inertia power separates characteristic-zero eigenvalues; the good residual inertia character contradicts the zero traces forced by the finite-index reducibility alternative.",
+          "sha256": "3ef1fe815cea097d8c34ca0b1c92528669cbe4fb9239f01c0834ff131a38f605",
+          "lineText": "theorem UpperTheory.V.Pr.matIrr_open_gd :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/WindowBoundOfLiteratureLevel.lean",
+          "declaration": "vwin_of_hypotheses_H_E_alt",
+          "line": 25,
+          "kind": "conditional-proof",
+          "inputs": "The stated literature and rank-four-lift hypotheses. Obtains ends0_alt, constructs AutomorphyUnramifiedCoefficientsAlt, and passes it directly to the strengthened one-character/counting route before assembling VWin. The older OneCharOf interface is not required at this junction.",
+          "sha256": "576e18ba083451bcffe9e94075dc8d22ccfa6995fa8d30d68ea108b1cc910cf0",
+          "lineText": "theorem vwin_of_hypotheses_H_E_alt (hH : _root_.UpperTheory.V.Af.HypothesesH') : VWin :="
+        }
+      ],
+      "priority": "next",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-galois-adjoint-vanishing",
+      "title": "Understand and apply polarized adjoint Selmer vanishing",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "Explain the Type I application with its polarization and irreducibility hypotheses, and the literature mechanism that derives vanishing from patched freeness and semisimple Hecke action.",
+      "notes": [
+        {
+          "anchor": "rigidity-type-one",
+          "label": "Rank-three polarized adjoint application"
+        },
+        {
+          "anchor": "adjoint-patching",
+          "label": "Auxiliary primes and dual Selmer control"
+        },
+        {
+          "anchor": "adjoint-faithfulness",
+          "label": "Freeness, faithful action and vanishing"
+        },
+        {
+          "anchor": "adjoint-return",
+          "label": "Return to the original Selmer group"
+        }
+      ],
+      "coverage": "The notes distinguish the source's explicit polarized adjoint Selmer-vanishing input from their expanded explanation of Thorne's theorem. They explain the local tangent comparison, auxiliary-prime detection, bounded errors, finite-level patching, freeness criterion, faithful descent and why semisimple action kills the local maximal ideal. The checked Lean application handles the cyclotomic twist, restricted irreducibility and polarized adjoint action. This verifies the application, not the internal construction of the vanishing theorem from those literature steps.",
+      "next": "The conditional mathematical mechanism is covered. For a source-complete account, locate and follow the actual theorem supplying polarized adjoint Selmer vanishing, including its local comparison and patching hypotheses. Do not relabel the literature reconstruction as a traced internal Lean proof.",
+      "dependsOn": [
+        "coverage-galois-point-automorphy"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/AutomorphicForms/CongruenceNumberRankThree.lean",
+          "declaration": "AdVanishK",
+          "line": 169,
+          "kind": "interface",
+          "inputs": "Continuous conjugate-self-dual automorphic representation over the specified quadratic CM field, cyclotomic-restriction irreducibility and the required polarized adjoint identification. The definition states vanishing; it does not prove it.",
+          "sha256": "77f54b0b28f2cf6294160689867cbf3721215c8b8a0b53b37ebbe677a9822efc",
+          "lineText": "def AdVanishK : Prop :="
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/LiftingTheory.lean",
+          "declaration": "UpperTheory.V.U3.bloch_kato_type_one",
+          "line": 40,
+          "kind": "conditional-proof",
+          "inputs": "CohInp and AdVanishK, plus a marked Type I point and its automorphy. The body checks continuity, the twist, typeI_irr_cyc, polarization and the complex-conjugation action before applying AdVanishK.",
+          "sha256": "fffd573ebe2f0d10c61d05186769b7ad97db61da14e7c8d98b91a6fabcdaa35e",
+          "lineText": "theorem UpperTheory.V.U3.bloch_kato_type_one :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-galois-other-selmer-branches",
+      "title": "Handle Type II and the split base point separately",
+      "branch": "galois",
+      "status": "summarized",
+      "scope": "Obtain the remaining pointwise rigidity clauses from the Type II block decomposition and nonpositive-weight vanishing at the split base representation.",
+      "notes": [
+        {
+          "anchor": "rigidity-type-two",
+          "label": "Rank-two corner and adjoint decomposition"
+        },
+        {
+          "anchor": "rigidity-base",
+          "label": "Nonpositive weights at the base point"
+        }
+      ],
+      "coverage": "The notes give the Type II projection/reconstruction mechanism and distinguish the base point from the irreducible Type I argument. The checked proofs use modularity of the rank-two corner with separate Kato and adjoint inputs; the base-point theorem splits weight zero from negative characters and reconstructs the matrix coboundary. The underlying Kato and character-vanishing arguments are not explained at comparable depth.",
+      "next": "Expand one negative-character vanishing argument and explain the separate weight-zero argument, then show exactly which Type II summands use Kato and which use adjoint vanishing. Preserve the one-sided/nonpositive-weight scope; do not claim unrestricted base-point Selmer vanishing.",
+      "dependsOn": [
+        "coverage-galois-point-automorphy"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ReducibleThreeDim.lean",
+          "declaration": "UpperTheory.V.U3.blochKatoSelmer_adRep_vanishes_of_typeII_modular",
+          "line": 263,
+          "kind": "conditional-proof",
+          "inputs": "Inp, a marked Type II point and modularity of its rank-two corner. Decomposes the adjoint, applies the supplied Kato/adjoint/newform inputs and reconstructs a coboundary.",
+          "sha256": "dd266f31c237bb08b2de32f9dee4011787a5a2195a1db6b639d21e6dff006420",
+          "lineText": "theorem UpperTheory.V.U3.blochKatoSelmer_adRep_vanishes_of_typeII_modular :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/BlochKatoNonpositiveWeight.lean",
+          "declaration": "UpperTheory.V.U3.bloch_kato_nonpositive_weight",
+          "line": 297,
+          "kind": "conditional-proof",
+          "inputs": "CohInp, the split base representation, a homogeneous cocycle of weight j ≤ 0 and its Bloch–Kato condition. Treats zero_case and neg_case separately and reconstructs a matrix coboundary.",
+          "sha256": "8dbf53e99c21b3a5f2a57ac8cbe340f04925b0d913ce0df907718b4d621cc9cc",
+          "lineText": "theorem UpperTheory.V.U3.bloch_kato_nonpositive_weight :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/PtHypOf.lean",
+          "declaration": "UpperTheory.V.U3.ptHyp_of",
+          "line": 64,
+          "kind": "conditional-proof",
+          "inputs": "Inp, AutB and LemW with the marked ring; combines fixed points, nonpositive base-weight vanishing and the Type I/II alternatives into PtHyp.",
+          "sha256": "db4729ead0b8d3908e17557f1a1af5de17f880b9687d5a5a4edc0640f1cdc195",
+          "lineText": "theorem UpperTheory.V.U3.ptHyp_of :"
+        }
+      ],
+      "priority": "later",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-rigidity-slice",
+      "title": "Reduce normalized tangent directions to one grading orbit",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "Given the pointwise rigidity and fixed-point hypotheses and the graded model, obtain the derivation/point conditions used for a transverse slice of multiplicity at most one.",
+      "notes": [
+        {
+          "anchor": "rigidity-normalization",
+          "label": "Only the torus coboundary remains"
+        },
+        {
+          "anchor": "rigidity-base",
+          "label": "Base-point boundary"
+        },
+        {
+          "anchor": "rigidity-slice",
+          "label": "Transverse slice and multiplicity one"
+        },
+        {
+          "anchor": "trace-multiplicity",
+          "label": "Use in the trace estimate"
+        }
+      ],
+      "coverage": "The notes solve the normalization equations for X = a diag(1,0,-1), explain faithfulness from matrix entries and distinguish the one-dimensional grading orbit from a genuine deformation. They then explain the slice, Nakayama/cyclicity and the multiplicity bound under the stated finiteness/support conditions. The checked source derives the required point and derivation conditions from pointwise rigidity, fixed-point hypotheses and graded finiteness, then uses them in the graded cotangent-length theorem.",
+      "next": "The bounded rigidity-to-slice mechanism is covered. Its arithmetic inputs remain pointwise Selmer rigidity and the fixed-point hypotheses, and its algebraic input remains graded finiteness; those cannot be removed by the tangent-dimension calculation alone.",
+      "dependsOn": [
+        "coverage-galois-adjoint-vanishing",
+        "coverage-galois-other-selmer-branches",
+        "coverage-galois-deformation-model"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/NormCob.lean",
+          "declaration": "UpperTheory.V.U3.normCoc_cob_iff",
+          "line": 30,
+          "kind": "proof",
+          "inputs": "Normalized representation, marking, invertibility of 2 and the marked eigenvalue separation. Solves the matrix equations identifying normalized coboundaries with the torus Lie direction.",
+          "sha256": "bfb5c674d652bddb1ba3d4d84a5293a6f6709746d2610d53e95c4b07382d7072",
+          "lineText": "theorem UpperTheory.V.U3.normCoc_cob_iff :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/GradedModelDerivationConditionOfPtHyp.lean",
+          "declaration": "UpperTheory.V.U3.gradedModel_derivationCondition_of_ptHyp",
+          "line": 111,
+          "kind": "conditional-proof",
+          "inputs": "Model, odd coefficient prime, marking, M2 and PtHyp; transports derivatives along the grading action and uses normalized coboundaries to obtain M4.",
+          "sha256": "d36b6111769fc068da2a0f53d96f6baa55e24eda6070cbfbf685e27015049214",
+          "lineText": "theorem UpperTheory.V.U3.gradedModel_derivationCondition_of_ptHyp :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/GradedModelPointConditionOfPtHyp.lean",
+          "declaration": "UpperTheory.V.U3.gradedModel_pointCondition_of_ptHyp",
+          "line": 53,
+          "kind": "conditional-proof",
+          "inputs": "The same Model/marking/M2/PtHyp data; uses the fixed-point clause to show the simultaneous positive/negative zero locus contributes only the base point, giving M3.",
+          "sha256": "9a7e47b2c7f40ab92e97afda8e3db7ad94d614e9840d3f484ff46ff7803bb6d9",
+          "lineText": "theorem UpperTheory.V.U3.gradedModel_pointCondition_of_ptHyp :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ModelUpper.lean",
+          "declaration": "UpperTheory.V.U3.model_upper",
+          "line": 103,
+          "kind": "conditional-proof",
+          "inputs": "LemmaM, finite weight-zero algebra, PtHyp and nonvanishing of the trace difference on two-sided points; constructs the model conditions and orbit representatives for the length-to-trace estimate.",
+          "sha256": "556e9ebbbf6983e2be65a7d647cad666cb96f3d6c0c7eff5aae62b80a947f880",
+          "lineText": "theorem UpperTheory.V.U3.model_upper :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-euler-trace",
+      "title": "Compare cotangent length with trace valuations by graded Euler characteristics",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "Given the graded-model hypotheses and nonzero trace function, derive the factor-two upper bound for the selected cotangent length.",
+      "notes": [
+        {
+          "anchor": "trace-scalar-layers",
+          "label": "Elementary-divisor layers"
+        },
+        {
+          "anchor": "trace-reorder",
+          "label": "Euler comparison with kernel corrections"
+        },
+        {
+          "anchor": "trace-final-bound",
+          "label": "Determinant and factor-two bound"
+        }
+      ],
+      "coverage": "The notes explain scalar layers and monomial counts, admissibility and sufficiently large degrees, additivity, Koszul permutation invariance, positivity and the explicit annihilator/kernel correction terms. The direction of the comparison is justified without assuming quotient monotonicity. The checked graded-length proof combines the lower estimate, the reordered Euler comparison and the upper determinant estimate, then cancels the common power of two.",
+      "next": "The bounded comparison is covered. It still needs the graded model, its support/admissibility conditions and trace separation. A new exposition of those inputs should not treat positivity or the finite-length large-degree condition as automatic for arbitrary modules.",
+      "dependsOn": [
+        "coverage-galois-deformation-model",
+        "coverage-galois-rigidity-slice"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/AlgMemCoef.lean",
+          "declaration": "chain",
+          "line": 22,
+          "kind": "proof",
+          "inputs": "A homogeneous ideal, valid sequence, non-zero-divisor and admissibility. Uses ruleNzd, Euler permutation/additivity, ruleUB and quotient isomorphism to obtain the eventual inequality.",
+          "sha256": "82a16f09d05845c3e9f495c2f10c7048abeae9315506c368812e7871aa4b30c6",
+          "lineText": "private theorem chain {k : ℕ} (X : HidaSetting k) (ts : List (Deg k × X.R)) (J : Ideal X.R) (a : X.R)"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/AlgMemCoef.lean",
+          "declaration": "UpperTheory.V.Alg.M.core_holds",
+          "line": 92,
+          "kind": "proof",
+          "inputs": "The stated chart, elementary divisors, cotangent spans and M2–M5 conditions. Establishes admissibility and combines low_holds, chain and up_holds at a common sufficiently large degree.",
+          "sha256": "82a16f09d05845c3e9f495c2f10c7048abeae9315506c368812e7871aa4b30c6",
+          "lineText": "theorem UpperTheory.V.Alg.M.core_holds :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/MainCotSpan.lean",
+          "declaration": "UpperTheory.V.Alg.M.main_holds",
+          "line": 32,
+          "kind": "proof",
+          "inputs": "Proves the quantified LemmaM statement. Chooses Smith-form generators and a chart, arranges a nonzero comparison function and applies core_holds; the graded hypotheses remain part of LemmaM's statement.",
+          "sha256": "3b5e97d2ccbc745e59702fffd96bb16f49a9d69e4d4e68a6f194dcdef63472dc",
+          "lineText": "theorem UpperTheory.V.Alg.M.main_holds :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-galois-trace-budget",
+      "title": "Turn one-character trace bounds into a prime-divisibility budget",
+      "branch": "galois",
+      "status": "explained",
+      "scope": "Given the uniform automorphic trace-label input and one-character estimate, use a nonzero integer and two auxiliary primes to bound the sum over qualifying coefficient primes.",
+      "notes": [
+        {
+          "anchor": "galois-trace-integer",
+          "label": "Common nonzero trace integer"
+        },
+        {
+          "anchor": "galois-global-budget",
+          "label": "Two-prime valuation budget"
+        },
+        {
+          "anchor": "arithmetic-congruence-integer",
+          "label": "Integrality, nonvanishing and height"
+        },
+        {
+          "anchor": "arithmetic-length",
+          "label": "2.6.2 What a length measures"
+        },
+        {
+          "anchor": "arithmetic-budget",
+          "label": "2.6.3 The finite-prime budget"
+        }
+      ],
+      "coverage": "The notes display the algebraic trace product, explain integrality/conjugation invariance and the archimedean nonvanishing test, then sum its nonnegative valuations. They explain why a second auxiliary prime covers the denominator exception and why both integers must be chosen independently of the varying coefficient prime. The checked proof transports character orbits and combines the one-character length estimate with the uniform rank-three trace-label theorem; the final finite-prime summation uses divisibility and logarithms.",
+      "next": "This bounded budget conversion is covered. The uniform trace-label counting/height theorem, comparison back to field cohomology and exceptional-prime branches are separate arithmetic inputs; this row does not certify their full assembly into the Landau window.",
+      "dependsOn": [
+        "coverage-galois-integral-lift",
+        "coverage-galois-euler-trace",
+        "coverage-galois-point-automorphy"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/OrbEquiv.lean",
+          "declaration": "UpperTheory.V.U3.propGK",
+          "line": 111,
+          "kind": "conditional-proof",
+          "inputs": "CongruenceNumberRankThree and OneChar. Constructs the common trace integer, transports coefficient-dependent character orbits and bounds the orbit sum by its valuation.",
+          "sha256": "1e0de8e190248610f54c298116c1025405311cce740a0693974a0503d503962d",
+          "lineText": "theorem UpperTheory.V.U3.propGK :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/CorGSumLog.lean",
+          "declaration": "corG_sum_log",
+          "line": 6,
+          "kind": "proof",
+          "inputs": "A nonzero integer and finite prime set; the product of the prime powers divides the integer, yielding the logarithmic valuation budget.",
+          "sha256": "8fb1f7e2de2193d3f0fb8101356b00dc623e86005c101d21b23e1deb0d2b2611",
+          "lineText": "private lemma corG_sum_log (n : ℤ) (hn : n ≠ 0) (Ls : Finset Nat.Primes) :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/CorGSumLog.lean",
+          "declaration": "UpperTheory.V.U3.corGK",
+          "line": 37,
+          "kind": "conditional-proof",
+          "inputs": "PropGK; chooses the two auxiliary-prime integers, handles the ell = p alternative and sums their nonnegative logarithmic valuation budgets.",
+          "sha256": "8fb1f7e2de2193d3f0fb8101356b00dc623e86005c101d21b23e1deb0d2b2611",
+          "lineText": "theorem UpperTheory.V.U3.corGK :"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-local-construction",
+      "title": "Construct the local parameter with its actual restricted laws",
+      "branch": "local",
+      "status": "explained",
+      "scope": "The construction from controlled cuspidal parameters through twists, segments and multisegment sums, including monodromy and the weaker guarantees outside the controlled class.",
+      "notes": [
+        {
+          "anchor": "local-cuspidal-construction",
+          "label": "2.8.4.2–2.8.4.4: cuspidals and twists"
+        },
+        {
+          "anchor": "local-segment-construction",
+          "label": "2.8.4.5–2.8.4.9: segments and restricted laws"
+        }
+      ],
+      "coverage": "The notes now describe the induced controlled parameter, independence under twists, the auxiliary assignment outside the controlled class, the monodromy chain, and extension by a direct sum. They explicitly restrict central-character, duality and injectivity statements to the hypotheses in the source.",
+      "next": "This coverage starts with the controlled cuspidal seed and multisegment classification. Their foundational proofs belong to separate entries; the construction should not be described as a proof of all usual local Langlands properties for arbitrary representations.",
+      "dependsOn": [
+        "coverage-local-classification",
+        "coverage-green-regular"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/LocalLanglands/LocalCentralUnits/CuspEx.lean",
+          "declaration": "UpperTheory.Zero.LLC.cuspEx",
+          "line": 168,
+          "kind": "proof",
+          "inputs": "The body combines a GoodCusp map with an auxiliary parameter on the complementary class and checks the stated restricted laws; it uses the earlier cuspidal/twist constructions.",
+          "sha256": "302ab0b096870b9d6819c4f078bdb72629d0f9d32516107a07cf8e7995b3ffa0",
+          "lineText": "theorem cuspEx : CuspEx := by"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LanglandsExtensionUniqueOnCuspidal.lean",
+          "declaration": "GlobalTheory.LocLanglands.exists_isLExt",
+          "line": 34,
+          "kind": "conditional-proof",
+          "inputs": "LanglandsExhaustionGL and LanglandsMultisegments are supplied; the proof chooses a multisegment, proves permutation independence and checks the one-segment cuspidal case.",
+          "sha256": "2299f6634dd118b3bf167a0136348a30a4eb2ecb6fb51685acc085b8976fd708",
+          "lineText": "theorem GlobalTheory.LocLanglands.exists_isLExt : LanglandsExhaustionGL → LanglandsMultisegments → ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω] (A : ValuationSubring Ω) (w : HeightOneSpectrum (𝓞 E)) (h : IsPlaceOver A w) (r : IrrGL (w.adicCompletion E) → WD h), (∃ rc, IsLExt r rc) ∧ ∀ rc, IsLExt r rc → ∀ x : IrrGL (w.adicCompletion E), x.IsCusp → rc x = r x := by"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-local-classification",
+      "title": "Prove the multisegment classification used by the extension",
+      "branch": "local",
+      "status": "summarized",
+      "scope": "Existence and uniqueness of the multisegment presenting an irreducible admissible GL representation, rather than the subsequent direct-sum parameter construction.",
+      "notes": [
+        {
+          "anchor": "local-multisegment-construction",
+          "label": "2.8.4.7: the classification input"
+        },
+        {
+          "anchor": "local-good-extension",
+          "label": "2.8.4.8: transport of controlled laws"
+        }
+      ],
+      "coverage": "The notes explain why exhaustion and uniqueness make the chosen parameter independent of presentation. They do not derive exhaustion, irreducibility for unlinked segments, or the interchange/refinement steps.",
+      "next": "Explain the standard-module ordering, the segment representation input, unlinked irreducibility, and the middle-factor/refinement/swap argument that supplies exhaustion and uniqueness. Keep this separate from the weaker local map constructed outside the controlled class.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/WeilBound/CoreStatements/AutomorphicKernels/LanglandsExhaustion/LanglandsMultisegmentsOfSeg.lean",
+          "declaration": "PositivityTheory.Exh.langlandsExhaustionGL_of_seg",
+          "line": 10,
+          "kind": "conditional-proof",
+          "inputs": "SegmentRepresentation is supplied. The proof invokes unlinked irreducibility and exhaustion_of_three with explicit middle-factor, refinement and swap constructions.",
+          "sha256": "34793198395efb2013e7794d253aa0ea0097c183610ac867178a5c0a1b50ccd9",
+          "lineText": "theorem langlandsExhaustionGL_of_seg (hZ : GlobalTheory.Published.SegmentRepresentation) : GlobalTheory.Published.LanglandsExhaustionGL := by"
+        },
+        {
+          "path": "Development/WeilBound/CoreStatements/AutomorphicKernels/LanglandsExhaustion/LanglandsMultisegmentsOfSeg.lean",
+          "declaration": "PositivityTheory.Exh.langlandsMultisegments_of_seg",
+          "line": 16,
+          "kind": "conditional-proof",
+          "inputs": "Combines SegmentRepresentation, unlinked irreducibility and the preceding exhaustion theorem; the full upstream segment/classification proof was not audited here.",
+          "sha256": "34793198395efb2013e7794d253aa0ea0097c183610ac867178a5c0a1b50ccd9",
+          "lineText": "theorem langlandsMultisegments_of_seg (hZ : GlobalTheory.Published.SegmentRepresentation) : GlobalTheory.Published.LanglandsMultisegments :="
+        }
+      ],
+      "priority": "later",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-local-divisibility",
+      "title": "Derive the weighted local divisibility bound from local Galois estimates",
+      "branch": "local",
+      "status": "summarized",
+      "scope": "The bound for the weighted sum of local multiplicities eta_j by d_j times the geometric budget plus the cohomology sum. This is distinct from the cotangent-to-trace integer-budget chain.",
+      "notes": [
+        {
+          "anchor": "arithmetic-absorption",
+          "label": "2.6.8: the local bound and its numerical absorption"
+        },
+        {
+          "anchor": "local-galois-handshake",
+          "label": "2.8.4.9: the local compatibility handoff"
+        }
+      ],
+      "coverage": "The notes state the eta inequality and explain how the cohomology growth bound is absorbed. They do not show how local type/multiplicity bounds, exceptional primes and the controlled cut establish the inequality itself.",
+      "next": "Expose the five prime classes in the local pointwise estimate, the admissible table assembled from the local Galois estimates, the weighted multiplicity bound with its cohomology term, and the correction when returning from the controlled cut. In particular, explain why the exceptional-prime and finite-row-group costs fit one uniform constant.",
+      "dependsOn": [
+        "coverage-local-construction"
+      ],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/AdmittedStatementsOfLocalBoundsConclusion.lean",
+          "declaration": "GlobalTheory.NLink.admittedStatements_of_localBoundsConclusion",
+          "line": 15,
+          "kind": "conditional-proof",
+          "inputs": "Takes Concl, including local representation bounds, multiplicity/rank control, killing conditions and separate small/ramified/type-prime estimates; constructs the actual admissible table.",
+          "sha256": "8ec7fd34d1d868e59913962e0847aa33c9495edc19c52f07a5ef4068fc978508",
+          "lineText": "theorem admittedStatements_of_localBoundsConclusion : ∀ (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) (X : KillingConditions.HubData D) (C : ℝ),"
+        },
+        {
+          "path": "Formalism/SharpRestriction/LevelLetterCocycles/ExportBoundOfAdmissible.lean",
+          "declaration": "Formalism.MainNotions.TwistedPlaces.point_bound",
+          "line": 893,
+          "kind": "conditional-proof",
+          "inputs": "Given AdmT, polynomially bounded parameters and the large-scale inequalities, partitions the prime costs and bounds their sum by 2000(C+1)^3 f m b large₂².",
+          "sha256": "bdfc98f88029b0046557d06ae9223905e3c4b4048114a676072820d150905534",
+          "lineText": "theorem point_bound (tb : Tab L) (hA : AdmT L tb C P) (S : Finset ℕ) (hS : ∀ l ∈ S, l.Prime) :"
+        },
+        {
+          "path": "Formalism/SharpRestriction/LevelLetterCocycles/ExportBoundOfAdmissible.lean",
+          "declaration": "Formalism.MainNotions.TwistedPlaces.export_bound_of_admissible",
+          "line": 1023,
+          "kind": "conditional-proof",
+          "inputs": "Uses etaSum_le, Sha finiteness and summability, then point_bound; retains the cohomological sum with coefficient d_j.",
+          "sha256": "bdfc98f88029b0046557d06ae9223905e3c4b4048114a676072820d150905534",
+          "lineText": "theorem export_bound_of_admissible (P : ParameterChoice' D L) {C : ℝ} (hL : Large L.sc.x L.sc.eps C) (hAdm : admitted L P C) :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/HeckeGaloisCriteria/LinkNOfGd.lean",
+          "declaration": "UpperTheory.GalC.linkN_of_gd",
+          "line": 38,
+          "kind": "conditional-proof",
+          "inputs": "A good cut, multiplicity/rank controls and LinkN for the cut family are supplied; the proof absorbs log of the finite residual-row group using the family parameter bounds.",
+          "sha256": "a16761133533d53f76cc50f8de704921ee544eb04336a92bce4fde7994a597cc",
+          "lineText": "theorem linkN_of_gd (Fm : FamP eps) (c : ∀ x (i : Fm.Ix x), CutD (Fm.D x i))"
+        }
+      ],
+      "priority": "next",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-theta-test-vectors",
+      "title": "Construct nonzero matched theta test vectors",
+      "branch": "theta",
+      "status": "summarized",
+      "scope": "Construction of compatible nonzero local vectors and their global restricted tensor, conditional on the stated local matching theorem.",
+      "notes": [
+        {
+          "anchor": "theta-matching",
+          "label": "2.9.2: matching local images"
+        },
+        {
+          "anchor": "theta-test-vectors",
+          "label": "2.9.4: detecting the required information"
+        }
+      ],
+      "coverage": "The notes give the matching relation, the need for a nonzero scalar, and the role of test vectors. They do not construct the finite-place Schwartz functions, the archimedean Fock lifts, or prove that their restricted tensor remains nonzero.",
+      "next": "Show the local zeta-integral comparison, prove its scalar is nonzero before rescaling, choose standard vacuum vectors away from finitely many places, lift the archimedean vector through both quotient maps, and prove nonvanishing of the tensor using normalized dual functionals. The underlying local matching theorem must remain an explicit input until separately traced.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/LocalTypeDictionary/ExistsFinitePlaceThetaMatch.lean",
+          "declaration": "local_matching_decomposition",
+          "line": 32,
+          "kind": "conditional-proof",
+          "inputs": "Local linear models and the big/small zeta-integral comparison supply proportional nonzero images; the body rescales the nonzero scalar.",
+          "sha256": "9a6d92dcaab048d51dd29a900b7507149990bf6fea757480b1d6f6a3131b8493",
+          "lineText": "private theorem local_matching_decomposition {B : Base F E} {a a' : ℕ} {G : Geo σ a a'} {X : Chars F E} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W}"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/LocalTypeDictionary/ExistsFinitePlaceThetaMatch.lean",
+          "declaration": "exists_finite_place_theta_match",
+          "line": 179,
+          "kind": "conditional-proof",
+          "inputs": "ThetaLocalInputs, LocalMatching, the additive character, compatible triples/lattices, ramification and finite Fock conditions are supplied. The proof assembles finite and archimedean choices and proves restricted-tensor nonvanishing.",
+          "sha256": "9a6d92dcaab048d51dd29a900b7507149990bf6fea757480b1d6f6a3131b8493",
+          "lineText": "theorem exists_finite_place_theta_match (hP : _root_.GlobalTheory.FunPr.ThetaLocalInputs) (hLM : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching) {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D}"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-theta-separation",
+      "title": "Choose one fixed pair of vectors that separates every required row",
+      "branch": "theta",
+      "status": "missing",
+      "scope": "The fixed-pair separation theorem, stronger than saying that the full family of period functionals has trivial common kernel.",
+      "notes": [
+        {
+          "anchor": "theta-test-vectors",
+          "label": "2.9.4: current general separation explanation"
+        }
+      ],
+      "coverage": "The current explanation discusses functionals detecting vectors, but does not explain why the same selected pair works simultaneously across the rows used in the construction.",
+      "next": "Derive one-dimensional local Bessel spaces under the gap hypothesis, pass to a tensor-product line, factor each row functional through that line, and use weak separation twice to select a fixed pair with a nonzero scalar on every nonzero row.",
+      "dependsOn": [
+        "coverage-theta-test-vectors"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/ThetaCorrespondence/BesselModels/SepGap.lean",
+          "declaration": "burGap_model",
+          "line": 34,
+          "kind": "conditional-proof",
+          "inputs": "Positive-definite Bessel data, genericity, the compact target representation and the stated gap bound give a rank-at-most-one Bessel space.",
+          "sha256": "c1dc5c0f7e122e28124128f4fd3d39d31c9527c3b985123af74fd67533c20208",
+          "lineText": "theorem burGap_model (hB : BurGapPos) {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/ThetaCorrespondence/BesselModels/SepGap.lean",
+          "declaration": "separate_of_burGapPos",
+          "line": 222,
+          "kind": "conditional-proof",
+          "inputs": "BurGapPos, coefficient tensor spanning, top separation, the row tower, size gap, good rows, convergence and weak separation are supplied; the body uses factorization and weak separation to select a fixed detecting pair.",
+          "sha256": "c1dc5c0f7e122e28124128f4fd3d39d31c9527c3b985123af74fd67533c20208",
+          "lineText": "theorem separate_of_burGapPos (hB : BurGapPos) (hCT : CoefTensor) (hTS : TopSep) (hT : RowTower) :"
+        }
+      ],
+      "priority": "later",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-theta-correlations",
+      "title": "Turn explicit correlation bounds into quantitative target coverage",
+      "branch": "theta",
+      "status": "explained",
+      "scope": "The chain from the stated orbital/mass inputs through the Gram loss, row counts, diagonal defect, trace-square estimate and missing-direction bound.",
+      "notes": [
+        {
+          "anchor": "theta-correlation-orbits",
+          "label": "2.9.8.2: orbital decomposition"
+        },
+        {
+          "anchor": "theta-correlation-local-gram",
+          "label": "2.9.8.3: finite Gram loss"
+        },
+        {
+          "anchor": "theta-correlation-row-counts",
+          "label": "2.9.8.4: main and error rows"
+        },
+        {
+          "anchor": "theta-correlation-coverage",
+          "label": "2.9.8.7: coverage"
+        }
+      ],
+      "coverage": "The seven steps now distinguish signed main-row sums from absolute error bounds, explain the product of (1+3/q) losses, retain D*/R, derive the diagonal error and compare the two dimensions, then deduce the rank/coverage conclusion.",
+      "next": "The calculation is covered at this scope. A fuller account would prove the supplied mass-formula, convergence, Siegel–Weil and nongeneric-row inputs; the existing exposition does not claim to derive all of them.",
+      "dependsOn": [
+        "coverage-theta-test-vectors"
+      ],
+      "sources": [
+        {
+          "path": "Formalism/LocalToGlobal/SiegelLatticeTheory/FlagStabilizerTensors/TheoremSConclusion.lean",
+          "declaration": "theoremS_of_conj",
+          "line": 68,
+          "kind": "conditional-proof",
+          "inputs": "The concrete period model's mass, density, norm-expansion, size and row inputs supply the sharp off-diagonal estimate.",
+          "sha256": "56c66de4b05f0f508af0bfbd3cfb99ff10ada21341f9ffe31ca4e3f1f5e55fac",
+          "lineText": "theorem theoremS_of_conj (h : TheoremSClosedHypotheses) (Cthr : ℝ) :"
+        },
+        {
+          "path": "Formalism/SharpRestriction/CuspSpanNormBounds/StandingHypothesesHoldFamily.lean",
+          "declaration": "diag_unproj",
+          "line": 144,
+          "kind": "conditional-proof",
+          "inputs": "The source rank window and norm-sum bounds imply the explicit diagonal error 2C0/Gamma + 2 exp(-kf log k).",
+          "sha256": "06745983b65b3270681d280b07fdd858e6de892134942f02e57c9264c9c3cc17",
+          "lineText": "theorem diag_unproj (C0 C' Cl Cg cb Cu cT CT : ℝ)"
+        },
+        {
+          "path": "Formalism/HarderNarasimhan/HarderNarasimhanProofs/FrameLinearAlgebraFirst.lean",
+          "declaration": "frame_linear_algebra_first",
+          "line": 77,
+          "kind": "proof",
+          "inputs": "Finite-dimensional Hermitian maps satisfying the stated diagonal and pairwise Hilbert–Schmidt bounds; the proof uses trace Cauchy–Schwarz and the orthogonal missing subspace.",
+          "sha256": "852a55f0b5058c59677fec2c3efdaa6286e5cc36bcf0d6a6cb3a25d085fa8e7a",
+          "lineText": "theorem frame_linear_algebra_first : FrameLA1 := by"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-theta-main-cancellation",
+      "title": "Cancel the normalized period main terms before estimating errors",
+      "branch": "theta",
+      "status": "explained",
+      "scope": "The exact algebraic cancellation after the period, CM and slope normalizations have already been established.",
+      "notes": [
+        {
+          "anchor": "theta-mean-slope",
+          "label": "2.9.9: the slope inequality used"
+        },
+        {
+          "anchor": "theta-main-cancellation",
+          "label": "2.9.10: the exact cancellation"
+        }
+      ],
+      "coverage": "The notes display and interpret the cancellation, including the positive-rank/normalization hypotheses, and explain why separately estimating the large summands would lose the needed result.",
+      "next": "This entry does not certify a derivation of the faithful CM-period normalization or the full Harder–Narasimhan frame theorem. Those are upstream inputs to the displayed identity and slope inequality.",
+      "dependsOn": [
+        "coverage-theta-correlations"
+      ],
+      "sources": [
+        {
+          "path": "Formalism/SizeWindowBrackets/ChainSlopeWindows/LevelOfCongruence.lean",
+          "declaration": "key_identity5",
+          "line": 105,
+          "kind": "conditional-proof",
+          "inputs": "Uses the earlier Data.key_identity, positive v and f and positive weights; unfolds the specified normalizations and proves the displayed cancellation by linear combination.",
+          "sha256": "b28d36820d558a77dd1b3d15fa0d8f13b130081b82f9439cc61bc676a137efd4",
+          "lineText": "lemma key_identity5 (hv : 0 < D.v) (hf : 0 < f) (u0 : U0) (hw : ∀ j ρ, 0 < D.w u0 j ρ) :"
+        },
+        {
+          "path": "Formalism/SizeWindowBrackets/ChainSlopeWindows/LevelOfCongruence.lean",
+          "declaration": "Ga_bound5",
+          "line": 113,
+          "kind": "conditional-proof",
+          "inputs": "The Hida setting, divisibility, counting, slope, quotient-slope and frame estimates are supplied; the proof combines them with key_identity5.",
+          "sha256": "b28d36820d558a77dd1b3d15fa0d8f13b130081b82f9439cc61bc676a137efd4",
+          "lineText": "lemma Ga_bound5 (hS : D.HidaSetting C) (hDIV : D.DIV C) (hE : EComp5 D C)"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-geometry-cover",
+      "title": "Construct the good deep cover with a controlled coefficient field",
+      "branch": "geometry",
+      "status": "summarized",
+      "scope": "Existence of the geometric cover and coefficient field, beyond the now-explained choice of depth and field-size budget.",
+      "notes": [
+        {
+          "anchor": "geometric-cover-data",
+          "label": "2.10.6.1: level and coefficient-field selection"
+        }
+      ],
+      "coverage": "The notes identify the level-forgetting cover, the 15^e refinement, the ray-class-field compositum and the field-size estimate, and explain how one large threshold satisfies the inequalities together.",
+      "next": "Explain how the level data produce the moduli model and good uniformization, why the half-ideal and splitting-root choices permit descent, and how the ray-class construction bounds degree and root discriminant. The notes currently summarize these geometric existence steps.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsGoodCoverOverSizedField.lean",
+          "declaration": "exists_good_sized",
+          "line": 111,
+          "kind": "conditional-proof",
+          "inputs": "RayClassFieldSt, the core pins, InR, splitBound at least 5 and the level coprimality hypotheses are supplied. The body constructs the refined cover and compositum field and proves its size bound.",
+          "sha256": "58899290dcedf06f1cced8f1785381c6bca34597494bda7be21820fbb7eedd02",
+          "lineText": "theorem exists_good_sized : GlobalTheory.Published.RayClassFieldSt → ∀ (D : D7) (T : Core D), T.Q.Pins → ∀ j : ℕ, InR D j → 5 ≤ D.host.splitBound → Nat.Coprime 15 (D.host.g 0 * D.host.g 1) → ∀ e : ℕ, ∃ Y : Deep T j, Y.Good e (fieldSz T.Q.c.F + 20 * (Real.log ((D.host.g 0 : ℝ) * D.host.g 1 * 15 ^ e) + Real.log D.host.d + 1)) := by"
+        }
+      ],
+      "priority": "later",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-geometry-mean-volume",
+      "title": "Prove the arithmetic-volume lower bound behind the component mean",
+      "branch": "geometry",
+      "status": "missing",
+      "scope": "The upstream lower-volume/limiting-self-intersection argument that supplies the ordinary component-mean slope bound.",
+      "notes": [
+        {
+          "anchor": "geometric-height-comparison",
+          "label": "2.10.6.2: supplied mean-volume information"
+        }
+      ],
+      "coverage": "The notes explain how short sections and the supplied component mean become height inequalities. They explicitly leave the arithmetic-volume lower bound as an input, so that lower bound's proof is not yet explained.",
+      "next": "Construct the limiting family, compare normalized self-intersections with arithmetic volume, use equal component volumes and proportionality to obtain the ordinary mean, and account for the metric correction. Trace the supplied arithmetic-volume lower bound and geometric hypotheses before presenting this as a completed foundational proof.",
+      "dependsOn": [
+        "coverage-geometry-cover",
+        "coverage-geometry-positivity"
+      ],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/EqualVolumeAndSlopeMean.lean",
+          "declaration": "volEq_and_slopeMean",
+          "line": 32,
+          "kind": "conditional-proof",
+          "inputs": "LimFam, PolySize, Agree, Degrees, EqVol, Propor and Lower are supplied. The actual proof divides the summed self-intersection limit by the positive common component volume and applies Lower.",
+          "sha256": "bb20acdfde9c15b9a130c914fa836000d56d2fabef21f2462a1c2f29147bdd4e",
+          "lineText": "theorem volEq_and_slopeMean : ∀ (D : D7) (Y : ShimX D.what₂.Tau), ∀ (A : SlopeTestRemainingChoices Y), ∀ (Φ : ℝ → Fn Y) (C : ℝ),"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/SourceStatementOfSlope.lean",
+          "declaration": "meanAll",
+          "line": 317,
+          "kind": "conditional-proof",
+          "inputs": "HypothesesXH, Hypotheses2, HypothesesH, RegSt, Core, FewBad, VolEq and SlopeMean are supplied. The proof identifies components, applies slope_le and charges the bounded metric correction, changing C to C+88.",
+          "sha256": "640ea09a7323fe13221deb6a5be003a183c6409d93d831797287b16a634666b0",
+          "lineText": "theorem meanAll (hX : HypothesesXH) (hP : Hypotheses2) (hH : HypothesesH) (hR : RegSt) {D : D7} {O : Setup D} (hC : O.Core)"
+        }
+      ],
+      "priority": "later",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-geometry-finite-hs-budget",
+      "title": "Carry the finite-degree Hilbert–Samuel bound through component averaging",
+      "branch": "geometry",
+      "status": "explained",
+      "scope": "The numerical use of the explicit finite-degree inequality, logarithmic-error absorption, rank-share weighting and resulting uniform cover-slope bound.",
+      "notes": [
+        {
+          "anchor": "geometric-finite-hilbert-samuel",
+          "label": "2.10.6.3: finite-degree inequality"
+        },
+        {
+          "anchor": "geometric-component-average",
+          "label": "2.10.6.4: logarithmic absorption and averaging"
+        }
+      ],
+      "coverage": "The notes retain the finite-degree constants and hypotheses, define the component heights and weights, absorb A log(2+|h|) explicitly, and derive a uniform negative slope bound. They do not substitute an unspecified asymptotic o(1) statement.",
+      "next": "The numerical chain is covered. Its finite-degree geometric inequality and component-mean input require the separate determinant and arithmetic-volume explanations.",
+      "dependsOn": [
+        "coverage-geometry-hs-determinant",
+        "coverage-geometry-mean-volume"
+      ],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/DegBoundOfClaimNumbers.lean",
+          "declaration": "deg_bound_of_claim_numbers",
+          "line": 9,
+          "kind": "conditional-proof",
+          "inputs": "HSClaimS26, the finite-degree dimension/rank/height/norm/denominator hypotheses and the displayed numerical budgets are supplied; the body obtains the explicit degree bound.",
+          "sha256": "f75edbc033237ad2ce2112681011dda4092ceff7ab0680c47852fb387d19e4b6",
+          "lineText": "theorem deg_bound_of_claim_numbers : ∀ (T D : ℕ) (PP kap b z ρ n Λ β ΛD ΛT J δ h d deg degM c : ℝ), 1 ≤ D → 3 * D + 5 ≤ T → 1 ≤ PP → 1 ≤ b → Real.log b ≤ PP → (T : ℝ) * PP ≤ Real.sqrt b → z = 7 * ((D : ℝ) ^ 2 / T + D * ρ) → 0 ≤ ρ → z ≤ 1 / 2 → z * (PP * kap) ≤ b → 0 ≤ kap → 1 ≤ n → 1 ≤ Λ → 1 ≤ β → 1 ≤ ΛD → 1 ≤ ΛT → 1 ≤ δ → 0 < d → Real.log n ≤ PP → Real.log β ≤ PP → Real.log δ ≤ PP → Real.log Λ ≤ PP * (kap / T + 1) → Real.log ΛD ≤ PP * kap → Real.log ΛT ≤ PP * kap → J ≤ 4 * (D * PP * (kap / T + 1) + T * PP) + 2 * PP * (kap / T) * D → (1 - z) * d ≤ ((T - 1).choose D : ℕ) * δ → Formalism.NormVectorIdentities.Items.HSClaimS 26 T D n 1 Λ β ΛD ΛT J δ h d deg → 0 ≤ c → deg - d * c ≤ degM → ((T - 1).choose D : ℕ) * δ * ((T : ℝ) * h - 3 * ((D : ℝ) + 1) * |h| - 26 * (26 * (D : ℝ) ^ 2 + 2 * z * T) * Real.log (2 + |h|) - (4000 * b + 2 * c)) ≤ degM := by"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/UniformLowerBoundOfSums.lean",
+          "declaration": "core",
+          "line": 15,
+          "kind": "proof",
+          "inputs": "Explicit component rank-share, height, mean, finite-Hilbert–Samuel and scaled-error inequalities are hypotheses. The proof combines their weighted sums and obtains the constant 2(3C1+C2+4).",
+          "sha256": "614e039611d248da03163a52c9ac53bfa9cc53aa1c8bce8c365c99bd15b0ec2a",
+          "lineText": "theorem core (ι : Type) [Finite ι] [Nonempty ι] (T D A cs X cc z ρ R Bn δ' E C1 C2 mu : ℝ) (h sl δ dc degc : ι → ℝ)"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-geometry-hs-determinant",
+      "title": "Prove finite-degree Hilbert–Samuel using short sections and a determinant",
+      "branch": "geometry",
+      "status": "missing",
+      "scope": "The geometric determinant argument that produces the finite-degree lower bound, rather than its later numerical application.",
+      "notes": [
+        {
+          "anchor": "geometric-finite-hilbert-samuel",
+          "label": "2.10.6.3: the currently supplied finite-degree theorem"
+        }
+      ],
+      "coverage": "The current notes state the finite-degree inequality and explain its terms, but not the filtration of sections, independent short-column construction, determinant divisibility or height comparison that proves it.",
+      "next": "Choose a good linear section, pass to splitting coordinates, construct residue and vanishing filtrations, select independent short columns adapted to the filtration, prove the required Chow-form power divides their determinant, and compare determinant height and lattice degree while tracking the three column classes.",
+      "dependsOn": [
+        "coverage-geometry-positivity"
+      ],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/HilbertSamuelFiltrationAtGoodSections.lean",
+          "declaration": "flatAt_of_simpleAt",
+          "line": 27,
+          "kind": "conditional-proof",
+          "inputs": "HSCore.Quoted, GeoHyp and the good-section avoidance implication are supplied; the proof builds the split-coordinate residue/vanishing filtration, symbol maps and deepest-span data.",
+          "sha256": "154ba72def8d80dbbde40d08e9e4f8c731861cc22bd1ab28b1d540a3d315d6a2",
+          "lineText": "theorem flatAt_of_simpleAt : Quoted → ∀ (F : Type) [Field F] [NumberField F] (X : Data F) (Λ₀ : ℝ), GeoHyp X Λ₀ →"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsShortColumnsDetNeZeroHilbertSamuel.lean",
+          "declaration": "exists_cols",
+          "line": 99,
+          "kind": "conditional-proof",
+          "inputs": "The geometric filtration, short-section and avoidance data are supplied; the body constructs independent bounded columns with nonzero determinant.",
+          "sha256": "f83ff9238016570a4edcb3fc5b96f71a3321398dcd70d5be65936d44f5fe283e",
+          "lineText": "theorem exists_cols : ∀ (F A : Type) [Field F] [NumberField F] [AddCommGroup A] [Module F A] [Module (𝓞 F) A] [IsScalarTower (𝓞 F) F A] (S : Sys F A), S.Hyp → ∀ (E A' : Type) [Field E] [Algebra F E] [AddCommGroup A'] [Module E A'] (s : Fin S.D → Fin S.N → F) (δ : ℕ) (Φ : S.Flat E A' (fun i k => algebraMap F E (s i k)) δ) (d : ℕ) (b : Module.Basis (Fin d) F (S.V S.T)) (c : Fin d → A →ₗ[F] F), S.IsCo b c → ∃ (col : Fin d → S.Col) (m : Fin δ → S.V 0) (ix : (Σ a : Fin (S.T - S.D), MonoDeg (Fin S.D) a) × Fin δ ↪ Fin d), S.Shape δ col m ix ∧ S.ShortCols col ∧ (Finset.univ.filter fun k => (col k).j = S.D).card = S.deepRank s ∧ S.det c col ≠ 0 := by"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/SlopeLowerBoundTopLatticeOffHypersurface.lean",
+          "declaration": "slopeBound",
+          "line": 106,
+          "kind": "conditional-proof",
+          "inputs": "The Hilbert–Samuel short-column and numerical hypotheses are supplied. The body uses determinant divisibility, the height of the cofactor, and a lattice-degree lower bound to obtain the claimed slope estimate.",
+          "sha256": "639e13a31f74a2f832606bfba37ccbb6ef029c3f37cf83768afd98772f08eb75",
+          "lineText": "theorem slopeBound : SlopeBound := by"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-geometry-positivity",
+      "title": "Explain the positivity and vanishing inputs used by the section filtration",
+      "branch": "geometry",
+      "status": "missing",
+      "scope": "Why the relevant bundles are nef and big and why their residues/vanishing filtration have the required surjectivity and span properties.",
+      "notes": [
+        {
+          "anchor": "geometric-foundations",
+          "label": "2.10.6: geometric inputs"
+        },
+        {
+          "anchor": "geometric-finite-hilbert-samuel",
+          "label": "2.10.6.3: finite-degree hypotheses"
+        }
+      ],
+      "coverage": "The notes name positivity and vanishing among the geometric ingredients, but do not derive the needed positivity or residue-surjectivity results. A package listing Kawamata–Viehweg and related statements is not itself their proof.",
+      "next": "Explain the curve-degree test and the passage from semipositive metrics plus fibrewise nefness to nefness; then show exactly how nef/big and the vanishing theorem produce residue surjectivity and the deepest filtration span. Separately trace the supplied foundational theorem package before claiming its proofs are covered.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Definitions/Divisors/WellChosen.lean",
+          "declaration": "GlobalTheory.HSCore.Quoted",
+          "line": 22,
+          "kind": "interface",
+          "inputs": "Contains KawamataViehweg, L2ExtensionLogCanonical, SerreHolomorphicSections, NefNumerics and the Chow/intersection statements. This is an explicit supplied-input boundary.",
+          "sha256": "d3338786bea3a686277764358ce56f87b52cff69692e96775df4b1e27e28c17d",
+          "lineText": "structure Quoted : Prop where"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/NefOfSemipositiveFibrewise.lean",
+          "declaration": "nef_of_semiPos_nefFib",
+          "line": 55,
+          "kind": "conditional-proof",
+          "inputs": "Hypotheses2 and HypothesesH, semipositivity and fibrewise nefness are supplied; the proof passes through curve-degree comparisons.",
+          "sha256": "7f84268b2ae480cd29cc738848ea1ef02959c0aba6430cd5503b4ca4882f59da",
+          "lineText": "theorem GlobalTheory.CovHt.Link.nef_of_semiPos_nefFib : Hypotheses2 → HypothesesH → ∀ (F : Type) [Field F] [NumberField F] (C : CxSt F)"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/HilbertSamuelDegreeZeroResiduesRangeEqTop.lean",
+          "declaration": "map_totRes_range_incl_zero",
+          "line": 23,
+          "kind": "conditional-proof",
+          "inputs": "Quoted and the nef/big hypotheses are supplied; residue surjectivity is used to lift each residue vector and prove the degree-zero range statement.",
+          "sha256": "c4bf08f4719206e9984b47f6a7732ababb0c41844036f6643d711fa98f5ed5c6",
+          "lineText": "theorem map_totRes_range_incl_zero : Quoted → ∀ (K : Type) [Field K] [NumberField K] (X : Data K) (s : Fin X.D → Fin X.N → K) (hs : X.IsGood s) (δ : ℕ) (Co : Coord X.toGeo hs δ), IsNef K X.L₂ → IsBig K X.L₂ → (LinearMap.range (incl X 0)).map (totRes Co) = ⊤ := by"
+        }
+      ],
+      "priority": "later",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-geometry-integral-descent",
+      "title": "Descend integrally and budget the resulting slope loss",
+      "branch": "geometry",
+      "status": "explained",
+      "scope": "Construction of the unnormalized twisted-trace maps, determinant-based joint injectivity, norm/rank estimates and final scalar descent budget.",
+      "notes": [
+        {
+          "anchor": "geometric-integral-descent",
+          "label": "2.10.6.5: integral maps and determinant"
+        },
+        {
+          "anchor": "geometric-descent-budget",
+          "label": "2.10.6.6: slope and rank losses"
+        }
+      ],
+      "coverage": "The notes explain why the unnormalized trace preserves integrality, how bounded coefficients avoid a zero-divisor determinant, why the norm cost is |Gamma|^3 B^2, and how the independent target-rank comparison and scalar budget recover the core lower bound.",
+      "next": "This argument is covered at the stated scope. The construction of short generators, the geometric existence of the cover, and the imported abstract lattice descent theorem remain upstream; joint injectivity alone must not be used to infer the separate target-rank inequality.",
+      "dependsOn": [
+        "coverage-geometry-cover",
+        "coverage-geometry-finite-hs-budget"
+      ],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/MapsBoundOfDeepGood.lean",
+          "declaration": "mapsCore",
+          "line": 41,
+          "kind": "conditional-proof",
+          "inputs": "Good lattices, parity/coprimality, integral-preserving and isometric actions, a regular determinant, multiplication bound B and the type-lattice identification are supplied; the body constructs integral jointly injective maps with the norm bound and a separate target-rank estimate.",
+          "sha256": "38c3a23e14f36bef1ceff6a121d5ffc144815a1cf0ce19ea4e78cf7e29ebaaef",
+          "lineText": "theorem mapsCore {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Geo.Tor.Host E} {Dw : Datum H} {l : Level H}"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/CardLeOfDetEqZero.lean",
+          "declaration": "exists_short",
+          "line": 279,
+          "kind": "conditional-proof",
+          "inputs": "A regular initial vector and short component-supported integral generators are supplied; bounded integer coefficients avoid the forbidden determinant roots.",
+          "sha256": "a03d646e53cc2bdc8bdaf0da14f0c8f6fd42a11fa225f5c20228b483994bb3f3",
+          "lineText": "theorem exists_short (hpq : 1 ≤ Dw.p + Dw.q) (hA : l.A.Coprime l.M) (hU : ∀ σ, GoodEmb c σ → IsUnf (U σ))"
+        },
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/DivisorProofs/LowerBoundOfAllEstimates.lean",
+          "declaration": "lowAt_of_cover",
+          "line": 65,
+          "kind": "conditional-proof",
+          "inputs": "The explicit size, map, rank, generator, flat-comparison and uniform-cover-slope hypotheses are supplied; the proof applies integral descent and the scalar error inequality.",
+          "sha256": "111bbcfa0022d90c5aebb3d52247857c8f10ff9269cc369f5d2eaae8a76637d9",
+          "lineText": "theorem lowAt_of_cover (p : PtAt ex Csz) (i : Fin D.R.m) (PP CS CF CU : ℝ) (hCF : 0 ≤ CF) (hCU : 0 ≤ CU)"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-fixed-exponents",
+      "title": "Choose epsilon after the candidate zero",
+      "branch": "assembly",
+      "status": "explained",
+      "scope": "Deduce nonvanishing from fixed loss exponents, arbitrarily late windows, and the windowed analytic criterion.",
+      "notes": [
+        {
+          "anchor": "assembly-order",
+          "label": "§§2.11.2–2.11.6"
+        }
+      ],
+      "coverage": "The notes display the positive margin, the small-parameter choice, the maximum of thresholds, and the comparison of exponents before applying Landau. The implication is explained with its inputs explicit.",
+      "next": "Keep the construction of the compatible family and the analytic criterion as separate dependencies. This row does not establish either input.",
+      "dependsOn": [
+        "coverage-landau-windows",
+        "coverage-fourier-square-root"
+      ],
+      "sources": [
+        {
+          "path": "Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/TopWin.lean",
+          "declaration": "level_of_tiedWin",
+          "line": 68,
+          "kind": "conditional-proof",
+          "inputs": "Chebyshev inequality on windows, the level's FormB analytic criterion, and a family-window estimate with fixed loss exponents. The proof calls exists_small_eps and restricts the available windows.",
+          "sha256": "afbbf8ec0a8aca08b7935c6118c76eef06b2eee896805e7de277b9d4e09fc52b",
+          "lineText": "theorem level_of_tiedWin {Λ : Level} {la : ℝ} (h112 : ChebyshevInequalityOnWindows @core @Tied Λ) (hB : Λ.FormBAt la)"
+        }
+      ],
+      "priority": "covered",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-common-host",
+      "title": "Construct one compatible family for all comparisons",
+      "branch": "assembly",
+      "status": "summarized",
+      "scope": "Produce the common hypothesis witness tying theta vectors, evaluation grids, local parameters, and covolume data together.",
+      "notes": [
+        {
+          "anchor": "assembly-witness",
+          "label": "§2.11.1"
+        }
+      ],
+      "coverage": "The quantifier order and the need for a single witness are explained. The actual construction of that witness is only outlined; its rational test vectors, common grid, open parameter conditions, and linked bundles are not reconstructed together.",
+      "next": "Follow the constructor in order: obtain separation and rational rows, take the maximum of the two grid thresholds, choose a compatible extension, and check the functional and covolume conditions for that same extension.",
+      "dependsOn": [
+        "coverage-theta-test-vectors",
+        "coverage-theta-separation",
+        "coverage-local-construction",
+        "coverage-geometry-integral-descent"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/SiegelEisensteinSecondTermHypotheses.lean",
+          "declaration": "nonempty_hyps_definite_side_of_closed_bound",
+          "line": 44,
+          "kind": "conditional-proof",
+          "inputs": "UnitaryGroupThirdPlaceHypotheses, ThetaLocalInputs, matching theta integrals, local matching, the covolume bound, RecTExists, and a linked bound at every dependence parameter. The body constructs rational rows, a common grid, open extensions and linked bundles.",
+          "sha256": "e761e876e3236895eec1b67b5a2118846ddfcc6883eed367ac6cc78523da15f2",
+          "lineText": "theorem nonempty_hyps_definite_side_of_closed_bound : _root_.GlobalTheory.Fc.S0.UnitaryGroupThirdPlaceHypotheses → _root_.GlobalTheory.FunPr.ThetaLocalInputs → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.ThetaIntegralsAgree → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.LocalMatching → _root_.GlobalTheory.CovTop.CovolumeBoundOfX → ∀ (hL : _root_.UpperTheory.Zero.LLC.RecTExists), (∀ cDep : ℝ, _root_.GlobalTheory.Fc.RL.LinkedAt (_root_.GlobalTheory.Mem.Top.Bl.parametersOfDependence hL cDep) (fun Q L => _root_.GlobalTheory.Fc.R1.SlotNormCondition Q L fun 𝒞 => Formalism.MainNotions.Closed 𝒞 fun Fm _ => _root_.GlobalTheory.NLink.BoundAtTwoThreeFamilyFonAlt Fm)) → Nonempty (_root_.GlobalTheory.Fc.HypsAlt S0.NL _root_.GlobalTheory.Fc.DefiniteSideCondition) := by"
+        }
+      ],
+      "priority": "next",
+      "confidence": "traced"
+    },
+    {
+      "id": "coverage-final-packages",
+      "title": "Discharge the final theorem's input packages",
+      "branch": "assembly",
+      "status": "summarized",
+      "scope": "Trace the final exported nonvanishing theorem through its Galois row, local correspondence, arithmetic window and geometric/automorphic packages.",
+      "notes": [
+        {
+          "anchor": "input",
+          "label": "§2.1"
+        },
+        {
+          "anchor": "nv-assembly",
+          "label": "§2.11"
+        }
+      ],
+      "coverage": "The final exports and the principal branches are identified. Many fields of the intervening hypothesis records are still named inputs in the exposition. A short constructor at the end does not measure the size of their proofs.",
+      "next": "Track each required field to its supplying theorem and then to its proof, retaining the exact hypotheses. The present checklist covers selected paths; unlisted fields and their transitive prerequisites remain outside this review.",
+      "dependsOn": [
+        "coverage-common-host",
+        "coverage-fixed-exponents",
+        "coverage-exceptional-tower",
+        "coverage-galois-theta-descent",
+        "coverage-green-regular"
+      ],
+      "sources": [
+        {
+          "path": "Development/AutomorphicArithmetic/CharacterBoxes/MainConclusion.lean",
+          "declaration": "UpperTheory.FinalTheorems.everyCharacter",
+          "line": 10,
+          "kind": "proof",
+          "inputs": "Calls everyCharacter_of_row with galoisLocalGlobalStrong_recParameter; that assembly also uses recTExists and vwin_of_row.",
+          "sha256": "a5f71e107087e37b2c598709795b0f56c0a6741cf1e8ab99ee1f97e2fce0fe34",
+          "lineText": "theorem UpperTheory.FinalTheorems.everyCharacter : UpperTheory.EveryCharacter :="
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean",
+          "declaration": "UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin",
+          "line": 810,
+          "kind": "conditional-proof",
+          "inputs": "OpenLiteratureStatements and VWin. The body supplies eigenvalue, theta, matching, geometric covolume and local-correspondence packages from named constructors; their full transitive proof trees were not audited here.",
+          "sha256": "246b74eeb03dae250c45b46c155b3590cb53c2bac86f5e35f4b74338db487068",
+          "lineText": "theorem UpperTheory.LiteratureTheorems.every_character_of_literature_of_vWin (O : _root_.UpperTheory.LiteratureTheorems.OpenLiteratureStatements) (hV : UpperTheory.Top.VWin) : UpperTheory.EveryCharacter :="
+        }
+      ],
+      "priority": "later",
+      "confidence": "partial"
+    },
+    {
+      "id": "coverage-green-regular",
+      "title": "Exhaust finite-field cuspidal characters by regular characters",
+      "branch": "local",
+      "status": "missing",
+      "scope": "Explain the finite general-linear-group character classification feeding Green's input and the local cuspidal construction.",
+      "notes": [
+        {
+          "anchor": "local-existence",
+          "label": "§2.8.4"
+        },
+        {
+          "anchor": "assembly-order",
+          "label": "§2.11.2"
+        }
+      ],
+      "coverage": "Regular finite-field characters appear in the local-parameter construction, and Green's theorem is named in the final assembly. The exhaustion argument identifying all relevant cuspidal characters is not explained.",
+      "next": "Explain regular-character orbits, the injection from irreducible polynomial labels, and the counting contradiction: a missing cuspidal label would create more degree-d cuspidal multisets than the allowed count. Then identify the separate existence and counting inputs.",
+      "dependsOn": [],
+      "sources": [
+        {
+          "path": "Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/GreenCuspidalCharsByRegularCharsProof.lean",
+          "declaration": "GlobalTheory.greenRegularCharacters_holds",
+          "line": 137,
+          "kind": "proof",
+          "inputs": "Uses existence of cuspidal characters from regular characters, an injection of irreducible-polynomial labels into regular-character orbits, the cuspidal-multiset bound, and the count of monic polynomials with nonzero constant coefficient. The file's count theorem at line 56 proves the exhaustion contradiction.",
+          "sha256": "9c900051d1d547b6a46835ee2cb5de818f06e4b84a1e6e731592743df41a6e99",
+          "lineText": "theorem GlobalTheory.greenRegularCharacters_holds : GreenRegularCharacters := by"
+        }
+      ],
+      "priority": "later",
+      "confidence": "traced"
+    }
+  ]
+}

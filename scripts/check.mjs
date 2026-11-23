@@ -190,5 +190,7 @@ for (const script of [
   try { execFileSync(process.execPath, ['--check', resolve(root, script)], { stdio: 'pipe' }); }
   catch (error) { failures.push(`Syntax error in ${script}: ${error.stderr}`); }
 }
+try { execFileSync(process.execPath, [resolve(root, 'scripts/sync-dependency-checklist.mjs'), '--check'], { stdio: 'pipe' }); }
+catch (error) { failures.push(`Dependency checklist validation: ${error.stderr}`); }
 if (failures.length) { console.error(failures.join('\n')); process.exit(1); }
-console.log(`Passed: ${pages.length} HTML pages, local links and cross-page anchors, ${snapshotCount} source snapshots, ${excerptLineCount} exact source lines, font assets, ${equations.length} LaTeX expressions, independent math startup and recovery, and JavaScript syntax.`);
+console.log(`Passed: ${pages.length} HTML pages, local links and cross-page anchors, ${snapshotCount} source snapshots, ${excerptLineCount} exact source lines, font assets, ${equations.length} LaTeX expressions, independent math startup and recovery, dependency checklist consistency, and JavaScript syntax.`);

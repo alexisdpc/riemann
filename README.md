@@ -66,6 +66,12 @@ The current edition explains:
   corrections, admissibility in large degrees, order independence and positivity,
   elementary-divisor layers, an explicit monomial count, localized
   multiplicities, and the factor of two in the trace-valuation estimate.
+- **Automorphy at deformation points:** modular ideals, propagation across the
+  required components, exact factorization at integral points, arithmetic
+  classicality and descent; finite invariant coefficients, valuation rescaling,
+  formal evaluation and ordinary integral models; open-subgroup irreducibility
+  and the separate rank-three and rank-two automorphy transfers. The ordinary
+  modular-family, seed, local propagation and classicality inputs remain explicit.
 - **Automorphy and rigidity:** tangent cocycles, the polarized adjoint, local
   Selmer conditions, separate rank-three and rank-two vanishing arguments,
   normalized basis changes, and the slice giving multiplicity at most one.
@@ -95,6 +101,15 @@ This is an explanatory guide to selected parts of the released source. It follow
 RH and the critical-line assertions for **Dirichlet L-functions**. Deeper geometric
 and automorphic construction theorems remain identified inputs where their full
 proofs have not yet been explained.
+
+The [dependency checklist in §2.12](technical.html#dependency-checklist) compares
+41 distinct arguments with inspected Lean proof bodies and input packages:
+20 are fully explained at an explicit scope, 11 are summarized, and 10 lack
+an explanation. Each entry links to the notes and source, identifies its input
+boundary, and names the next expansion. These unequal components do **not**
+measure a percentage of the full proof. Six priorities organize the remaining
+work, beginning with the ordinary modular-family inputs and the geometric
+construction and local properties of Galois representations.
 
 Many people claim successful Lean compilation.
 
@@ -132,7 +147,9 @@ node scripts/build.mjs
 
 The checker validates local links and cross-page anchors, LaTeX rendering,
 JavaScript syntax, math initialization, fonts, source-file hashes, and the exact
-displayed Lean excerpts. The build writes a static website to `dist/`.
+displayed Lean excerpts. It also validates the dependency checklist's links,
+classifications, dependency references, and synchronization with its source
+record. The build writes a static website to `dist/`.
 
 [The Pages workflow](.github/workflows/pages.yml) checks, builds, and deploys the
 site on pushes to `main`; it can also be run manually from GitHub Actions. Only
@@ -149,6 +166,7 @@ does not publish anything.
 | `assets/` | Styles, scripts, local fonts, and vendored KaTeX. |
 | `references/lean/` | 44 unchanged Lean files supporting the explanations. |
 | `references/provenance.json` | Archive identity, hashes, toolchain, and review status. |
+| `references/dependency-checklist.json` | Exposition coverage, next priorities, and inspected declaration locations and fingerprints. |
 | `scripts/` | Local server, content checks, build, and excerpt maintenance. |
 | `.github/workflows/pages.yml` | Automated GitHub Pages publication. |
 
@@ -167,6 +185,13 @@ The optional `node scripts/sync-source-excerpts.mjs` command refreshes curated
 excerpts from a local copy of the original archive. Its selection is recorded in
 `references/nonvanishing-sources.json`; ordinary checks and builds use the committed
 snapshots and do not need that archive.
+
+Edit `references/dependency-checklist.json` to update the coverage review, then
+run `node scripts/sync-dependency-checklist.mjs` to refresh §2.12. With the original
+archive available locally, add `--verify-source` to verify every recorded source
+fingerprint and declaration line. Ordinary checks use `--check` and do not need
+the full archive. Source links use the pinned mirror revision recorded in the
+checklist; the review itself uses the downloaded source.
 
 The visual design adapts Alexis Plascencia’s Yang–Mills field guide. KaTeX and font
 license files remain alongside their vendored assets. The Visits and Hits counters

@@ -101,6 +101,33 @@
 .technical-section table{border-collapse:collapse;width:100%;font-size:14px;margin:25px 0}
 .technical-section th,.technical-section td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .technical-section th{font-weight:600;color:var(--ink)}
+.coverage-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:26px 0 12px}
+.coverage-counts p{margin:0;padding:18px;border:1px solid var(--line);background:#f2f5ed}
+.coverage-counts strong{display:block;font-family:var(--serif);font-size:36px;line-height:1.1;margin-bottom:8px}
+.coverage-counts span,.coverage-count-note{font-size:14px;line-height:1.65}
+.coverage-status{display:inline-block;border:1px solid currentColor;border-radius:3px;padding:4px 8px;font-size:11px;font-weight:600;line-height:1.5}
+.coverage-explained{color:#245b48;background:#e9f2e9}
+.coverage-summarized{color:#6a4e1f;background:#faf1db}
+.coverage-missing{color:#7c3e30;background:#faece7}
+.coverage-next{display:block;margin-top:10px;font-size:11px;color:var(--muted)}
+.coverage-legend{display:grid;grid-template-columns:155px minmax(0,1fr);gap:16px 20px;margin:24px 0}
+.coverage-legend dd{margin:0;font-size:15px;line-height:1.7}
+.coverage-priorities>li{margin-bottom:24px}
+.coverage-priorities p{margin:6px 0;font-size:15px;line-height:1.75}
+.coverage-branch-nav{display:flex;flex-wrap:wrap;gap:8px 18px;margin:24px 0;font-size:14px}
+.coverage-table-wrap{overflow-x:auto;margin:22px 0 38px;scrollbar-width:thin}
+.coverage-table-wrap:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
+.technical-section .coverage-table{min-width:660px;font-size:13px;line-height:1.65;margin:0}
+.coverage-table caption{text-align:left;font-size:12px;color:var(--muted);padding:0 0 14px}
+.coverage-table th:first-child{width:27%}.coverage-table th:nth-child(2){width:18%}
+.coverage-table tbody th{font-weight:400}.coverage-row-title{display:block;font-weight:600;font-size:14px;color:var(--ink)}
+.technical-section .coverage-table p{margin:8px 0}.coverage-table .coverage-scope{font-size:12px;color:var(--muted)}
+.coverage-table tr[id]{scroll-margin-top:32px}.coverage-note-links{font-size:12px}
+.coverage-table .coverage-evidence{font-size:12px;margin:15px 0 0;padding:11px 0;border-bottom:0}
+.coverage-evidence ul{padding-left:16px!important;margin:12px 0!important}.coverage-evidence li{overflow-wrap:anywhere}
+.coverage-dependencies{font-size:12px}
+@media(max-width:600px){.coverage-counts{gap:7px}.coverage-counts p{padding:13px 9px}.coverage-counts strong{font-size:29px}.coverage-counts span{font-size:12px}.coverage-legend{grid-template-columns:1fr;gap:8px}.coverage-legend dd{margin-bottom:12px}}
+@media print{.technical-section .coverage-table{min-width:0;font-size:9pt}.coverage-table th,.coverage-table td{padding:8px 6px}.coverage-table tr{break-inside:avoid}.coverage-table-wrap{overflow:visible}.coverage-branch-nav{display:none}.coverage-table .coverage-evidence{font-size:8pt}}
 @media(max-width:1100px){.technical-layout{grid-template-columns:185px minmax(0,1fr);gap:35px}.technical-roadmap{gap:8px}.technical-roadmap li{padding:13px}.technical-article{font-size:16px}.technical-equation{font-size:15px}}
 @media(max-width:850px){.technical-layout{grid-template-columns:minmax(0,1fr);gap:32px;margin-top:30px}.technical-toc{position:static;max-height:none;border-block:1px solid var(--line);padding:17px 0}.technical-toc summary{margin:0}.technical-toc details[open] summary{margin-bottom:15px}.technical-toc ol{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.technical-toc .toc-back{margin-top:10px}.technical-roadmap{grid-template-columns:repeat(3,minmax(0,1fr))}.technical-section h2{font-size:40px}.technical-hero{padding-top:44px}}
 @media(max-width:600px){.technical-hero{padding-block:35px 30px}.technical-hero h1{font-size:52px;letter-spacing:-1px}.technical-lead{font-size:17px}.technical-meta{font-size:11px;gap:8px}.technical-meta span{flex-basis:100%}.technical-scope{font-size:13px;padding-left:14px}.technical-roadmap{grid-template-columns:1fr 1fr;gap:8px}.technical-roadmap li{padding:13px}.technical-roadmap li:last-child{grid-column:1/-1}.technical-toc ol{grid-template-columns:1fr}.technical-toc a{font-size:14px}.technical-article{font-size:16px;line-height:1.8}.technical-section{padding-bottom:32px;margin-bottom:34px}.technical-section h2{font-size:37px}.technical-section h3{font-size:28px}.technical-kicker{font-size:10px}.technical-equation{font-size:15px;padding:20px 16px 31px;margin:23px 0}.technical-note{padding:17px 18px;font-size:14px}.technical-key{grid-template-columns:50px 1fr;gap:13px}.technical-key dd{font-size:13px}.technical-reading li{font-size:13px}.technical-reading li strong{font-size:14px}}
