@@ -57,11 +57,14 @@ The current edition explains:
   main terms, and four normalized costs balanced by a square-root chain length.
 - **Galois and local compatibility:** representations, characteristic polynomials,
   Hodge weights, local parameters, and the hypotheses on their comparisons;
+  geometric seeds, congruence approximations, trace limits, semisimple realization,
+  and descent; cuspidal parameters, multisegments, and monodromy;
   normalized cocycles, constrained deformation rings, a graded cotangent quotient,
   integral lifts and length bounds, automorphic rigidity, and trace congruences
   leading to the cohomology budget.
 - **The cotangent-to-trace bound:** graded Euler characteristics with kernel
-  corrections, elementary-divisor layers, an explicit monomial count, localized
+  corrections, admissibility in large degrees, order independence and positivity,
+  elementary-divisor layers, an explicit monomial count, localized
   multiplicities, and the factor of two in the trace-valuation estimate.
 - **Automorphy and rigidity:** tangent cocycles, the polarized adjoint, local
   Selmer conditions, separate rank-three and rank-two vanishing arguments,
@@ -72,10 +75,15 @@ The current edition explains:
 - **Auxiliary primes and dual Selmer control:** local trace tests, integral block
   operators, detection of divisible classes, Chebotarev choices, uniform torsion
   bounds, and the resulting control of cotangent generators.
+- **Patching to freeness:** finite-level group-algebra modules, compatible
+  truncations, resultant-controlled comparisons, characteristic-zero localization,
+  and the embedding-dimension check in Brochard's criterion.
 - **Theta matching:** convergent integrals, nonzero proportionality constants,
-  test vectors, periods in a common lattice, correlation bounds, and mean slopes.
+  test vectors, periods in a common lattice, orbit contributions and finite-field
+  convolution, correlation bounds, removed-column losses, and mean slopes.
 - **Covolume estimates:** lattices, slopes, projection losses, and the absorption
-  of exponentially small errors, with component-rank comparisons and local
+  of exponentially small errors; deep covers, component-rank comparisons,
+  finite-degree arithmetic Hilbert–Samuel bounds and integral descent; local
   determinant jets that survive cancellation.
 - **The final deduction:** an explicit small-parameter choice, passage from
   primitive to all characters, and reflection through the functional equation,

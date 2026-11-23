@@ -51,7 +51,7 @@
       <div class="technical-meta">
         <span><strong>Level</strong> Graduate &amp; research</span>
         <span><strong>Prerequisites</strong> Complex analysis; algebraic and automorphic number theory for the deeper sections</span>
-        <span><strong>Edition</strong> 21 November 2026</span>
+        <span><strong>Edition</strong> 23 November 2026</span>
       </div>
       <p class="technical-scope">This edition explains the quantitative route to universal Dirichlet nonvanishing and the contracts supplied by its main dependencies. It also retains a complete explanation of the final conditional critical-line deduction. Source inspection and mathematical exposition are distinct from compiling and auditing the full Lean project.</p>
       <div class="technical-hero-actions">
@@ -202,6 +202,15 @@
     <li><a href="#nv-assembly">One theorem for every character</a><p>The final assembly supplies those inputs, proves the universal nonvanishing statement, and feeds it into the critical-line deduction.</p></li>
   </ol>
   <div class="technical-note"><p><strong>Where the numerical estimate comes from.</strong> The <a href="#arithmetic-fourier">finite Fourier calculation</a> identifies the prime sum, the <a href="#theta-main-cancellation">period normalization</a> cancels its large main terms, and the <a href="#arithmetic-square-root">four normalized costs</a> explain the square-root scale. These are the intermediate calculations connecting the arithmetic inputs to Landau.</p></div>
+  <p><strong>Follow the construction steps.</strong> These six expanded passages explain the maps, limiting arguments, and quantitative comparisons connecting the deeper inputs.</p>
+  <nav class="landau-step-nav adjoint-step-nav" aria-label="Expanded construction arguments"><ol>
+    <li><a href="#galois-construction"><span class="note-nav-number">2.7.4</span><span>Geometry, congruences, and trace limits</span></a></li>
+    <li><a href="#adjoint-faithfulness"><span class="note-nav-number">2.7.12.6.8</span><span>Patching, freeness, and Selmer vanishing</span></a></li>
+    <li><a href="#trace-reorder"><span class="note-nav-number">2.7.13.9</span><span>Euler characteristics and correction terms</span></a></li>
+    <li><a href="#local-existence"><span class="note-nav-number">2.8.4</span><span>Local parameters and monodromy</span></a></li>
+    <li><a href="#theta-correlations"><span class="note-nav-number">2.9.8</span><span>Orbit calculations and period correlations</span></a></li>
+    <li><a href="#geometric-foundations"><span class="note-nav-number">2.10.6</span><span>Deep covers, heights, and integral descent</span></a></li>
+  </ol></nav>
   <div class="dependency-key"><p><strong>How to read this expansion.</strong> The formulas and contracts below are traced to selected declarations in the downloaded source. We explain the analytic implication and the roles of the main dependencies. The construction of every imported representation, cohomology object and geometric estimate is not reproduced; this is a dependency-level exposition, not a new independent verification of the entire Lean development.</p></div>
   <p class="source-callout">Entry points: <a href="sources.html#main-conclusion">the arithmetic assembly</a>, <a href="sources.html#every-character">the universal nonvanishing proposition</a>, and <a href="sources.html#assembly">the final theorem exports</a>.</p>
 </section>
@@ -905,8 +914,156 @@
   <p>Thus a weight on one embedding determines its partner on the conjugate embedding. Above \(\ell\), the theorem identifies these multisets with the appropriate jumps under its comparison hypotheses. In the spherical local case it supplies crystalline and de Rham properties; the separate “nice” case supplies de Rham, potentially semistable, jump, and local-parameter conclusions under additional conditions. It does not declare every local component crystalline.</p>
 
   <h4 id="galois-construction"><span class="note-number">2.7.4</span> Follow the construction from geometry to the final representation.</h4>
-  <p>The inspected construction begins with geometric realizations that supply initial Galois data. It combines these seeds with congruences, passes through a trace-limit theorem, and uses descent and theta lifting to reach a broader representation theorem. Traces are useful because they retain basis-independent information; producing a representation from limiting information is a substantive theorem in this chain.</p>
-  <p>The theta-lift input concerns unitary groups attached to Hermitian and skew spaces over the CM field. For sufficiently large target rank, it supplies a lift when the characters and weights satisfy the prescribed compatibility conditions. This is followed by local compatibility results and a passage to the exact theorem used by the arithmetic window. The assembly therefore supplies the Galois input through theorem constructions. Explaining the assembly does not reproduce the deeper geometric, congruence, trace-limit, or descent proofs.</p>
+  <p>The construction has two different tasks. First, geometric cohomology supplies representations for specially arranged automorphic forms. Then congruences and trace limits remove those extra arrangements. Theta lifting changes the rank, and descent removes auxiliary field conditions. Keeping these tasks separate explains why neither a geometric representation of the wrong dimension nor a collection of matching traces is already the final theorem.</p>
+
+  <h5 id="galois-geometric-piece"><span class="note-number">2.7.4.1</span> Extract the automorphic information from geometric cohomology.</h5>
+  <p>The geometric input contains a tower with Hecke correspondences, a chosen system of Hecke eigenvalues, and an algebraic character used to normalize the result. The cohomology of the tower carries a Galois action. Correspondences defined over the ground field commute with that action, so selecting their eigendata leaves a Galois-stable piece. In the familiar generalized-eigenspace notation, the mechanism is</p>
+  <div class="technical-equation">\[
+    V_\theta=\bigcap_T\ker(T-\theta(T))^{m_T},
+    \qquad \rho(g)T=T\rho(g)
+    \quad\Longrightarrow\quad \rho(g)V_\theta\subseteq V_\theta.
+  \]</div>
+  <p>This formula explains the selection mechanism; the source implements it through its geometric tower and matrix-realization conditions. Passing to the semisimplification retains traces and characteristic polynomials. The first output can have dimension \(d\) larger than the desired automorphic rank \(a\). Further extraction is therefore required.</p>
+  <p>At a suitable place away from \(\ell\), the geometric Hecke–Frobenius relation gives an annihilating polynomial. Schematically,</p>
+  <div class="technical-equation">\[
+    Q_w(F_w)=0
+    \quad\Longrightarrow\quad
+    \text{every eigenvalue of }F_w\text{ is a root of }Q_w.
+  \]</div>
+  <p>An annihilating polynomial controls possible eigenvalues; it does not by itself give their multiplicities or identify the characteristic polynomial. The geometric package also records Hodge occurrences and crystalline comparisons at the specified coefficient-prime places. These additional data are used when extracting the rank-\(a\) seed.</p>
+
+  <h5 id="galois-geometric-normalization"><span class="note-number">2.7.4.2</span> Remove the extra character and arrange usable seeds.</h5>
+  <p>The geometric eigendata include an algebraic Hecke character \(\kappa\). If the geometric polynomial has roots \(\alpha_j\kappa(w)^{-1}\), twisting by the corresponding Galois character restores the intended roots:</p>
+  <div class="technical-equation">\[
+    \{\alpha_j\kappa(w)^{-1}\}_j
+       \xrightarrow{\ \otimes\kappa_\ell\ }
+    \{\alpha_j\}_j.
+  \]</div>
+  <p>Weights must be corrected at the same time: tensoring by a character adds its Hodge–Tate weight to every weight of the representation. Correcting the eigenvalues while leaving the weights unchanged would give the wrong normalization.</p>
+  <p>The first seed theorem works in odd rank with auxiliary field conditions, two selected split places above \(\ell\), specified local automorphic type, separated weights, and genericity conditions at finitely many chosen places. Its output is a continuous semisimple rank-\(a\) representation. It has a dense-set Frobenius comparison and stronger local conclusions at the finite set being controlled. These hypotheses make the geometric extraction possible; the target automorphic representation need not already satisfy all of them.</p>
+  <p>The quantifier order matters. For every finite collection \(Y\) of places we want to inspect, the construction may choose a suitable seed. The eventual representation must work for all places, so the next steps coordinate these separate choices.</p>
+
+  <h5 id="galois-polynomial-approximation"><span class="note-number">2.7.4.3</span> Approximate entire eigenvalue systems, including their relations.</h5>
+  <p>Write \(\theta=(\theta_j)_{j\in J}\) for the target Hecke eigenvalues and \(\eta_i=(\eta_{i,j})_{j\in J}\) for systems carried by usable seeds \(\rho_i\). The congruence theorem supplies more than approximation of each coordinate separately. For every \(\epsilon&gt;0\), it supplies a finite set \(I_\epsilon\) and coefficients \(c_i\) such that, simultaneously for every integral polynomial in finitely many coordinates,</p>
+  <div class="technical-equation">\[
+    \left|P(\theta)-\sum_{i\in I_\epsilon}c_iP(\eta_i)\right|_\ell
+       \le\epsilon,
+    \qquad P\in\mathbb Z[X_j:j\in J].
+  \]</div>
+  <p>This is the source's polynomial approximation condition. The coefficients need not be positive, and the target need not be the limit of a single sequence of eigenforms. Taking \(P=X_j\) controls an individual eigenvalue. Taking a polynomial relation controls how different eigenvalues fit together. That second feature is essential for eventually recovering a representation.</p>
+  <p>The same approximation can include finitely many local power-sum coordinates above \(\ell\), while retaining fixed weights away from the two distinguished places. The congruence theorem also places the target eigenvalues in a finite extension \(L/\mathbb Q_\ell\). This supplies a complete coefficient field in which limits can be taken.</p>
+
+  <h5 id="galois-dense-trace"><span class="note-number">2.7.4.4</span> Extend the prescribed traces from dense arithmetic data.</h5>
+  <p>Suitable Hecke operators give elements \(x_j\in G_E\). For each seed there is a set \(D_i\subseteq J\) on which</p>
+  <div class="technical-equation">\[
+    \eta_{i,j}=\operatorname{tr}\rho_i(x_j)
+       \quad(j\in D_i),
+    \qquad
+    \overline{\{x_j:j\in\bigcap_{i\in I_0}D_i\}}=G_E
+       \quad\text{for every finite }I_0.
+  \]</div>
+  <p>The finite-intersection clause lets one compare several seeds on a common dense set. Their traces are continuous. Consequently, a uniform estimate obtained on that set extends to every group element. The trace-limit theorem constructs \(t:G_E\to L\) with the same approximation bounds:</p>
+  <div class="technical-equation">\[
+    \left|t(g)-\sum_{i\in I_\epsilon}
+           c_i\operatorname{tr}\rho_i(g)\right|_\ell
+       \le\epsilon
+       \qquad(g\in G_E).
+  \]</div>
+  <p>Where a prescribed coordinate is shared by all the relevant seeds, \(t(x_j)=\theta_j\). Completeness prevents the values from escaping the coefficient field; the uniform approximation by continuous traces gives continuity. Density alone would establish uniqueness of a continuous extension, but would not establish that an extension exists. The approximation estimates supply that missing existence argument.</p>
+
+  <h5 id="galois-pseudocharacter"><span class="note-number">2.7.4.5</span> Prove that the limiting function really is a trace.</h5>
+  <p>A continuous function on a Galois group need not be the trace of a representation. Traces of \(a\)-dimensional representations satisfy polynomial identities. Two are</p>
+  <div class="technical-equation">\[
+    t(1)=a,\qquad t(gh)=t(hg).
+  \]</div>
+  <p>A further alternating identity encodes the dimension. One way to write the source's recursive form is</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    A_0(t)&=1,\\
+    A_{m+1}(t;g_0,\ldots,g_m)
+      &=t(g_0)A_m(t;g_1,\ldots,g_m)\\
+      &\quad-\sum_{j=1}^{m}
+         A_m(t;g_1,\ldots,g_0g_j,\ldots,g_m),\\
+    A_{a+1}(t;g_0,\ldots,g_a)&=0.
+    \end{aligned}
+  \]</div>
+  <p>For example, when \(a=1\), the last relation is \(t(g)t(h)=t(gh)\): the trace is a character. In higher rank, it is the corresponding matrix trace identity.</p>
+  <p>Polynomial approximation preserves every such identity. If \(P\) vanishes on all seed traces, then</p>
+  <div class="technical-equation">\[
+    |P(t)|_\ell
+      =\left|P(t)-\sum_i c_iP(\operatorname{tr}\rho_i)\right|_\ell
+      \le\epsilon
+      \quad\text{for every }\epsilon&gt;0,
+    \qquad P(t)=0.
+  \]</div>
+  <p>The function \(t\) is therefore a dimension-\(a\) <em>pseudocharacter</em>, meaning that it satisfies the trace identities. The characteristic-zero realization theorem then supplies a semisimple representation \(r\) with \(\operatorname{tr}r=t\). A separate continuity theorem for semisimple representations upgrades the continuity of this trace to continuity of \(r\). These are genuine steps: taking a linear combination of representation matrices would not preserve the multiplication law.</p>
+  <div class="technical-equation">\[
+    \text{polynomially approximated traces}
+      \Longrightarrow t\text{ is a pseudocharacter}
+      \Longrightarrow
+      r:G_E\to\mathrm{GL}_a(\overline{\mathbb Q}_\ell),
+      \quad r(gh)=r(g)r(h).
+  \]</div>
+
+  <h5 id="galois-local-limit"><span class="note-number">2.7.4.6</span> Carry local information through the limit.</h5>
+  <p>Recovering a global representation does not automatically preserve crystalline behavior or monodromy. The source therefore chooses the approximating seeds separately for each finite set of places. At a place above \(\ell\), it keeps the relevant Hodge jumps fixed and approximates local Frobenius power sums jointly with the global traces. The closedness and comparison results then transfer the specified local conclusions.</p>
+  <p>Power sums explain why this carries polynomial information. If \(\alpha_1,\ldots,\alpha_a\) are eigenvalues, put \(p_j=\sum_i\alpha_i^j\). Newton's identities recover the characteristic-polynomial coefficients \(e_k\):</p>
+  <div class="technical-equation">\[
+    e_0=1,\qquad
+    ke_k=\sum_{j=1}^{k}(-1)^{j-1}e_{k-j}p_j,
+    \qquad
+    \det(T-A)=\sum_{k=0}^{a}(-1)^ke_kT^{a-k}.
+  \]</div>
+  <p>Thus matching the appropriate power sums recovers the polynomial in characteristic zero. It still does not recover the monodromy operator by itself. That is why the proof retains its crystalline, fixed-weight, and local-parameter hypotheses rather than treating trace convergence as a universal local compatibility theorem.</p>
+  <p>Different choices of finite test set must yield the same global semisimple representation up to isomorphism: the prescribed traces agree on dense arithmetic data. This uniqueness allows a local conclusion proved using one convenient family of seeds to be attached to the common representation.</p>
+
+  <h5 id="galois-theta-rank"><span class="note-number">2.7.4.7</span> Reach other ranks by lifting, then removing known characters.</h5>
+  <p>The geometric seed argument starts in odd rank. For an even target rank, the theta input supplies lifts to sufficiently large odd rank, with compatible characters and weights. The relevant weight inequality has the form</p>
+  <div class="technical-equation">\[
+    b+m_W(v)\le2\lambda_{v,k}
+       \qquad\text{for every archimedean }v\text{ and weight index }k,
+  \]</div>
+  <p>where \(b\) is the target rank of the lift. Auxiliary characters are chosen along with \(b\) so that this inequality and the required restrictions of those characters hold. Merely choosing a large rank would not suffice.</p>
+  <p>The lift adds explicit character contributions to the Satake data. The source uses two lifts whose extra character families are disjoint. After matching characteristic polynomials on dense arithmetic data, the resulting representations satisfy an identity of the form</p>
+  <div class="technical-equation">\[
+    P_{R_1(g)}(T)\prod_j(T-\chi_{2,j}(g))
+      =P_{R_2(g)}(T)\prod_i(T-\chi_{1,i}(g)),
+    \qquad \chi_{1,i}\ne\chi_{2,j}.
+  \]</div>
+  <p>Semisimplicity turns this identity into a statement about actual constituents. A character occurring on one side must occur on the other; disjointness prevents it from being absorbed by the other auxiliary family. It must therefore occur inside the corresponding \(R_i\), where it can be split off. Repeating this removes the known lines and leaves the desired lower-rank representation.</p>
+  <div class="technical-equation">\[
+    R_i\simeq r\oplus\bigoplus_j\chi_{i,j},
+    \qquad
+    P_{R_i(g)}(T)=P_{r(g)}(T)\prod_j(T-\chi_{i,j}(g)).
+  \]</div>
+  <p>These equations describe the character-removal step after the prescribed twists. The proof supplies the stable summands before cancelling their polynomial factors. It also transfers continuity, semisimplicity, Hodge jumps and the permitted local comparisons to the remaining summand.</p>
+
+  <h5 id="galois-field-descent"><span class="note-number">2.7.4.8</span> Remove the auxiliary field conditions by compatible descent.</h5>
+  <p>Auxiliary CM extensions arrange splitting and local conditions needed earlier. Constructing a representation over an extension \(E'/E\) gives an action of the smaller group \(G_{E'}\); extending it to \(G_E\) requires compatibility. The source combines automorphic base change, comparisons on overlaps, and representation patching. In schematic form the compatibility being sought is</p>
+  <div class="technical-equation">\[
+    r_{E'}|_{G_{E'E''}}\simeq
+       r_{E''}|_{G_{E'E''}},
+    \qquad
+    r_E|_{G_{E'}}\simeq r_{E'}.
+  \]</div>
+  <p>Matching semisimple traces identifies the overlap representations. The descent theorem handles the further consistency needed to obtain the global action. Local properties are then descended by separate results for unramifiedness, de Rham and crystalline comparisons, and local Frobenius data. They are not all consequences of the abstract existence of \(r_E\).</p>
+
+  <h5 id="galois-construction-output"><span class="note-number">2.7.4.9</span> State what this chain has established, and where its inputs enter.</h5>
+  <p>The resulting assembly has the following shape:</p>
+  <div class="technical-equation">\[
+    \begin{gathered}
+    \text{geometric eigenspaces and local comparisons}
+       \Longrightarrow\text{odd-rank seeds},\\
+    \text{seeds + congruences}
+       \Longrightarrow\text{continuous semisimple trace-limit representations},\\
+    \text{theta lifts + character removal + descent}
+       \Longrightarrow\text{the required ranks and fields},\\
+    \text{local comparison theorems}
+       \Longrightarrow\text{the precise conclusions in section 2.7.5}.
+    \end{gathered}
+  \]</div>
+  <p>At this assembly entry point, the geometric realization package and the theta-lift existence statement remain explicit hypotheses, named <code>GeoOne</code> and <code>TLiftK</code> in the source. Writing a proposition or packaging its conclusions is not a proof of it. The geometric package is itself assembled from the geometric tower, Hodge, correspondence and realization results; the theta package carries its own character and weight conditions. The steps above explain how those inputs are used and why the intermediate constructions work. They do not infer that the final short assembly theorem proves all of arithmetic geometry or theta lifting on its own.</p>
+  <p class="source-callout">Three useful checks: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/TraceLimits/LimFinOddOf.lean#L118">the passage from seed traces to a representation</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/ExistsLimitRep.lean#L15">pseudocharacter realization and continuity</a>; and <a href="sources.html#nv-galois-construction">the final conditional assembly</a>.</p>
 
   <h4 id="galois-local-restrictions"><span class="note-number">2.7.5</span> Keep the local conclusions at their stated strength.</h4>
   <p>At a place \(v\nmid\ell\), write \(X_v\) for the Weil–Deligne data from \(r\), and \(Y_v\) for the parameter of the algebraically normalized local automorphic representation. The comparison always gives</p>
@@ -1595,30 +1752,175 @@
   <div class="technical-note"><p><strong>The role of the auxiliary primes.</strong> They turn selected Frobenius trace measurements into local dual Selmer equations. Image control makes the measurements detect every divisible direction; Chebotarev places them at actual primes; bounded resultants keep the integral losses fixed. The remaining dual group has bounded length, which gives uniform control of the deformation variables.</p></div>
   <p class="source-callout">For the mathematical comparison theorem: <a href="sources.html#ref-selmer-duality">Newton–Thorne, §2.4</a>, for dual local conditions and finite-level control; <a href="https://arxiv.org/html/2207.04925v1#S5">Thorne, Lemma 5.5 and Proposition 5.6</a>, for detecting elements and the bounded cotangent conclusion.</p>
 
-  <h6 id="adjoint-faithfulness"><span class="note-number">2.7.12.6.8</span> Show explicitly how freeness and semisimplicity force vanishing.</h6>
-  <p>The algebraic conclusion can now be checked directly. After the proof's reductions, let \((R,\mathfrak m,E)\) be the completed local algebra at the chosen characteristic-zero eigensystem, and let \(M\) be its automorphic module. The comparison supplies</p>
+  <h6 id="adjoint-faithfulness"><span class="note-number">2.7.12.6.8</span> Construct the free module, then force the tangent to vanish.</h6>
+  <p>We now connect the bounded auxiliary errors to the faithful automorphic module. This is the patching mechanism in Thorne's adjoint-vanishing theorem. Keep the coefficient field \(E\), its integer ring \(\mathcal O\), and uniformizer \(\varpi\) fixed. The two kinds of variables below have different jobs: \(x_i\) generate Galois deformations, while \(t_i\) record characters of the auxiliary level groups.</p>
+  <nav class="landau-step-nav auxiliary-step-nav" aria-label="From patching to a free automorphic module"><ol>
+    <li><a href="#patching-rings"><span class="note-nav-number">2.7.12.6.8.1</span><span>Keep both parameter rings</span></a></li>
+    <li><a href="#patching-finite-level"><span class="note-nav-number">2.7.12.6.8.2</span><span>Start with free level modules</span></a></li>
+    <li><a href="#patching-limit"><span class="note-nav-number">2.7.12.6.8.3</span><span>Patch compatible finite quotients</span></a></li>
+    <li><a href="#patching-generators"><span class="note-nav-number">2.7.12.6.8.4</span><span>Remove the bounded cotangent error</span></a></li>
+    <li><a href="#patching-localize"><span class="note-nav-number">2.7.12.6.8.5</span><span>Localize the module comparison</span></a></li>
+    <li><a href="#patching-first-order"><span class="note-nav-number">2.7.12.6.8.6</span><span>Use a square-zero neighborhood</span></a></li>
+    <li><a href="#patching-criterion"><span class="note-nav-number">2.7.12.6.8.7</span><span>Apply the freeness criterion</span></a></li>
+    <li><a href="#patching-descend"><span class="note-nav-number">2.7.12.6.8.8</span><span>Return to the original level</span></a></li>
+    <li><a href="#patching-vanish"><span class="note-nav-number">2.7.12.6.8.9</span><span>Combine faithfulness and semisimplicity</span></a></li>
+  </ol></nav>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-rings"><span class="note-number">2.7.12.6.8.1</span> Keep both parameter rings.</div>
+  <p>For each precision \(N\), the auxiliary set \(Q_N\) has the same number \(q\) of primes. Its finite abelian \(\ell\)-group \(\Delta_N\) acts by changing the auxiliary level. Choose a quotient map from \(\mathbb Z_\ell^q\) for each \(N\), giving</p>
   <div class="technical-equation">\[
-    M\simeq R^d,\qquad d>0.
+    S_\infty=\mathcal O[[\mathbb Z_\ell^q]]
+       \simeq\mathcal O[[t_1,\ldots,t_q]],\qquad
+    \mathfrak a=(t_1,\ldots,t_q),\qquad
+    S_\infty\twoheadrightarrow\mathcal O[\Delta_N].
   \]</div>
-  <p>This makes the action faithful: if \(a\in R\) kills \(M\), apply \(a\) to the first basis vector of \(R^d\); its first coordinate is \(a\), so \(a=0\). Thus</p>
+  <p>Here \(1+t_i\) is a chosen group generator. Setting all \(t_i=0\) makes the auxiliary characters trivial. The deformation ring \(R_N\) receives this action and also a map from \(R_\infty=\mathcal O[[x_1,\ldots,x_q]]\). The preceding cotangent estimate concerns the latter map; it says nothing by itself about flatness over \(S_\infty\).</p>
+  <p>There is also a finite algebra recording the chosen factorization of each Frobenius polynomial. Write \(\mathcal A_0\) for its coefficient algebra and \(\mathcal B_0\) for the algebra of the two factors, and put</p>
   <div class="technical-equation">\[
-    \operatorname{Ann}_R(M)=0.
+    R_0=R(\varnothing)\otimes_{\mathcal A_0}\mathcal B_0,\qquad
+    P_0=\ker(R_0\longrightarrow\mathcal O).
   \]</div>
-  <p>On the other hand, semisimplicity at the selected eigensystem says that \(R\) acts on every simple constituent through the residue character \(\lambda:R\to E\). Every \(a\in\mathfrak m=\ker\lambda\) therefore kills every constituent, hence all of \(M\). Combining the two conclusions gives</p>
+  <p>This marks the selected eigensystem together with its blocks. In characteristic zero the factors have nonzero resultant, so marking them is étale near that point: it adds a choice of block, not a new infinitesimal deformation.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-finite-level"><span class="note-number">2.7.12.6.8.2</span> Start with free level modules.</div>
+  <p>Let \(S_{N,1}\) be the localized space of integral automorphic forms at the deeper auxiliary level, and \(S_{N,0}\) the corresponding shallower space. At a sufficiently small fixed level, the level quotient acts freely on the relevant double-coset fibers. Functions on one free \(\Delta_N\)-orbit form a copy of its group algebra; the fixed coefficient lattice contributes additional copies. The resulting module statement and trace comparison are</p>
   <div class="technical-equation">\[
-    \mathfrak mM=0
-       \ \Longrightarrow\
-    \mathfrak m\subseteq\operatorname{Ann}_R(M)=0
-       \ \Longrightarrow\
-    R=E.
+    S_{N,1}\text{ is finite free over }\mathcal O[\Delta_N],
+    \qquad
+    S_{N,1}/\mathfrak aS_{N,1}\simeq S_{N,0}.
   \]</div>
-  <p>There is no maximal-ideal direction left in which to deform. Using the tangent comparison,</p>
+  <p>The trace map sums along a fiber. On functions on \(\Delta_N\), it sends a delta function to \(1\); after passing to coinvariants, this is an isomorphism. No division by \(|\Delta_N|\) is needed. That matters because \(|\Delta_N|\) is usually divisible by \(\ell\).</p>
+  <p>A second comparison relates \(S_{N,0}\) to the original-level forms with the Frobenius factorization adjoined. Its integral kernel and cokernel are controlled by resultants. These are the possible losses when two blocks are distinct in \(E\) but very close modulo \(\varpi\).</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-limit"><span class="note-number">2.7.12.6.8.3</span> Patch finite quotients before taking the limit.</div>
+  <p>The sets \(Q_N\) change with \(N\), so the \(R_N\) are not a tower with canonical transition maps. Patching first compares their finite-precision data. To describe the construction, write</p>
+  <div class="technical-equation">\[
+    \mathcal U((X_N)_N)=
+      \mathbf O_{\mathcal F}\otimes_{\prod_N\mathcal O}\prod_N X_N.
+  \]</div>
+  <p>Here \(\mathcal F\) is a nonprincipal ultrafilter, and \(\mathbf O_{\mathcal F}\) is the product ring localized at the idempotents of sets in \(\mathcal F\). This operation disregards any finite initial set of indices and selects coherent finite-precision behavior. It does not identify whole rings \(R_N\) with one another. With \(\mathfrak n=(\varpi,t_1,\ldots,t_q)\), the patched modules are</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    M_1&=\varprojlim_m\mathcal U
+         \bigl((S_{N,1}/\mathfrak n^mS_{N,1})_{N\ge m}\bigr),\\
+    M_0&=\varprojlim_m\mathcal U
+         \bigl((S_{N,0}/\varpi^mS_{N,0})_{N\ge m}\bigr),\\
+    M&\simeq S_{\varnothing}\otimes_{\mathcal A_0}\mathcal B_0.
+    \end{aligned}
+  \]</div>
+  <p>For fixed \(m\), the sufficiently deep group algebras surject onto \(S_\infty/\mathfrak n^m\). Freeness at finite level therefore gives flat modules over this fixed Artinian ring. Products preserve flatness over a Noetherian ring, and the ultrafilter localization is a filtered localization. The truncations also satisfy</p>
+  <div class="technical-equation">\[
+    M_{1,m+1}/\mathfrak n^mM_{1,m+1}\simeq M_{1,m}.
+  \]</div>
+  <p>The adic flatness criterion now applies to this compatible inverse system. Together with the finite-level trace maps it gives</p>
+  <div class="technical-equation">\[
+    M_1\text{ is }S_\infty\text{-flat},\qquad
+    M_1/\mathfrak aM_1\simeq M_0,\qquad f:M\longrightarrow M_0.
+  \]</div>
+  <p>These flatness and comparison statements are the module input to patching. Their finite-level and inverse-limit forms are developed in <a href="https://arxiv.org/html/1912.11265v3#S4">Newton–Thorne, §4</a>.</p>
+  <p>One patches the rings using a filtration that makes these module actions continuous. For example, put \(u_N=\prod_{v\in Q_N}\operatorname{Res}_v^2\), and let \(J_N\) be the image of the maximal ideal of the unrestricted ring \(R_{S\cup Q_N}\). The relevant construction is</p>
+  <div class="technical-equation">\[
+    R^{\mathrm p}=\varprojlim_m\mathcal U
+          \bigl((R_N/(J_Nu_N)^m)_N\bigr),
+    \qquad R^{\mathrm p}\twoheadrightarrow R_0.
+  \]</div>
+  <p>The resultant factor in the filtration controls the comparison errors uniformly. The actions on \(M_1,M_0,M\) and the map \(f\) are compatible with this ring. The action on \(M\) factors through \(R_0\).</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-generators"><span class="note-number">2.7.12.6.8.4</span> Remove the bounded cotangent error at the characteristic-zero point.</div>
+  <p>Let \(P^{\mathrm p}\) be the preimage of \(P_0\), and \(P_\infty=(x_1,\ldots,x_q)\). The patched ideal and its powers are obtained from the products of the corresponding \(P_N\) and their powers. Thus the uniform bound from §2.7.12.6.7.10 becomes</p>
+  <div class="technical-equation">\[
+    \varpi^C\,
+      \frac{P^{\mathrm p}}
+      {(P^{\mathrm p})^2+(x_1,\ldots,x_q)}
+      =0
+    \quad\text{for one fixed }C.
+  \]</div>
+  <p>Localizing at \(P^{\mathrm p}\) inverts \(\varpi\). The remaining cotangent directions are therefore generated by the \(q\) images of \(x_i\). The complete-local comparison upgrades this to a surjection</p>
+  <div class="technical-equation">\[
+    E[[x_1,\ldots,x_q]]
+       \twoheadrightarrow
+    B:=\widehat{(R^{\mathrm p})_{P^{\mathrm p}}},
+    \qquad \operatorname{edim}B\le q.
+  \]</div>
+  <p>The algebra behind the upgrade is successive approximation: generators of the maximal ideal modulo its square generate each successive power modulo the next, so one lifts any element degree by degree and uses completeness. The patching proposition establishes the needed complete Noetherian local structure. The bounded error is used here, not as a substitute for the module flatness established above.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-localize"><span class="note-number">2.7.12.6.8.5</span> Make the module comparison exact near the selected point.</div>
+  <p>The patched element \(u=(u_N)_N\) kills \(\ker f\) and \(\operatorname{coker}f\). Its value at the selected eigensystem is nonzero: the fixed Frobenius factorizations have nonzero resultants, and the chosen congruences preserve them to arbitrarily high precision. Hence \(u\notin P^{\mathrm p}\), so localization makes \(u\) invertible. Consequently</p>
+  <div class="technical-equation">\[
+    \mathfrak M:=M_{P_0}\simeq(M_0)_{P^{\mathrm p}}.
+  \]</div>
+  <p>This explains why a uniformly bounded integral error is harmless at this point. One needs a common annihilator whose value there is nonzero; merely knowing that every individual finite-level error is finite would not give this conclusion.</p>
+  <p>Retain the first neighborhood of the trivial auxiliary character by setting</p>
+  <div class="technical-equation">\[
+    \mathfrak M_1=(M_1/\mathfrak a^2M_1)_{P^{\mathrm p}},
+    \qquad
+    \mathfrak M_1/\mathfrak a\mathfrak M_1\simeq\mathfrak M.
+  \]</div>
+  <p>The module \(\mathfrak M\) is a nonzero finite-dimensional \(E\)-space: the original automorphic eigensystem survives at the selected point. Thus \(\mathfrak M_1\) is nonzero as well.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-first-order"><span class="note-number">2.7.12.6.8.6</span> Use a square-zero neighborhood to obtain finite freeness.</div>
+  <p>After localizing the auxiliary ring at its augmentation ideal, its first neighborhood is</p>
+  <div class="technical-equation">\[
+    A=(S_\infty)_{\mathfrak a}/\mathfrak a^2
+      \simeq
+       E[t_1,\ldots,t_q]/(t_it_j:1\le i,j\le q).
+  \]</div>
+  <p>Its maximal ideal \(\mathfrak n_A\) has square zero, and its embedding dimension is \(q\). Flatness of \(M_1\) passes to \(\mathfrak M_1\) over \(A\). This module is also finite: lift an \(E\)-basis of \(\mathfrak M=\mathfrak M_1/\mathfrak n_A\mathfrak M_1\) to a submodule \(L\). Then</p>
+  <div class="technical-equation">\[
+    \mathfrak M_1=L+\mathfrak n_A\mathfrak M_1
+       =L+\mathfrak n_A L+\mathfrak n_A^2\mathfrak M_1=L.
+  \]</div>
+  <p>A finite flat module over a local ring is free. In particular, for \(h=\dim_E\mathfrak M>0\),</p>
+  <div class="technical-equation">\[
+    \mathfrak M_1\simeq A^h,\qquad
+    \dim_E\mathfrak M_1=(q+1)h.
+  \]</div>
+  <p>Keeping \(\mathfrak a^2\), rather than immediately setting \(\mathfrak a=0\), retains the independent first-order level directions needed by the next criterion.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-criterion"><span class="note-number">2.7.12.6.8.7</span> Transfer freeness to the deformation algebra.</div>
+  <p>The localized deformation-ring action on \(\mathfrak M_1\) extends to its completion \(B\). To see why, \(\mathfrak M_1\) is finite-dimensional over \(E\), so the image of the local ring in \(\operatorname{End}_E(\mathfrak M_1)\) is a finite-dimensional local algebra. Its maximal ideal is nilpotent; a power of \(P^{\mathrm p}\) therefore kills \(\mathfrak M_1\), and the action factors through that same finite quotient of the completion.</p>
+  <p>Write \(B_1=B/\mathfrak a^2B\). We have a local map \(A\to B_1\), and \(\mathfrak M_1\) is a finite \(B_1\)-module that is free over \(A\). The number of available deformation generators gives</p>
+  <div class="technical-equation">\[
+    \operatorname{edim}B_1
+       \le\operatorname{edim}B
+       \le q=\operatorname{edim}A.
+  \]</div>
+  <p><strong>The precise freeness criterion.</strong> For a local map of Noetherian local rings \(A\to B_1\), a nonzero finite \(B_1\)-module that is flat over \(A\) is flat over \(B_1\) if \(\operatorname{edim}B_1\le\operatorname{edim}A\). This is <a href="https://arxiv.org/abs/1607.02044">Brochard's Theorem 1.1</a>. Finiteness over the local ring then makes the module free.</p>
+  <p>All three requirements now have separate justifications: nonzero automorphic forms, flatness from auxiliary levels, and an embedding-dimension bound from dual Selmer control. The criterion yields</p>
+  <div class="technical-equation">\[
+    \mathfrak M_1\simeq B_1^d,\quad d>0
+       \quad\Longrightarrow\quad
+    \mathfrak M\simeq(B/\mathfrak aB)^d.
+  \]</div>
+  <p>Intuitively, the automorphic module already accommodates every independent first-order level parameter without a relation. The deformation algebra has no larger supply of generators. The criterion is what turns this numerical match and flatness into the assertion that the module has no hidden relations over that algebra.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-descend"><span class="note-number">2.7.12.6.8.8</span> Return to the original deformation problem.</div>
+  <p>Put \(R=\widehat{(R_0)_{P_0}}\). Trivial auxiliary characters give a surjection \(B/\mathfrak aB\twoheadrightarrow R\), through which the action on \(\mathfrak M\) factors. If \(I\) is its kernel, then \(I\mathfrak M=0\). But the displayed free module has positive rank, so</p>
+  <div class="technical-equation">\[
+    I\mathfrak M=0,\quad
+    \mathfrak M\simeq(B/\mathfrak aB)^d
+       \quad\Longrightarrow\quad I=0.
+  \]</div>
+  <p>Indeed, applying \(a\in I\) to the first basis vector leaves \(a\) as its first coordinate. Thus \(a=0\). We have proved the required comparison</p>
+  <div class="technical-equation">\[
+    B/\mathfrak aB\simeq R,\qquad \mathfrak M\simeq R^d,\quad d>0.
+  \]</div>
+  <p>The module comparison, the cotangent presentation, and the application of the criterion are assembled in <a href="https://arxiv.org/html/2207.04925v1#S6">Thorne, §6.7, Propositions 6.10–6.12</a>. This explains the literature theorem used here; it does not identify a particular internal Lean patching implementation.</p>
+
+  <div class="technical-substep" role="heading" aria-level="7" id="patching-vanish"><span class="note-number">2.7.12.6.8.9</span> Combine faithfulness with semisimplicity.</div>
+  <p>Freeness gives \(\operatorname{Ann}_R(\mathfrak M)=0\). At the original level, the characteristic-zero Hecke action is semisimple. Adjoining the marked factors preserves this at \(P_0\), because their nonzero resultants make the extension étale there. After localization at the chosen eigensystem, every simple constituent is acted on through the same residue character \(R\to E\). Therefore the maximal ideal \(\mathfrak m_R\) kills the whole semisimple module:</p>
+  <div class="technical-equation">\[
+    \mathfrak m_R\mathfrak M=0
+       \quad\Longrightarrow\quad
+    \mathfrak m_R\subseteq\operatorname{Ann}_R(\mathfrak M)=0
+       \quad\Longrightarrow\quad R=E.
+  \]</div>
+  <p>The tangent comparison from the previous sections, unchanged by the étale marking of the factors, now gives</p>
   <div class="technical-equation">\[
     H^1_{\mathrm{BK}}(F^+,W_E)
-      \simeq\operatorname{Hom}_E(\mathfrak m/\mathfrak m^2,E)
-      =0.
+      \simeq\operatorname{Hom}_E(\mathfrak m_R/\mathfrak m_R^2,E)=0.
   \]</div>
-  <p>These implications explain the role of each ingredient. Automorphy provides the module; patching proves that it detects the deformation algebra faithfully; semisimplicity makes the maximal ideal act trivially. Faithfulness and trivial action are compatible only when that ideal is zero. We have used the substantive comparison theorem, not assumed the desired Galois rigidity in advance.</p>
+  <p>This closes the chain: auxiliary primes control generators; automorphic level modules supply flatness; patching and the freeness criterion make the action faithful; semisimplicity removes the maximal ideal. Integral torsion can still remain before inverting \(\varpi\), which is why the later length estimate is necessary.</p>
 
   <h6 id="adjoint-return"><span class="note-number">2.7.12.6.9</span> Transfer the conclusion to the tangent used in the trace bound.</h6>
   <p>Vanishing after the auxiliary field reductions descends to the original field. For a finite extension \(F^+/\mathbb Q\), restriction preserves the local Selmer conditions and corestriction satisfies</p>
@@ -1970,12 +2272,181 @@
   <p>This calculation explains the lower power of two. The parameters \(\alpha,\beta\) cancel because the weight-two equations take exactly the corresponding finite differences. The extra positive coordinates and the nonlinear section determine the constant that remains.</p>
 
   <h5 id="trace-reorder"><span class="note-number">2.7.13.9</span> Compare cutting the trace first with cutting the equations first.</h5>
-  <p>A technical preparation prevents an unjustified injectivity assumption. The source can replace \(a\) by a weight-zero \(a'\) satisfying</p>
+  <p>The lower count in the preceding subsection lives in the leading-term quotient \(\overline P\). The upper count will live in \(\mathcal M=\mathcal P/(\mathbf t)\), where \(\mathcal P=\mathscr R/J\). We need to connect these modules without losing the kernel corrections in the Euler characteristic. The argument below explains both inequality signs and why all its lengths are finite in sufficiently large multidegrees.</p>
+
+  <h6 id="trace-reorder-prepare"><span class="note-number">2.7.13.9.1</span> Choose a trace representative that is injective before the equation cuts.</h6>
+  <p>We first arrange</p>
   <div class="technical-equation">\[
-    a'-a\in I,\qquad x(a')=0,\qquad \phi(a')\ne0.
+    a'-a\in I,\qquad a'\in A_0,\qquad x(a')=0,
+    \qquad \phi(a')\ne0.
   \]</div>
-  <p>Every solution \(f\) of \(I\) still has \(f(a')=f(a)\), so the final trace valuations are unchanged. Set \(\mathcal P=\mathscr R/J\) and \(\mathcal M=\mathcal P/(\mathbf t)\). Because the chart's power-series target is a domain and \(\phi(a')\ne0\), multiplication by \(a'\) is injective on \(\mathcal P\). This need not remain true on \(\mathcal M\).</p>
-  <p>Since \(a'\in\mathfrak q\), there is a surjection \(\mathcal P/a'\mathcal P\to\overline P\). The source's eventual Euler monotonicity, order-independence and positivity now give the complete middle comparison:</p>
+  <p>If \(\phi(a)\ne0\), take \(a'=a\). Otherwise, the nonzero negative cotangent direction and spanning by the \(F_i\) imply that some \(F_i\) has \(\phi(F_i)\ne0\). Indeed, if every \(\phi(F_i)\) vanished, every linear coefficient they span would vanish, contradicting the chart's negative coordinate. The chart also has a positive coordinate, so choose \(g\in A_1\) with \(\phi(g)\ne0\). Then</p>
+  <div class="technical-equation">\[
+    a'=a+gF_i,\qquad
+    gF_i\in I\cap A_0,\qquad
+    \phi(a')=\phi(g)\phi(F_i)\ne0.
+  \]</div>
+  <p>The product has weight zero, and its base value is zero because nonzero-weight functions vanish at the base point. For every solution \(f\) of \(I\), we still have \(f(a')=f(a)\). Thus this change preserves exactly the trace valuations used in the final bound.</p>
+  <p>The ideal \(J\) consists of Rees expressions whose coefficients vanish under \(\phi\). If \(a'p\in J\), applying \(\phi\) coefficient by coefficient gives \(\phi(a')\phi(p_{\mathbf n})=0\). The power-series target is a domain, so every \(\phi(p_{\mathbf n})=0\), and \(p\in J\). Consequently,</p>
+  <div class="technical-equation">\[
+    \mathcal P[a']=0,
+    \qquad
+    \chi((a'),\mathbf t;\mathcal P)_{\mathbf n}
+      =\chi(\mathbf t;\mathcal P/a'\mathcal P)_{\mathbf n}.
+  \]</div>
+  <p>This proves injectivity at this stage. Later quotients can acquire \(a'\)-torsion, which the final Euler characteristic will retain with a minus sign.</p>
+
+  <h6 id="trace-reorder-admissibility"><span class="note-number">2.7.13.9.2</span> State the condition that makes the eventual lengths finite.</h6>
+  <p>Let \(\mathfrak b\) be the maximal ideal of the local ring \(B=A_0\). In the standard \(\mathbb N^3\)-graded Rees algebra define</p>
+  <div class="technical-equation">\[
+    \mathfrak r=
+       (\mathscr R_{e_0})(\mathscr R_{e_1})(\mathscr R_{e_2}).
+  \]</div>
+  <p>Each parenthesis denotes the ideal generated by that homogeneous piece. A power of \(\mathfrak r\) requires positive degree in all three directions. For a finitely generated graded module \(N\) and a list of homogeneous sections \(\mathbf s\), the required admissibility condition is</p>
+  <div class="technical-equation">\[
+    \exists L\ge0:\qquad
+    \bigl((\mathfrak b\mathscr R)\mathfrak r\bigr)^L
+       \subseteq \operatorname{Ann}_{\mathscr R}(N)+(\mathbf s).
+  \]</div>
+  <p>This condition survives each step of the Euler recursion. If the next section is \(s\), both \(N/sN\) and \(N[s]\) are annihilated by \(\operatorname{Ann}(N)+(s)\). We can therefore remove \(s\) from the list and use the same containment for either resulting module. Degree shifts preserve annihilators.</p>
+  <p>At the end of any branch, no sections remain. The terminal module \(V\) satisfies \(\mathfrak b^L\mathfrak r^L V=0\). Choose finitely many homogeneous generators of \(V\). Once every coordinate of \(\mathbf n\) exceeds their degrees by at least \(L\), standard grading gives</p>
+  <div class="technical-equation">\[
+    V_{\mathbf n}\subseteq\mathfrak r^L V,
+    \qquad \mathfrak b^L V_{\mathbf n}=0.
+  \]</div>
+  <p>Each graded piece is a finite \(B\)-module. Its filtration by powers of \(\mathfrak b\) now has finitely many layers, each finite-dimensional over \(B/\mathfrak b\); hence its length is finite. The recursion has finitely many branches, so one componentwise lower bound on \(\mathbf n\) works for all of them. Intermediate modules need not themselves have finite-length graded pieces before the remaining cuts are made.</p>
+
+  <h6 id="trace-reorder-support"><span class="note-number">2.7.13.9.3</span> Explain why this model satisfies admissibility.</h6>
+  <p>For the present comparison, the source establishes the concrete containment</p>
+  <div class="technical-equation">\[
+    \bigl((\mathfrak b\mathscr R)\mathfrak r\bigr)^L
+       \subseteq J+(\mathbf t,a').
+  \]</div>
+  <p>The proof tests prime ideals containing the right side. A prime containing \(\mathfrak r\) already contains the product on the left. At a prime not containing \(\mathfrak r\), each Rees direction survives. The equations then force its contraction to \(B\) to contain the degree-zero part of \(I\). Finiteness of the degree-zero quotient gives two possibilities: the contraction is \(\mathfrak b\), or it is the kernel of a characteristic-zero character \(\tau:B\to\overline E\).</p>
+  <p>In the second case, suppose some product \(fg\), with \(f\in A_{-2}\) and \(g\in A_2\), survives under \(\tau\). The graded point-lifting argument extends \(\tau\) to a two-sided solution \(\xi\) of \(I\). Since the prime also contains \(a'\), this would give</p>
+  <div class="technical-equation">\[
+    \xi(I)=0,\qquad \xi\text{ two-sided},\qquad
+    \xi(a')=\tau(a')=0,
+  \]</div>
+  <p>contradicting the trace-nonvanishing hypothesis at two-sided points. If every such product vanishes, the model's separate control of the base point and one-sided loci applies: surviving Rees directions would produce positive and negative one-sided lifts with the same degree-zero character. The one-sided separation condition excludes their coexistence away from the base; at the base, the negative cotangent-spanning condition excludes the negative lift. Thus a relevant prime over all the cuts must instead contract to \(\mathfrak b\). These are precisely the places where the model's support and cotangent hypotheses enter this comparison.</p>
+  <p>Every prime over \(J+(\mathbf t,a')\) therefore contains \((\mathfrak b\mathscr R)\mathfrak r\), placing this product in the radical of that ideal. It is finitely generated, so radical containment gives the displayed power containment. Explicitly, if generators \(u_i\) satisfy \(u_i^{n_i}\in J+(\mathbf t,a')\), any product of \(1+\sum_i(n_i-1)\) generators contains one of those powers.</p>
+
+  <h6 id="trace-reorder-additivity"><span class="note-number">2.7.13.9.4</span> Track the connecting map that makes Euler characteristics additive.</h6>
+  <p>For a graded exact sequence \(0\to N'\to N\to N''\to0\) and a section \(s\) of multidegree \(\delta\), the multiplication diagrams give the exact sequence</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    0\longrightarrow N'[s](-\delta)
+      &\longrightarrow N[s](-\delta)
+       \longrightarrow N''[s](-\delta)\\
+      &\longrightarrow N'/sN'
+       \longrightarrow N/sN
+       \longrightarrow N''/sN''\longrightarrow0.
+    \end{aligned}
+  \]</div>
+  <p>The connecting map is essential. A class killed by \(s\) in \(N''\) can lift to an element of \(N\) whose product by \(s\) is nonzero in \(N'\). The connecting map records that product modulo \(sN'\). Thus quotienting by \(s\) alone need not preserve the original short exact sequence.</p>
+  <p>Taking alternating lengths makes the connecting contributions cancel. Applying the same argument to the remaining sections proves, by induction,</p>
+  <div class="technical-equation">\[
+    \chi(\mathbf s;N)_{\mathbf n}
+      =\chi(\mathbf s;N')_{\mathbf n}
+       +\chi(\mathbf s;N'')_{\mathbf n}
+       \qquad(\mathbf n\text{ sufficiently large}).
+  \]</div>
+  <p>Admissibility supplies the finite lengths needed at the terminal steps of this induction. This is why the subtraction of annihilator terms in §2.7.13.4 is indispensable.</p>
+
+  <h6 id="trace-reorder-permute"><span class="note-number">2.7.13.9.5</span> Check why exchanging two cuts preserves the answer.</h6>
+  <p>For sections \(s,t\) of multidegrees \(\delta,\eta\), their two-step multiplication complex is</p>
+  <div class="technical-equation">\[
+    0\longrightarrow N(-\delta-\eta)
+      \xrightarrow{\ z\mapsto(-tz,sz)\ }
+        N(-\delta)\oplus N(-\eta)
+      \xrightarrow{\ (x,y)\mapsto sx+ty\ }N
+      \longrightarrow0.
+  \]</div>
+  <p>The composite is zero because \(st=ts\). Write its homology modules as \(H_0,H_1,H_2\). Here \(H_0=N/(s,t)N\), \(H_2\) is the common annihilator with the indicated shift, and \(H_1\) records relations between the two cuts modulo the evident relations \((-tz,sz)\).</p>
+  <p>Expanding the quotient-minus-kernel recursion and using exact-sequence additivity gives, for any remaining list \(\mathbf v\),</p>
+  <div class="technical-equation">\[
+    \chi((s,t),\mathbf v;N)_{\mathbf n}
+       =\chi(\mathbf v;H_0)_{\mathbf n}
+        -\chi(\mathbf v;H_1)_{\mathbf n}
+        +\chi(\mathbf v;H_2)_{\mathbf n}.
+  \]</div>
+  <p>Swapping the two middle coordinates and changing the sign on the left identifies this complex with the one for \((t,s)\). All three homology contributions are preserved. Any permutation is a finite sequence of adjacent swaps, so, after choosing one sufficiently large multidegree threshold,</p>
+  <div class="technical-equation">\[
+    \chi((a'),\mathbf t;\mathcal P)_{\mathbf n}
+       =\chi(\mathbf t,(a');\mathcal P)_{\mathbf n}.
+  \]</div>
+  <p>The sections need not form a regular sequence. Their failure to be regular is already included in the homology and annihilator terms.</p>
+
+  <h6 id="trace-reorder-positivity"><span class="note-number">2.7.13.9.6</span> Prove the nonnegativity used to compare modules.</h6>
+  <p>An alternating sum of lengths is not automatically nonnegative. Here the proof reduces a finitely generated graded module to its homogeneous prime factors. A finite graded prime filtration has factors \((\mathscr R/\mathfrak p)(-\gamma)\). Additivity reduces the question to these factors, and a fixed shift only changes how large \(\mathbf n\) must be.</p>
+  <p>If \(\mathfrak r\subseteq\mathfrak p\), the factor vanishes in sufficiently large multidegrees. Otherwise put \(D=\mathscr R/\mathfrak p\), a graded domain. Consider the first section \(s\), of degree \(\delta\). If \(s\notin\mathfrak p\), multiplication is injective, and</p>
+  <div class="technical-equation">\[
+    \chi((\delta,s),\mathbf v;D)_{\mathbf n}
+       =\chi(\mathbf v;D/sD)_{\mathbf n}.
+  \]</div>
+  <p>If \(s\in\mathfrak p\), it acts as zero. Because \(\mathfrak r\not\subseteq\mathfrak p\) and \(\delta\) is componentwise nonnegative, products of surviving degree-\(e_i\) elements give a section \(\sigma\) of degree \(\delta\) outside \(\mathfrak p\). For degree zero, take \(\sigma=1\). The exact sequence \(0\to D(-\delta)\xrightarrow{\sigma}D\to D/\sigma D\to0\) then gives</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \chi((\delta,s),\mathbf v;D)_{\mathbf n}
+      &=\chi(\mathbf v;D)_{\mathbf n}
+        -\chi(\mathbf v;D(-\delta))_{\mathbf n}\\
+      &=\chi(\mathbf v;D/\sigma D)_{\mathbf n}.
+    \end{aligned}
+  \]</div>
+  <p>Both cases replace the original expression by one with a shorter section list. Admissibility passes to the resulting quotient. Repeating the argument ends at ordinary finite lengths, which are nonnegative. Summing over the prime filtration proves</p>
+  <div class="technical-equation">\[
+    \chi(\mathbf s;N)_{\mathbf n}\ge0
+       \qquad(\mathbf n\text{ sufficiently large})
+  \]</div>
+  <p>for the valid, admissible graded data used here. This proof supplies the sign of the corrections below; it does not require their individual modules to vanish.</p>
+
+  <h6 id="trace-reorder-leading-kernel"><span class="note-number">2.7.13.9.7</span> Account for the kernel of the leading-term quotient.</h6>
+  <p>Since \(J+(a')\subseteq\mathfrak q\), define</p>
+  <div class="technical-equation">\[
+    K_{\mathrm{lead}}=\mathfrak q/(J+(a')),
+    \qquad
+    0\longrightarrow K_{\mathrm{lead}}
+      \longrightarrow\mathcal P/a'\mathcal P
+      \longrightarrow\overline P\longrightarrow0.
+  \]</div>
+  <p>The full admissibility containment from step 3 becomes admissibility for \(\mathbf t\) on \(\mathcal P/a'\mathcal P\), because \(a'\) now annihilates this module. Its submodule \(K_{\mathrm{lead}}\) inherits the same condition. Additivity and the positivity just proved give</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \chi(\mathbf t;\mathcal P/a'\mathcal P)_{\mathbf n}
+      -\chi(\mathbf t;\overline P)_{\mathbf n}
+       &=\chi(\mathbf t;K_{\mathrm{lead}})_{\mathbf n}\\
+       &\ge0.
+    \end{aligned}
+  \]</div>
+  <p>The inequality follows from the nonnegative Euler contribution of this particular kernel. The existence of the surjection by itself would not establish the sign.</p>
+
+  <h6 id="trace-reorder-cut-kernels"><span class="note-number">2.7.13.9.8</span> Keep every correction when the equation cuts come first.</h6>
+  <p>Write \(\mathbf t=(t_1,\ldots,t_k)\), with \(\deg t_j=\delta_j\), and form the successive quotients</p>
+  <div class="technical-equation">\[
+    \mathcal P_0=\mathcal P,\qquad
+    \mathcal P_j=\mathcal P_{j-1}/t_j\mathcal P_{j-1},
+    \qquad
+    K_j=\mathcal P_{j-1}[t_j](-\delta_j).
+  \]</div>
+  <p>The last quotient is \(\mathcal P_k=\mathcal M\). The first recursion subtracts the Euler contribution of \(K_1\); the next recursion subtracts that of \(K_2\) from the surviving quotient branch; continuing gives the exact identity</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \chi(\mathbf t,(a');\mathcal P)_{\mathbf n}
+      &=\chi((a');\mathcal M)_{\mathbf n}\\
+      &\quad-\sum_{j=1}^{k}
+         \chi((t_{j+1},\ldots,t_k,a');K_j)_{\mathbf n}.
+    \end{aligned}
+  \]</div>
+  <p>For \(j=k\), the remaining list is just \((a')\). The earlier equations annihilate \(\mathcal P_{j-1}\), and \(t_j\) annihilates \(K_j\). Thus admissibility of the original list gives admissibility of the remaining list on every \(K_j\). Each summand is eventually nonnegative, and therefore</p>
+  <div class="technical-equation">\[
+    \chi(\mathbf t,(a');\mathcal P)_{\mathbf n}
+       \le\chi((a');\mathcal M)_{\mathbf n}
+       =\Theta_{a'}(\mathcal M_{\mathbf n}).
+  \]</div>
+  <p>The last equality still subtracts \(\operatorname{length}_B\mathcal M_{\mathbf n}[a']\). It makes no injectivity assertion about the trace on \(\mathcal M\).</p>
+
+  <h6 id="trace-reorder-assemble"><span class="note-number">2.7.13.9.9</span> Put the comparison together at one common multidegree.</h6>
+  <p>There are finitely many filtrations, swaps and kernel modules in this argument. Choose \(\mathbf n\) componentwise beyond all their thresholds and the monomial-count threshold from §2.7.13.8. Then the whole comparison holds simultaneously:</p>
   <div class="technical-equation">\[
     \begin{aligned}
     2^{u+v}\lambda
@@ -1987,7 +2458,19 @@
        =\Theta_{a'}(\mathcal M_{\mathbf n}).
     \end{aligned}
   \]</div>
-  <p>The first equality uses injectivity on \(\mathcal P\). The last inequality cuts all the equations and uses positivity to discard the accumulated kernel corrections with the correct sign. We have reached the same Euler quantity that can be evaluated at characteristic-zero points.</p>
+  <p>More explicitly, the entire difference between the two Euler quantities is accounted for:</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+    \Theta_{a'}(\mathcal M_{\mathbf n})
+      -\chi(\mathbf t;\overline P)_{\mathbf n}
+      &=\chi(\mathbf t;K_{\mathrm{lead}})_{\mathbf n}\\
+      &\quad+\sum_{j=1}^{k}
+        \chi((t_{j+1},\ldots,t_k,a');K_j)_{\mathbf n}
+      \ge0.
+    \end{aligned}
+  \]</div>
+  <p>The lower cotangent count can therefore be carried to the module whose generic components produce trace valuations. The next subsection bounds the multiplicity of those components; this comparison has established the intervening inequality, including every kernel correction.</p>
+  <p class="source-callout">Two source entry points: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/CommutativeAlgebra/GradedModulesLength/AlgMemCoef.lean">the comparison chain and its admissibility inputs</a>; <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Formalism/SharpRestriction/ValuationFrobeniusEpsilon/LeastPrimeTwists/QuotientShiftIrreducible/NoetherianQuotientCalc/RulePos.lean">the graded positivity argument</a>.</p>
 
   <h5 id="trace-multiplicity"><span class="note-number">2.7.13.10</span> Bound the number of layers at each surviving point.</h5>
   <p>For a character \(\tau:B\to\overline E\), write \(\mathfrak p_\tau=\ker\tau\). Localizing at this prime isolates the corresponding generic component. Its multiplicity in the graded piece is</p>
@@ -2150,9 +2633,149 @@
   \]</div>
   <p>Removing the first hypothesis would assert more than the inspected theorem. The same discipline applies when these laws are used to compare Galois and automorphic data.</p>
 
-  <h4 id="local-existence"><span class="note-number">2.8.4</span> Supply the map, then use its laws.</h4>
-  <p>The existence theorem chooses an Artin map, chooses cuspidal parameters, extends them by multisegments, and verifies the required laws through extension theorems. The Galois theorem quantifies over maps satisfying precisely these laws. Consequently, the local existence theorem supplies an admissible map and the Galois theorem supplies its comparison with the arithmetic representation. This shared condition is what lets the two constructions fit together.</p>
-  <p class="source-callout">Selective source links: <a href="sources.html#nv-rec-t">the local laws and the Good restriction</a>; <a href="sources.html#nv-rec-exists">construction of the local correspondence</a>.</p>
+  <h4 id="local-existence"><span class="note-number">2.8.4</span> Construct the local parameter, then check exactly which laws it satisfies.</h4>
+  <p>The local map is built in stages: characters first, selected cuspidal representations next, then segments and multisegments. This is more informative than simply asserting that an automorphic representation has a Weil–Deligne parameter. It explains where the dimension, twists, monodromy and restrictions on the comparison come from.</p>
+
+  <h5 id="local-construction-target"><span class="note-number">2.8.4.1</span> Keep both parts of a Weil–Deligne parameter.</h5>
+  <p>Fix the local field \(k=E_v\). A Weil–Deligne parameter consists of a Weil-group representation \(R\) and a nilpotent operator \(N\), with the prescribed compatibility between conjugation by \(R(w)\) and scaling of \(N\). The map being constructed is</p>
+  <div class="technical-equation">\[
+    \operatorname{rc}:\operatorname{Irr}(\mathrm{GL}_n(k))
+       \longrightarrow\{(R,N)\text{ of dimension }n\}/\simeq.
+  \]</div>
+  <p>Here irreducible representations are taken up to isomorphism, and the construction handles all ranks together. In rank one, the chosen local Artin map gives</p>
+  <div class="technical-equation">\[
+    \operatorname{rc}(\chi)
+       =(\chi\circ\operatorname{Art}_v,0).
+  \]</div>
+  <p>The orientation of the Artin map fixes the Frobenius convention. We keep that convention throughout. Write \(\nu\) for the real norm twist on the automorphic side and \(\nu_W\) for its matching Weil-group twist; then \(\operatorname{rc}(\sigma\nu^s)=\operatorname{rc}(\sigma)\nu_W^s\) is the normalization used below.</p>
+
+  <h5 id="local-cuspidal-construction"><span class="note-number">2.8.4.2</span> Build the controlled cuspidal parameters from finite-field characters.</h5>
+  <p>The source's controlled higher-rank cuspidal case requires \(k\simeq\mathbb Q_p\) and a representation with nonzero fixed vectors for the specified subgroup \(K_1\). Its local type is described by a cuspidal representation of \(\mathrm{GL}_n(\mathbb F_p)\). The finite-field character theorem associates to this type a regular character</p>
+  <div class="technical-equation">\[
+    \theta:\mathbb F_{p^n}^{\times}\to\mathbb C^{\times},
+    \qquad
+    \theta,\theta^p,\ldots,\theta^{p^{n-1}}
+       \text{ are distinct}.
+  \]</div>
+  <p>Regularity means that the Frobenius orbit has length \(n\). The character is determined only up to that orbit, which is exactly the ambiguity that the resulting parameter should ignore.</p>
+  <p>A tame residue map \(R_I:I_k\to\mathbb F_{p^n}^{\times}\) then gives the inertia characters</p>
+  <div class="technical-equation">\[
+    \eta_j(t)=\theta\bigl(R_I(t)^{p^j}\bigr),
+    \qquad 0\le j&lt;n,
+    \qquad
+    \det(T-R(t))=\prod_{j=0}^{n-1}(T-\eta_j(t)).
+  \]</div>
+  <p>Frobenius permutes these characters cyclically. This constructs an \(n\)-dimensional Weil representation: inertia acts diagonally, and Frobenius moves between the corresponding lines. Distinctness of the inertia characters and transitivity of the permutation force irreducibility. A stable subspace must be a sum of inertia eigenspaces; including any one of them forces inclusion of the entire Frobenius orbit.</p>
+  <p>The remaining scalar in the Frobenius cycle is chosen to match the central character \(\omega_\sigma\). For a cyclic matrix \(F\) with wraparound scalar \(\lambda\),</p>
+  <div class="technical-equation">\[
+    F^n=\lambda I,\qquad
+    \det F=(-1)^{n-1}\lambda,
+    \qquad
+    \det R(w)=\omega_\sigma(\operatorname{Art}_v(w)).
+  \]</div>
+  <p>The inertia determinant is checked using the norm from \(\mathbb F_{p^n}\) to \(\mathbb F_p\). Wild inertia acts trivially in this construction, and the irreducible parameter has \(N=0\). These are conclusions of the controlled cuspidal construction, not assertions about every local representation.</p>
+
+  <h5 id="local-cuspidal-twists"><span class="note-number">2.8.4.3</span> Extend across character twists without depending on a presentation.</h5>
+  <p>A higher-rank \(\mathrm{GoodCusp}\) representation can be a smooth character twist of the preceding case. If \(\sigma=\sigma_0\otimes(\chi\circ\det)\), set</p>
+  <div class="technical-equation">\[
+    R_\sigma=R_{\sigma_0}\otimes(\chi\circ\operatorname{Art}_v).
+  \]</div>
+  <p>A representation might admit two such presentations. The definition is useful only if they give isomorphic parameters. The source proves this using uniqueness of the underlying tame parameter and compatibility with twists. Concretely,</p>
+  <div class="technical-equation">\[
+    \sigma_0\otimes\chi\simeq\sigma_1\otimes\chi_1
+       \quad\Longrightarrow\quad
+    R_{\sigma_0}\otimes(\chi\circ\operatorname{Art}_v)
+       \simeq
+    R_{\sigma_1}\otimes(\chi_1\circ\operatorname{Art}_v).
+  \]</div>
+  <p>In the intermediate comparison, the ratio of the two twisting characters is tame when both untwisted representations have the specified \(K_1\)-fixed vectors. This lets the tame uniqueness theorem apply. Rank-one characters are checked separately against the Artin normalization. The result is a well-defined cuspidal parameter on the controlled class.</p>
+
+  <h5 id="local-uncontrolled-cuspidals"><span class="note-number">2.8.4.4</span> Understand why the map outside the controlled class has weaker guarantees.</h5>
+  <p>The actual existence proof defines a map on every cuspidal isomorphism class. On \(\mathrm{GoodCusp}\) it uses the preceding construction. Outside that class it chooses auxiliary irreducible parameters of the right dimension and adjusts their real norm twist to match the absolute central-character condition. Schematically, its case distinction is</p>
+  <div class="technical-equation">\[
+    R_\sigma=
+      \begin{cases}
+        R^{\mathrm{good}}_\sigma,&\mathrm{GoodCusp}(\sigma),\\
+        J_n\otimes\nu_W^{s(\sigma)},&\text{otherwise},
+      \end{cases}
+      \qquad\sigma\text{ is a representation of }\mathrm{GL}_n(k).
+  \]</div>
+  <p>Here \(n\) denotes the rank of the general linear group, not the vector-space dimension of its usually infinite-dimensional smooth representation. The auxiliary choice \(J_n\) is accompanied by the separation properties required in the proof. It supplies the weaker laws demanded outside the controlled class; it is not an identification of those arbitrary cuspidal representations with their usual full local Langlands parameters.</p>
+  <p>This explains the placement of the hypotheses in §2.8.3. Dimension, cuspidal irreducibility and real norm twisting hold for the whole constructed map. Exact central characters, arbitrary character twisting, duality, and the stronger uniqueness statements retain their \(\mathrm{Good}\) assumptions. A total map with restricted laws must be read with those restrictions.</p>
+
+  <h5 id="local-segment-construction"><span class="note-number">2.8.4.5</span> Turn one segment into a parameter with a monodromy chain.</h5>
+  <p>A segment begins with a cuspidal representation \(\sigma\) of \(\mathrm{GL}_d(k)\) and has length \(m\ge1\):</p>
+  <div class="technical-equation">\[
+    \Delta=(\sigma,\sigma\nu,\ldots,\sigma\nu^{m-1}).
+  \]</div>
+  <p>It contributes rank \(dm\). The source assigns the parameter</p>
+  <div class="technical-equation">\[
+    S(\Delta)=
+       \bigl(R_\sigma\otimes\nu_W^{(m-1)/2}\bigr)
+           \otimes\operatorname{Sp}_m.
+  \]</div>
+  <p>The special parameter \(\operatorname{Sp}_m\) has dimension \(m\), symmetrically normalized norm weights, and a single nilpotent chain of length \(m\). The factor \(\nu_W^{(m-1)/2}\) changes the symmetric normalization to the segment's exponents \(0,1,\ldots,m-1\). On the underlying Weil representation, its characteristic polynomial is therefore</p>
+  <div class="technical-equation">\[
+    \det(T-S(\Delta)(w))
+       =\prod_{j=0}^{m-1}
+          \det\bigl(T-(R_\sigma\otimes\nu_W^j)(w)\bigr).
+  \]</div>
+  <p>The tensor-product monodromy is \(N_{R_\sigma}\otimes1+1\otimes N_{\operatorname{Sp}_m}\). Since the cuspidal parameter has zero monodromy, this becomes \(1\otimes N_{\operatorname{Sp}_m}\). The segment length is consequently retained as a nilpotent chain, rather than disappearing when the Weil eigenvalues are listed.</p>
+
+  <h5 id="local-monodromy-example"><span class="note-number">2.8.4.6</span> See why eigenvalues alone lose information.</h5>
+  <p>Take a rank-one character \(\chi\) and the length-two segment \((\chi,\chi\nu)\). Put \(\xi=\chi\circ\operatorname{Art}_v\). Its two-dimensional parameter has</p>
+  <div class="technical-equation">\[
+    P_w(T)=(T-\xi(w))(T-\xi(w)\nu_W(w)),
+    \qquad
+    N\sim\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+  \]</div>
+  <p>The direct sum of the two length-one parameters has the same underlying Weil characteristic polynomial, but has \(N=0\). These are different Weil–Deligne parameters. In the segment parameter the two lines are linked by monodromy; in the direct sum they are not. Thus a proof comparing only characteristic polynomials cannot automatically claim equality of full local parameters. This is the concrete reason for the monodromy restrictions in §2.7.5.</p>
+
+  <h5 id="local-multisegment-construction"><span class="note-number">2.8.4.7</span> Assemble all segments and prove independence of choices.</h5>
+  <p>The Langlands classification supplies a multisegment \(\mathfrak m=\{\Delta_1,\ldots,\Delta_r\}\) for an irreducible representation \(\pi_v\). Its segments determine essentially square-integrable pieces; the appropriately ordered normalized induction has \(\pi_v\) as its Langlands quotient. The parameter is defined by</p>
+  <div class="technical-equation">\[
+    \operatorname{rc}(\pi_v)=\bigoplus_{i=1}^{r}S(\Delta_i).
+  \]</div>
+  <p>The classification and uniqueness of the extension ensure that this depends on the isomorphism class of \(\pi_v\), rather than on a chosen ordering or presentation. The basic checks are now visible:</p>
+  <div class="technical-equation">\[
+    \dim\operatorname{rc}(\pi_v)
+       =\sum_i d_i m_i=n,
+    \qquad
+    P_{\operatorname{rc}(\pi_v)(w)}(T)
+       =\prod_i P_{S(\Delta_i)(w)}(T).
+  \]</div>
+  <p>A cuspidal representation corresponds to a single segment of length one, so the extension agrees with the original cuspidal map. Real norm twists shift every segment together. Direct sums preserve the determinant product, while the segment formula keeps track of the nilpotent blocks. These observations explain the dimension, cuspidal and multisegment laws filled by the existence theorem.</p>
+
+  <h5 id="local-good-extension"><span class="note-number">2.8.4.8</span> Carry the controlled laws from cuspidal support to the whole representation.</h5>
+  <p>Assume \(\mathrm{Good}(\pi_v)\): every cuspidal constituent in its support lies in the controlled class. Then each segment can use the exact cuspidal twisting and determinant formulas. For example, determinants multiply across the support, yielding</p>
+  <div class="technical-equation">\[
+    \det\operatorname{rc}(\pi_v)(w)
+       =\prod_{\sigma\text{ in the cuspidal support}}
+          \det R_\sigma(w)
+       =\omega_{\pi_v}(\operatorname{Art}_v(w)).
+  \]</div>
+  <p>The product retains multiplicities and the segment twists. Similarly, dualizing the segment data and their monodromy chains proves the duality law. Uniqueness of the parameter decomposition, together with the controlled cuspidal uniqueness statement, gives the restricted injectivity conclusion:</p>
+  <div class="technical-equation">\[
+    \mathrm{Good}(\pi_2),\quad
+    \operatorname{rc}(\pi_1)=\operatorname{rc}(\pi_2)
+       \quad\Longrightarrow\quad \pi_1=\pi_2.
+  \]</div>
+  <p>The source proves these extension results before assembling the final record of laws. Merely writing the record would not establish that any map satisfies it. Here the construction of the cuspidal map, the multisegment existence theorem and the separate law proofs supply the witnesses.</p>
+
+  <h5 id="local-galois-handshake"><span class="note-number">2.8.4.9</span> Use the constructed map at exactly the strength the arithmetic needs.</h5>
+  <p>The Galois representation theorem is formulated for a local map satisfying these particular laws. The existence theorem supplies such a map, so the two results can be composed:</p>
+  <div class="technical-equation">\[
+    \begin{gathered}
+    \exists\operatorname{rc},\ \operatorname{Laws}(\operatorname{rc}),\\
+    \forall\operatorname{rc},\ \operatorname{Laws}(\operatorname{rc})
+       \Longrightarrow\operatorname{Comparison}(r,\pi,\operatorname{rc})\\
+    \Longrightarrow\quad
+    \text{the comparison for the constructed }\operatorname{rc}.
+    \end{gathered}
+  \]</div>
+  <p>The content lies in the meaning of <em>comparison</em>. The local hypotheses in §2.7.5 remain in force: the toral case and zero-monodromy assumption, or the specified tame and squarefree conditions with the local-field and rank bound, give their respective conclusions. The stronger laws retain \(\mathrm{Good}\). Neither the existence of a total map nor its dimension law upgrades these statements to unrestricted local–global compatibility.</p>
+  <p class="source-callout">Selective checks: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/Foundations/LocalLanglands/LocalCentralUnits/CuspEx.lean#L168">the controlled and auxiliary cuspidal choices</a>; <a href="sources.html#nv-rec-exists">multisegment extension and assembly of the laws</a>; and <a href="sources.html#nv-rec-t">the precise restrictions on those laws</a>.</p>
+
 </section>
 
 
@@ -2234,36 +2857,171 @@
   <p>Here \(U_i\) is an isometry of the source and \(V\) is one fixed isometry of the target, shared by every \(i\). This last condition lets us take inner products between the images of different character choices. The scalar \(a_i\) remains part of the calculation: its absolute values and finite-place valuations affect the height and divisibility estimates.</p>
   <p>The arithmetic construction also provides lattices \(N_i\), integral period maps \(B_i:N_i\to C\), and height allowances \(h_i\). The common lattice \(C\) is in a dual period space. Local divisibility permits the prescribed adjustment of each \(N_i\), while the resulting maps still land in \(C\). Thus the same maps have both an integral meaning at finite places and a Hermitian norm at infinity. That compatibility is what allows the next linear-algebra estimate to constrain arithmetic size.</p>
 
-  <h4 id="theta-correlations"><span class="note-number">2.9.8</span> Measure whether the periods cover the target.</h4>
-  <p>At a fixed infinite place, the full period matrices are \(\widetilde B_i:V_i\to H\). Their prescribed retained target coordinates give the integral maps \(B_i\) introduced above. In orthonormal coordinates write \(A_i=\sqrt{c_i}\,\widetilde B_i\), where \(c_i&gt;0\) incorporates the chosen normalization. Put \(r_i=\dim V_i\), \(R=\sum_i r_i&gt;0\), and \(D=\dim H&gt;0\). The two operators</p>
+  <h4 id="theta-correlations"><span class="note-number">2.9.8</span> Derive the correlations and measure coverage of the target.</h4>
+  <p>The period maps must do two jobs: preserve enough of each source and distribute those sources across the common target. The second requirement is essential: a collection of isometries could otherwise have exactly the same image. Here is the chain from the orbital calculation to the two quantitative tests used by the slope argument.</p>
+
+  <h5 id="theta-correlation-operators"><span class="note-number">2.9.8.1</span> Fix the operators and the comparison scale.</h5>
+  <p>At a fixed infinite place, write the full period matrices as \(\widetilde B_i:V_i\to H\). Their prescribed retained target coordinates give the integral maps \(B_i\) of the preceding step. In orthonormal coordinates set \(A_i=\sqrt{c_i}\,\widetilde B_i\), with the positive normalization \(c_i\) coming from the period identity. Put</p>
   <div class="technical-equation">\[
-    K_i=A_i^*A_i,\qquad Q=\sum_i A_iA_i^*
+    r_i=\dim V_i,\qquad R=\sum_i r_i&gt;0,\qquad
+    D=\dim H&gt;0,\qquad
+    K_{ij}=A_i^*A_j,\qquad Q=\sum_iA_iA_i^*.
   \]</div>
-  <p>answer different questions. \(K_i\) measures distortion within one source; \(Q\) measures the total mass reaching each target direction. The required estimates are</p>
+  <p>The Hilbert–Schmidt norm satisfies \(\|M\|_{\mathrm{HS}}^2=\operatorname{tr}(M^*M)\). Thus \(K_{ii}-I\) measures distortion in one source, while \(K_{ij}\), for \(i\ne j\), measures overlap between two sources. The natural cross-term scale is \(r_ir_j/D_*\), where \(D_*&gt;0\) is the dimension predicted by the mass and volume calculation. The actual target dimension \(D\) is compared with \(D_*\) separately; these are not interchangeable definitions.</p>
+  <p>The argument applies to the compatible family already constructed: its archimedean weights are separated, its local models and measures agree, and its level parameters satisfy the required congruences. The auxiliary rank and level must also exceed the thresholds below. The pair estimate is not a claim about arbitrary automorphic forms.</p>
+
+  <h5 id="theta-correlation-orbits"><span class="note-number">2.9.8.2</span> Unfold the overlap and remove degenerate off-diagonal terms.</h5>
+  <p>Unfolding expands \(K_{ij}\) into orbital terms. Absolute convergence permits regrouping them into the identity contribution, a degenerate contribution \(K^{\mathrm{deg}}_{ij}\), and the remaining terms \(K^0_{ij}\). The identity contribution is \(I\) when \(i=j\) and vanishes for distinct words. This is why the diagonal is compared with the identity rather than with zero.</p>
+  <p>The degenerate contribution disappears off the diagonal for a more specific reason. Its orbital operator intertwines the two archimedean representations on the subgroup fixing the relevant flag subspaces. The separated highest weights imply that this intertwiner is zero. Terms outside the relevant orbits vanish as well. Consequently, for \(i\ne j\),</p>
   <div class="technical-equation">\[
-    \sum_i\|K_i-I\|_{\mathrm{HS}}^2\le eR,
+    K^{\mathrm{deg}}_{ij}=0,\qquad K_{ij}=K^0_{ij}.
+  \]</div>
+  <p>The surviving squared norm is organized into rows of pairs of orbital terms. Different rows with the same finite index are orthogonal. Within a row, pairs divide according to a corank statistic: corank at least two, corank one with nonscalar generic data, corank one with scalar generic data, and nongeneric data. The scalar generic class carries the main term. Bounds for the other classes must be small after normalization, rather than merely finite.</p>
+
+  <h5 id="theta-correlation-local-gram"><span class="note-number">2.9.8.3</span> Control the finite Gram matrix with a factor approaching one.</h5>
+  <p>At the selected finite places, the row calculation contains a Gram matrix built from a Whittaker character of the upper unipotent subgroup \(U\subseteq\mathrm{GL}_k(\mathbf F_q)\). Averaging that character over conjugates gives a central convolution operator. On a nongeneric irreducible representation it acts by zero; on a generic one its normalized eigenvalue is \(|U|/\dim\pi\). Multiplicity one and the mirabolic dimension estimate give</p>
+  <div class="technical-equation">\[
+    |U|=q^{k(k-1)/2},\qquad
+    \dim\pi\ge\prod_{a=1}^{k-1}(q^a-1),
+    \qquad
+    \frac{|U|}{\dim\pi}
+      \le\prod_{a=1}^{k-1}(1-q^{-a})^{-1}
+      \le1+\frac3q\quad(q\ge3).
+  \]</div>
+  <p>This bounds the Gram operator by a scalar multiple of the identity. Tensoring over the selected places multiplies the scalar losses. If \(g_1,g_2\) are the two selected rational prime sizes and \(f\) is the number of real places, the resulting price \(P_g\) is bounded by</p>
+  <div class="technical-equation">\[
+    0\le P_g\le(1+3/g_1)^f(1+3/g_2)^f
+       \le \exp(6b^{-7})
+  \]</div>
+  <p>provided \(b\ge1\), \(1\le k\), \(f\le k\), and \(g_1,g_2\ge(kb)^8\). Here \(b\) is the growing size parameter of the family. The large auxiliary primes make the finite Gram operator almost contractive. Keeping this factor near one is necessary for covering almost the whole target.</p>
+
+  <h5 id="theta-correlation-row-counts"><span class="note-number">2.9.8.4</span> Count the main rows and bound the other rows.</h5>
+  <p>The main scalar rows are evaluated through the mass formula, which separates an archimedean volume from a product of local representation densities. Those densities count frames with prescribed pairings. For example, over \(\mathbf F_q\), let \(\phi:V\to U_0\) be surjective and let \(z_1,\ldots,z_\ell\) be independent. Set \(d_0=\dim\ker\phi\) and \(s=\dim\langle\phi(z_1),\ldots,\phi(z_\ell)\rangle\). The exact count for the next independent vector is</p>
+  <div class="technical-equation">\[
+    \#\{x:\phi(x)=a,\ x\notin\langle z_1,\ldots,z_\ell\rangle\}
+    =
+    \begin{cases}
+      q^{d_0}-q^{\ell-s},&
+          a\in\langle\phi(z_1),\ldots,\phi(z_\ell)\rangle,\\
+      q^{d_0},&\text{otherwise}.
+    \end{cases}
+  \]</div>
+  <p>Indeed, every nonempty fiber is a translate of \(\ker\phi\), giving \(q^{d_0}\) choices. If that fiber meets the already chosen span, its intersection has \(q^{\ell-s}\) elements, which must be removed. Iterating this count gives the split local factors. For inert places the analogous induction peels off a vector of nonzero norm, reducing the ambient dimension by one, or an isotropic vector and its paired direction, reducing it by two. These exact recursions are the source of the local-density error estimates.</p>
+  <p>The global mass identity and the compatible archimedean normalization then put the scalar generic row sum on the scale \(d_{ij}=r_ir_j/D_*\). The remaining archimedean and lattice-counting bounds control the departure from that scale. Writing \(A_{\mathrm{main}}\) for the normalized scalar-row upper bound, \(\epsilon_{\mathrm{loop}}\) for each of the large-corank and nonscalar errors, and \(\epsilon_{\mathrm{ng}}\) for the nongeneric error, the row estimates combine as</p>
+  <div class="technical-equation">\[
+    \|K^0_{ij}\|_{\mathrm{HS}}^2
+    \le
+    \left(
+      \sqrt{P_g(A_{\mathrm{main}}+2\epsilon_{\mathrm{loop}})}
+      +\sqrt{P_g(\epsilon_{\mathrm{loop}}+\epsilon_{\mathrm{ng}})}
+    \right)^2 d_{ij}.
+  \]</div>
+  <p>The two square roots come from bounding the generic and nongeneric vectors separately and then applying the triangle inequality. Within the generic part there are two error classes, explaining the coefficient \(2\). The scalar main row is a signed quadratic sum; the argument does not replace every individual contribution by its absolute value and thereby lose the leading constant.</p>
+  <p>The estimates have quantitative room. The loop error has the form \(\exp(-kf\log k/3)\). The nongeneric bound contains a decaying factor \(2^{-(k-2r_s-5)}\) multiplied by \(\exp(Cm_0^5f\log b)\), where \(r_s\) is the smaller flag rank and \(m_0=2r_s+2\). Taking \(k\) large enough to dominate \(Cm_0^5f\log b\) makes the first factor win. For example, the numerical steps use \(k\ge4r_s+10\), \(k\ge8Cm_0^5f\log b\), and \(k\ge70\log b\) to reach a bound \(b^{-14}\). The density error has the explicit reduction</p>
+  <div class="technical-equation">\[
+    12f\,2^{-(k-2r_s-2)}
+      \le f\,2^{-k/2}
+      \le e^{-k/5}
+      \le b^{-14},
+    \qquad
+    f\le k,\quad k\ge\max(32,4r_s+12,70\log b).
+  \]</div>
+  <p>Thus the surplus ambient dimension controls the product of the local-density corrections, even while the number of places grows.</p>
+  <p>After the family thresholds are imposed, the precise numerical targets are</p>
+  <div class="technical-equation">\[
+    A_{\mathrm{main}}\le(1+b^{-7})e^{b^{-14}},
+    \qquad
+    \epsilon_{\mathrm{loop}},\epsilon_{\mathrm{ng}}\le b^{-14}.
+  \]</div>
+  <p>For \(b\ge16\), substituting these and the Gram price into the preceding square-root expression makes it at most \(1+b^{-6}\). Together with the vanishing of the degenerate off-diagonal terms, this gives the desired sharp comparison</p>
+  <div class="technical-equation">\[
+    \boxed{\ \|K_{ij}\|_{\mathrm{HS}}^2
+       \le(1+\eta_0)\frac{r_ir_j}{D_*},
+       \qquad \eta_0=b^{-6},\quad i\ne j.\ }
+  \]</div>
+  <p>The finite-field count alone does not prove this global bound: the mass identity, convergent unfolding, archimedean orbital estimates, and the selected size conditions are all used in the passage to the displayed row bounds.</p>
+
+  <h5 id="theta-correlation-diagonal"><span class="note-number">2.9.8.5</span> Recover the diagonal error and compare the two target dimensions.</h5>
+  <p>On the diagonal, the degenerate part need not vanish. The source bounds it by \(r_i e^{-kf\log k}\), while the remainder after subtracting the identity has squared norm at most \(\Gamma r_i^2/D_*\). Here \(\Gamma&gt;1\) is the common normalization parameter. The admissible rank window supplies \(r_i\Gamma^2/D_*\le C_0\), with fixed \(C_0\ge1\). Therefore</p>
+  <div class="technical-equation">\[
+    \|K_{ii}-I\|_{\mathrm{HS}}^2
+      \le 2\Gamma\frac{r_i^2}{D_*}
+           +2r_i e^{-kf\log k}
+      \le e_0r_i,\qquad
+    e_0=\frac{2C_0}{\Gamma}+2e^{-kf\log k}.
+  \]</div>
+  <p>The factor \(2\) comes from \(\|X+Y\|^2\le2\|X\|^2+2\|Y\|^2\). This explains both pieces of the distortion error: the first is reduced by the common normalization and rank window; the second is the residual degenerate contribution. Summing over \(i\) gives \(\sum_i\|K_{ii}-I\|_{\mathrm{HS}}^2\le e_0R\).</p>
+  <p>A separate counting estimate compares the actual target with its mass prediction:</p>
+  <div class="technical-equation">\[
+    |D-D_*|\le\eta_1D_*,
+    \qquad \eta_1=e^{-c_7rf\log r},
+    \qquad c_7&gt;0.
+  \]</div>
+  <p>Here \(r\) is the ambient rank in that counting problem. For the selected family, \(\log b=x^\varepsilon\), and \(\log\Gamma=C_\Gamma m^5f\log b\) with fixed \(C_\Gamma&gt;0\). The choices enforce \(k\ge8\log\Gamma\), \(r\ge k\), \(f\ge1\), and \(k\ge5\). To see the resulting rate, put \(y=x^{\varepsilon/8}\), so \(\log b=y^8\). For sufficiently large \(y\),</p>
+  <div class="technical-equation">\[
+    e_0\le(2C_0+2)e^{-C_\Gamma y^8}\le e^{-2y},
+    \qquad 8c_7C_\Gamma y^8\ge y.
+  \]</div>
+  <p>The first inequality uses \(kf\log k\ge\log\Gamma\); the second controls the target-dimension error because \(rf\log r\ge k\ge8C_\Gamma y^8\). Since \(b^{-6}=e^{-6y^8}\), all three losses then satisfy, uniformly throughout the chosen family,</p>
+  <div class="technical-equation">\[
+    \eta_0,\ \eta_1,\ \sqrt{e_0}
+       \le e^{-x^{\varepsilon/8}}.
+  \]</div>
+  <p>Thus the correlation parameters are supplied by specific counts and norm estimates. They are not arbitrary small constants assumed at the end.</p>
+
+  <h5 id="theta-correlation-trace"><span class="note-number">2.9.8.6</span> Sum the pair estimates, including the diagonal price.</h5>
+  <p>The identities relating the source overlaps to the target operator are</p>
+  <div class="technical-equation">\[
+    T:=\operatorname{tr}Q=\sum_i\operatorname{tr}K_{ii},
+    \qquad
+    \operatorname{tr}(Q^2)=\sum_{i,j}\|K_{ij}\|_{\mathrm{HS}}^2.
+  \]</div>
+  <p>Cauchy–Schwarz gives \(|T-R|\le\sqrt{R}\sqrt{\sum_i\|K_{ii}-I\|_{\mathrm{HS}}^2}\le R\sqrt{e_0}\). Also \(\|K_{ii}\|_{\mathrm{HS}}\le(1+\sqrt{e_0})\sqrt{r_i}\). Summing the diagonal and off-diagonal terms separately therefore yields</p>
+  <div class="technical-equation">\[
+    T\ge(1-\sqrt{e_0})R,\qquad
+    \operatorname{tr}(Q^2)
+      \le(1+\eta_0)\frac{R^2}{D_*}
+          +(1+\sqrt{e_0})^2R.
+  \]</div>
+  <p>For \(e_0&lt;1\), divide by \(T^2\) and use \(D\le(1+\eta_1)D_*\):</p>
+  <div class="technical-equation">\[
+    \frac{D\,\operatorname{tr}(Q^2)}{T^2}
+    \le
+    \frac{(1+\eta_1)
+       \left(1+\eta_0+(1+\sqrt{e_0})^2D_*/R\right)}
+      {(1-\sqrt{e_0})^2}.
+  \]</div>
+  <p>This exposes an additional requirement: \(R\) must greatly exceed \(D_*\). Even perfect off-diagonal estimates leave a diagonal price of order \(D_*/R\). The many members of the family provide this surplus. More precisely, if \(0&lt;\sigma\le1/4\), \(R\ge D_*/\sigma\), and \(\eta_0,\eta_1,\sqrt{e_0}\le\sigma/2\), the source bounds the last expression by \(1+5\sigma\). One may therefore take \(e=e_0\) and \(\eta=5\sigma\) in the frame inequalities.</p>
+  <p>Some source columns must then be restricted to the prescribed ramified subspaces. These restrictions use isometric inclusions, so they compress each \(K_{ii}\) and cannot enlarge its Hilbert–Schmidt defect. If the removed columns have total dimension at most \(\delta_{\mathrm{col}}R\), the trace lost is at most</p>
+  <div class="technical-equation">\[
+    T_{\mathrm{full}}-T_{\mathrm{restricted}}
+       \le\left(\delta_{\mathrm{col}}
+                +\sqrt{\delta_{\mathrm{col}}e_0}\right)R.
+  \]</div>
+  <p>The positive operator decreases under this restriction. Combining that fact with the trace bound gives the usable parameters \(e=2e_0\) and \(\eta=5\sigma+3\sqrt{\delta_{\mathrm{col}}}\), under \(0&lt;\sigma\le1/20\), \(0\le\delta_{\mathrm{col}}\le1/4\), and the preceding size conditions. The column loss is distinct from the retained <em>target</em> fraction used in the next step.</p>
+
+  <h5 id="theta-correlation-coverage"><span class="note-number">2.9.8.7</span> Turn the trace inequality into coverage.</h5>
+  <p>For the resulting family, use its actual total source rank \(R\). The two established tests now read</p>
+  <div class="technical-equation">\[
+    \sum_i\|K_{ii}-I\|_{\mathrm{HS}}^2\le eR,
     \qquad
     \operatorname{tr}(Q^2)\le
-    \frac{1+\eta}{D}\bigl(\operatorname{tr}Q\bigr)^2,
+       \frac{1+\eta}{D}(\operatorname{tr}Q)^2,
     \qquad 0\le e\le\tfrac14,\quad\eta\ge0.
   \]</div>
-  <p>The Hilbert–Schmidt norm is the square root of the sum of squared matrix entries in orthonormal bases. Nearly preserving lengths is insufficient by itself: many isometries could all have the same image. The second inequality prevents this concentration. The first bound gives \(|\operatorname{tr}Q-R|\le R\sqrt e\), so \(T=\operatorname{tr}Q\ge R/2&gt;0\). For the eigenvalues \(q_1,\ldots,q_D\ge0\) of \(Q\), Cauchy–Schwarz gives</p>
+  <p>The first gives \(T\ge R/2&gt;0\). For the nonnegative eigenvalues \(q_1,\ldots,q_D\) of \(Q\), Cauchy–Schwarz then gives</p>
   <div class="technical-equation">\[
     T^2\le\operatorname{rank}(Q)\sum_jq_j^2
     \quad\Longrightarrow\quad
     \operatorname{rank}(Q)\ge\frac{D}{1+\eta}.
   \]</div>
-  <p>Since \(\ker Q=\bigcap_i\ker A_i^*\), the range of \(Q\) is the span of the period images. Small \(\eta\) therefore forces these images to cover almost all of \(H\). The trace identity</p>
+  <p>Since \(\ker Q=\bigcap_i\ker A_i^*\), the range of \(Q\) is precisely the span of the period images. Hence the images cover almost all target directions. The stronger form needed for slopes survives a further restriction \(S_i\subseteq V_i\): if \(\sum_i\operatorname{codim}S_i\le\alpha R\), then</p>
   <div class="technical-equation">\[
-    \operatorname{tr}(Q^2)=\sum_{i,j}\|A_i^*A_j\|_{\mathrm{HS}}^2
+    \dim\left(\sum_iA_iS_i\right)^\perp
+      \le(\eta+4\alpha+4\sqrt e)D.
   \]</div>
-  <p>explains where comparisons between different characters enter. The automorphic calculation bounds these cross terms near the scale \(r_ir_j/D_*\), with a leading factor approaching one and \(D_*\) close to \(D\). The diagonal terms are controlled separately. An unspecified constant factor would not give a vanishing fraction of missing directions.</p>
-  <p>The source proves a version that survives removing some source directions. If \(S_i\subseteq V_i\) and \(\sum_i\operatorname{codim}S_i\le\alpha R\), then</p>
-  <div class="technical-equation">\[
-    \dim\left(\sum_i A_iS_i\right)^\perp
-    \le(\eta+4\alpha+4\sqrt e)D.
-  \]</div>
-  <p>The added terms account for the removed columns and the aggregate distortion. The deep orbital and local-density estimates supply \(e\) and \(\eta\); the passage from those estimates to coverage of the target is finite-dimensional linear algebra.</p>
+  <p>The next step applies this estimate to the high-slope pieces of the source lattices. The orbital calculation supplies the small errors; linear algebra then prevents all the arithmetically useful vectors from being confined to a small part of the common target.</p>
+  <p class="source-callout"><a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Formalism/SharpRestriction/CuspSpanNormBounds/StandingHypothesesHoldFamily.lean#L143">The assembled correlation errors</a> and <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Formalism/SizeWindowBrackets/TraceSquareAndDiagBounds.lean#L61">their conversion to trace and frame bounds</a> give the precise source statements.</p>
 
   <h4 id="theta-mean-slope"><span class="note-number">2.9.9</span> Turn coverage into an arithmetic slope inequality.</h4>
   <p>For the integral sources, let \(\mu(N_i)\) be mean slope and \(\mu_{\max}(N_i)\) maximal slope, in the source’s common normalization. Subtract each map’s height allowance and define</p>
@@ -2418,43 +3176,169 @@
   \]</div>
   <p>This is the numerical mechanism of the covolume estimate. <a href="sources.html#nv-covolume-ingredients">The constituent inequalities</a> specify the lattices, norms, and compatibility hypotheses. The loss calculation above follows the archive’s <code>CovolumeFromGramAndBounds.lean</code>, theorem <code>lcv_le</code>.</p>
 
-  <h4 id="geometric-foundations"><span class="note-number">2.10.6</span> Identify the deeper geometric work behind the lower bound.</h4>
-  <p>The difficult starting inequality for \(\mu_{\mathrm{core}}\) is supplied through deep covers, degree and rank comparisons, height bounds, arithmetic Hilbert–Samuel estimates, and controlled descent maps. A representative step compares total arithmetic degree with total rank:</p>
-  <div class="technical-equation">\[
-    2\,\frac{\sum_Z\deg_Z}{\sum_Z r_Z}
-      \le \mu_{\mathrm{cover}},
-    \qquad \sum_Z r_Z&gt;0.
-  \]</div>
-  <p>Lower bounds for the left-hand side therefore give lower bounds for the cover’s slope. Descent and norm comparisons carry that information back to the core. Toroidal models and Hodge bundles supply the geometric objects; resolution, positivity, and deformation results support the height and section estimates. <a href="sources.html#nv-covolume-proof">The geometric assembly</a> shows where those inputs enter. The inequalities above explain their role; their individual construction proofs remain deeper dependencies.</p>
+  <h4 id="geometric-foundations"><span class="note-number">2.10.6</span> Follow the geometric lower bound from a deep cover back to the core.</h4>
+  <p>The core-slope bound in <a href="#geometric-core">2.10.2</a> is obtained in two stages. First, heights and section counts control a lattice on a sufficiently deep level cover. Second, integral maps bring that control back to the original type. The estimates must be uniform as the field, weights, and level change. Here is the chain, including the losses that the large parameter \(b\) is chosen to absorb.</p>
 
-<details>
-    <summary>Why the distribution of component ranks matters</summary>
-    <p>The cover has components \(Z\), each with a section-space rank \(r_Z\), a positive geometric degree \(d_Z\), and an arithmetic degree \(\widehat{\deg}_Z\). A bound for the average component height does not immediately bound a rank-weighted average: a component of poor height might carry most of the rank. The geometric estimates prevent that concentration.</p>
-    <p>For a flag dimension \(d\) and a truncation length \(L\), put \(b_*=\binom{L-1}{d}\). Under the source's positivity, vanishing, and weight hypotheses, the comparison has the following form, with \(d_*&gt;0\) and \(0\le\rho&lt;1\):</p>
-    <div class="technical-equation">\[
-      (1-z)r_Z\le b_*d_Z\le r_Z,
-      \qquad d_*\le d_Z\le\frac{d_*}{1-\rho},
-      \qquad z=7\left(\frac{d^2}{L}+d\rho\right)&lt;1.
-    \]</div>
-    <p>The binomial coefficient counts the growth allowed by successive hyperplane restrictions. The upper rank estimate bounds sections after each restriction; the lower estimate also needs vanishing of higher cohomology, so that sections lift through the restriction sequences. Thus the close comparison uses geometric theorems, not only a count of monomials.</p>
-    <p>Let \(M\ge1\) be the number of components, \(R=\sum_Zr_Z\), and \(w_Z=b_*d_Z/R\). These are controlled weights:</p>
-    <div class="technical-equation">\[
-      \sum_Zw_Z\le1,
-      \qquad w_Z\ge\frac{(1-z)(1-\rho)}{M}.
-    \]</div>
-    <p>The first inequality bounds any common cost; the second ensures that no component disappears from the mean. Write \(h_Z\) for its normalized height and \(s_Z\) for a comparison slope. With nonnegative allowances \(c_s,c_c,X\), the component inputs give</p>
-    <div class="technical-equation">\[
-      h_Z+c_s\ge0,\qquad
-      h_Z+c_s+c_c\ge(1-\rho)(s_Z+c_s)_+,
-      \qquad \frac1M\sum_Zs_Z\ge-X,
-    \]</div>
-    <p>where \(u_+=\max(u,0)\). Multiplying the nonnegative height terms by their minimum weight, summing, and using \((s_Z+c_s)_+\ge s_Z+c_s\) yields</p>
-    <div class="technical-equation">\[
-      \sum_Zw_Z(h_Z+c_s)
-        \ge(1-z)(1-\rho)^2(c_s-X)-c_c.
-    \]</div>
-    <p>This is the missing passage from an ordinary mean to the degree/rank weights. A finite-degree arithmetic Hilbert–Samuel estimate then bounds each \(\widehat{\deg}_Z\) below by a leading height term minus explicit linear and logarithmic losses. Those losses are controlled in the family before taking the total degree divided by total rank. The resulting lower bound for the cover slope feeds into the core-lattice estimate in step <a href="#geometric-core">2.10.2</a>. An asymptotic formula for one fixed variety would not by itself provide the uniform errors needed as this family grows. <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/UniformLowerBoundOfSums.lean#L15">The component-to-slope theorem states these hypotheses together.</a></p>
-  </details>
+  <h5 id="geometric-cover-data"><span class="note-number">2.10.6.1</span> Choose a cover on which heights and section spaces can be compared.</h5>
+  <p>At a nonterminal step, the cover is constructed by refining the level with the odd factor \(15^e\) and a suitable local ideal. The source's level construction uses its splitting and coprimality hypotheses; forgetting the added level structure gives the map back to the original moduli problem. It constructs the refined moduli scheme and enlarges the coefficient field to the compositum of the original field with a controlled ray-class field. This supplies the roots of unity and field-of-definition properties needed by the new level.</p>
+  <p>The depth is chosen as \(e=\lfloor3L_{\rm lev}/\log3\rfloor\), where \(L_{\rm lev}\) is the family's logarithmic level scale. In particular, \(e\log15\le9L_{\rm lev}\). The ray-class-field estimate bounds both field degree and root discriminant; after the family-size estimates it gives</p>
+  <div class="technical-equation">\[
+    \log[F_Y:\mathbb Q]
+      +\frac{\log|\operatorname{disc}F_Y|}{[F_Y:\mathbb Q]}
+       \le391\zeta^2,\qquad \zeta=frL_{\rm lev}.
+  \]</div>
+  <p>Thus deeper level comes with an explicit arithmetic cost. The family thresholds are then enlarged to satisfy the finitely many size, weight-gap, and norm inequalities together. The geometric existence theorem remains essential: parameter choices alone do not construct a moduli cover.</p>
+  <p>For this good deep cover \(Y\), the regularity results supply integral lattices of cusp sections at the required weights, finitely many nonempty geometric components, and a positive rank at the negatively shifted weight. These are substantive properties: a rational space of sections alone would not provide the integral lattice or the archimedean norms needed for an arithmetic degree.</p>
+  <p>On a component \(Z\), write \(h_Z\) for its normalized height, \(d_Z&gt;0\) for its geometric degree, \(r_Z\) for the relevant section rank, and \(\widehat{\deg}_Z\) for its arithmetic degree. Let \(d\) be the flag dimension, \(T\) the truncation length, and</p>
+  <div class="technical-equation">\[
+    B_T=\binom{T-1}{d},\qquad
+    z=7\left(\frac{d^2}{T}+d\rho\right),\qquad
+    0\le\rho&lt;1,\quad 0\le z&lt;1.
+  \]</div>
+  <p>The weight gaps give regularity and a birational section map; proportionality on the compactification compares its top degree with \(d_Z\). The comparison loses at most the factor \(1-\rho\). Degree and rank estimates then give, for one common \(d_*&gt;0\),</p>
+  <div class="technical-equation">\[
+    d_*\le d_Z\le\frac{d_*}{1-\rho},\qquad
+    (1-z)r_Z\le B_Td_Z\le r_Z.
+  \]</div>
+  <p>The binomial coefficient records successive hyperplane restrictions. The lower rank estimate also uses higher-cohomology vanishing so that sections lift through the restriction sequences. Thus these are estimates for actual section spaces, with controlled errors, rather than a formal monomial count. The cover and positivity hypotheses are what make this comparison available.</p>
+
+  <h5 id="geometric-height-comparison"><span class="note-number">2.10.6.2</span> Convert short sections and volume information into component heights.</h5>
+  <p>The short-section construction supplies integral generators on each component with a common norm bound \(\Lambda_{\rm sec}\ge1\). Set \(c_s=\log\Lambda_{\rm sec}\). The resulting projective height comparison gives</p>
+  <div class="technical-equation">\[
+    h_Z+c_s\ge0.
+  \]</div>
+  <p>This shift has a concrete purpose: an integral presentation by bounded sections makes the height nonnegative after paying for their norms. The source controls those norms using the level, coefficient field, flat degree, and weight size. One may take a bound of the form \(\Lambda_{\rm sec}=\exp(C(\zeta^3\|u_1\|_1+\zeta^5))\), where \(\zeta\) is the family's combined size parameter and \(u_1\) is the comparison weight; the parameter inequalities place the resulting cost inside the final error budget.</p>
+  <p>A separate volume estimate gives component comparison slopes \(s_Z\) with a lower bound on their ordinary mean. Multiplication by a controlled auxiliary section compares the relevant volumes; the birational map and top-degree comparison from the previous step turn this into</p>
+  <div class="technical-equation">\[
+    (1-\rho)(s_Z+c_s)_+\le h_Z+c_s+c_c,
+    \qquad \frac1M\sum_Zs_Z\ge-X,
+    \qquad u_+=\max(u,0).
+  \]</div>
+  <p>Here \(M\ge1\) is the number of components and \(c_c,X\ge0\). The comparison cost \(c_c\) includes the auxiliary-section multiplication cost and a metric-height correction. The source obtains the mean inequality from its mean-volume input; it does not deduce it merely from the existence of a deep cover. The positive part is necessary: a negative comparison slope gives no positive volume to exploit.</p>
+  <p>With \(E_i\ge1\) denoting the error scale already used in this section, the uniform estimates give a constant \(C_H\ge0\) such that</p>
+  <div class="technical-equation">\[
+    TX\le C_HE_i,\qquad Tc_c\le C_HE_i,\qquad
+    c_s\bigl(6d+10+T(z+2\rho)\bigr)\le C_HE_i.
+  \]</div>
+  <p>These bounds explain why choosing short sections is not enough by itself. Their logarithmic norms must remain affordable after the truncation length and the degree-comparison losses have multiplied them.</p>
+
+  <h5 id="geometric-finite-hilbert-samuel"><span class="note-number">2.10.6.3</span> Use Hilbert–Samuel at the chosen finite degree.</h5>
+  <p>The arithmetic Hilbert–Samuel step estimates the determinant of the integral section lattice, not just its dimension. At the actual truncation length \(T\), its output is</p>
+  <div class="technical-equation">\[
+    \widehat{\deg}_Z\ge
+    B_Td_Z\left(
+      Th_Z-3(d+1)|h_Z|
+      -A_{\rm HS}\log(2+|h_Z|)-R_{\rm HS}
+    \right),
+  \]</div>
+  <div class="technical-equation">\[
+    A_{\rm HS}&gt;0,\quad R_{\rm HS}\ge0,\qquad
+    A_{\rm HS}\log\!\bigl(\max(A_{\rm HS},1)\bigr)+R_{\rm HS}
+      \le C_{\rm HS}E_i.
+  \]</div>
+  <p>The term \(Th_Z\) is the height contribution that should dominate. The linear and logarithmic terms record the cost of turning that expectation into a bound for a finite lattice. In the numerical reduction, one can take</p>
+  <div class="technical-equation">\[
+    A_{\rm HS}=26(26d^2+2zT),\qquad
+    R_{\rm HS}=4000b+2c_{\rm twist},
+  \]</div>
+  <p>where \(c_{\rm twist}\ge0\) bounds the per-rank loss from the auxiliary twist. Write \(P\ge1\) for the family's auxiliary precision parameter and \(\kappa\ge0\) for the size of its central weight. The reduction uses \(d\ge1\), \(T\ge3d+5\), \(z\le\tfrac12\), and the family's degree-parameter bounds. In particular, it requires \(\log b\le P\), \(TP\le\sqrt b\), and \(zP\kappa\le b\), together with bounds for the degrees, norms, and denominators in the geometric Hilbert–Samuel input. These are checked before the component estimates are summed.</p>
+  <p>The explicit remainder matters. An asymptotic Hilbert–Samuel statement for a fixed variety would not control the changing varieties and weights in this family. The required result controls both the determinant degree and its errors at the selected value of \(T\).</p>
+
+  <h5 id="geometric-component-average"><span class="note-number">2.10.6.4</span> Pass from the ordinary component mean to the lattice slope.</h5>
+  <p>A bad component could dominate a rank-weighted sum even when the ordinary mean of the heights is acceptable. The degree and rank comparisons prevent this. Put \(R=\sum_Zr_Z&gt;0\) and \(w_Z=B_Td_Z/R\). Then</p>
+  <div class="technical-equation">\[
+    \sum_Zw_Z\le1,\qquad
+    w_Z\ge\frac{(1-z)(1-\rho)}{M}.
+  \]</div>
+  <p>Indeed, \(B_Td_Z\le r_Z\) gives the first statement. For the second, use \(d_Z\ge d_*\) and \(R\le MB_Td_*/((1-z)(1-\rho))\). Thus each component retains a definite share of the total weight.</p>
+  <p>Since \(h_Z+c_s+c_c\ge0\), multiply the height comparison by these weights, use their lower bound on the nonnegative positive-part terms, and use \(\sum_Zw_Z\le1\) for the common cost. This gives</p>
+  <div class="technical-equation">\[
+    \sum_Zw_Z(h_Z+c_s)
+      \ge(1-z)(1-\rho)^2(c_s-X)-c_c.
+  \]</div>
+  <p>To see the error absorption explicitly, use the elementary bound</p>
+  <div class="technical-equation">\[
+    A\log(2+x)\le x+A\log\max(A,1)+2
+       \qquad(A&gt;0,\ x\ge0).
+  \]</div>
+  <p>For \(A\ge1\), apply \(\log y\le y-1\) to \(y=(2+x)/A\); for \(A\le1\), use \(\log(2+x)\le x+2\). Put \(a=3d+4\), \(\beta=(1-z)(1-\rho)^2\), and let \(F(h)\) denote the bracket in the Hilbert–Samuel bound. Since \(|h|\le(h+c_s)+c_s\) when \(h\ge-c_s\),</p>
+  <div class="technical-equation">\[
+    F(h)\ge(T-a)(h+c_s)-(T+a)c_s-C_{\rm HS}E_i-2.
+  \]</div>
+  <p>Now \(T-a\ge1\). Multiply by \(w_Z\), sum, and insert the weighted-height bound. Using \(0\le\beta\le1\) gives</p>
+  <div class="technical-equation">\[
+    \sum_Zw_ZF(h_Z)\ge
+      -c_s\bigl(2a+T(1-\beta)\bigr)
+      -T(X+c_c)-C_{\rm HS}E_i-2.
+  \]</div>
+  <p>Finally, \(1-\beta\le z+2\rho\) and \(2a=6d+8\). The three height budgets bound the first term, \(TX\), and \(Tc_c\) separately by \(C_HE_i\); \(E_i\ge1\) absorbs the final constant. Combining this with the arithmetic-degree comparison gives the source's slightly relaxed uniform bound</p>
+  <div class="technical-equation">\[
+    2\,\frac{\sum_Z\widehat{\deg}_Z}{R}
+       \le\mu_{\rm cover},\qquad
+    \mu_{\rm cover}\ge-C_UE_i,\qquad
+    C_U=2(3C_H+C_{\rm HS}+4).
+  \]</div>
+  <p>This is the precise lower bound for the cover lattice at the untwisted comparison weight. The flat-line comparison subsequently restores the period-dependent main term:</p>
+  <div class="technical-equation">\[
+    \mu_-\ge\mu_{\rm cover}-T_i-C_FE_i
+      \ge-T_i-(C_F+C_U)E_i.
+  \]</div>
+  <p>Here \(\mu_-\) is the slope at the negatively shifted weight and \(C_F\ge0\) controls the flat-line comparison. <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/UniformLowerBoundOfSums.lean#L15">The component-to-slope theorem</a> collects the hypotheses and states the constant \(C_U\).</p>
+
+  <h5 id="geometric-integral-descent"><span class="note-number">2.10.6.5</span> Construct integral maps into the desired type.</h5>
+  <p>A cover estimate still concerns the wrong lattice. Let \(\Gamma\) be the finite level group and \(\chi\) the character selecting the required type. Write \(\gamma^*\) for its pullback action. Choose a short integral cusp section \(u\) of auxiliary weight \(W\), so that the negative weight plus \(W\) is the desired central weight. Define the unnormalized twisted trace and the family of maps</p>
+  <div class="technical-equation">\[
+    \operatorname{Tr}_{\chi}(v)=
+      \sum_{\gamma\in\Gamma}\chi(\gamma)^{-1}\gamma^*v,
+    \qquad
+    \phi_h(f)=\operatorname{Tr}_{\chi}(f\,h^*u)
+      \quad(h\in\Gamma).
+  \]</div>
+  <p>The action preserves the cusp lattice, \(u\) is integral, and finite-order character values are integral units. Consequently these maps carry integral sections into the desired character lattice \(B\). There is no division by \(|\Gamma|\). This preserves integrality while leaving an explicit norm cost.</p>
+  <p>The shortness and the determinant condition are obtained together. Orbit separation first supplies a cusp section \(u_0\) with a regular group determinant. Expand it in short integral generators supported on the components. When one coefficient varies, the determinant on an affected component is a polynomial of degree at most \(|\Gamma|\). A generator affects at most \(|\Gamma|\) components in its orbit. Hence at most \(|\Gamma|^2\) integer choices are forbidden, and one can replace that coefficient by an integer in \(\{0,\ldots,|\Gamma|^2\}\) while preserving regularity. Repeating this produces an integral \(u\) with bounded coefficients. The generator norm and pointwise bounds then control multiplication by \(u\).</p>
+  <p>In particular, the choice makes the group determinant</p>
+  <div class="technical-equation">\[
+    \Delta(u)=\det\bigl((hg)^*u\bigr)_{h,g\in\Gamma}
+  \]</div>
+  <p>a non-zero-divisor in the section ring: multiplication by it kills no nonzero section. The matrix identity behind the twisted traces therefore gives</p>
+  <div class="technical-equation">\[
+    \bigl(\phi_h(f)=0\text{ for every }h\bigr)\Longrightarrow f=0.
+  \]</div>
+  <p>Thus the whole family is injective, although an individual trace need not be. The non-zero-divisor condition is stronger than merely asking for one nonzero value of the determinant, because the section ring can have several components.</p>
+  <p>Suppose multiplication by any translate of \(u\) increases norm by at most \(B_u\), and the group action is isometric. Cauchy–Schwarz for each sum and then summation over \(h\) give</p>
+  <div class="technical-equation">\[
+    \sum_{h\in\Gamma}\|\phi_h(f)\|_\sigma^2
+      \le|\Gamma|^3B_u^2\|f\|_\sigma^2
+      \le e^{2b}\|f\|_\sigma^2
+  \]</div>
+  <p>at every complex embedding \(\sigma\). In the construction, \(\log|\Gamma|\le45\zeta^2\) and \(B_u=\exp(C\zeta^9)\). The size choices ensure \(135\zeta^2+2C\zeta^9\le2b\). This accounts for the full operator-norm loss used by descent. The same determinant construction also gives \(n\,\operatorname{rk}B\le r_+\), where \(n=|\Gamma|\) and \(r_+\) is the section rank at the positively shifted weight. <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MapsBoundOfDeepGood.lean#L41">The integral-map theorem</a> states these four outputs together: integrality, joint injectivity, the norm bound, and the rank comparison.</p>
+
+  <h5 id="geometric-descent-budget"><span class="note-number">2.10.6.6</span> Budget the rank defect and return to the core.</h5>
+  <p>Let \(A\) be the negative-weight lattice and let \(K_{\rm des}=P\kappa&gt;0\) be the scalar descent budget. The rank-growth estimate and the preceding map construction imply</p>
+  <div class="technical-equation">\[
+    n\,\operatorname{rk}B\le r_+
+      \le\left(1+\frac b{K_{\rm des}}\right)\operatorname{rk}A.
+  \]</div>
+  <p>The excess target rank is therefore at most the fraction \(b/K_{\rm des}\). The source also constructs a spanning set of integral vectors in \(B\), each of norm at most \(e^{K_{\rm des}}\). This supplies control over the part of the target that the injective family does not fill. Put</p>
+  <div class="technical-equation">\[
+    H=-T_i-(C_F+C_U)E_i-2b.
+  \]</div>
+  <p>The lattice descent inequality, with the preceding norm and rank bounds, gives</p>
+  <div class="technical-equation">\[
+    \mu_B\ge H-\frac b{K_{\rm des}}\bigl(|H|+2K_{\rm des}\bigr).
+  \]</div>
+  <p>Finally, comparison with the original coefficient field charges twice its logarithmic root discriminant. The good-cover field-size bound places that charge inside \(2b\), giving</p>
+  <div class="technical-equation">\[
+    \mu_{\rm core}\ge\mu_B-
+      2\frac{\log|\operatorname{disc}F_Y|}{[F_Y:\mathbb Q]}
+      \ge\mu_B-2b.
+  \]</div>
+  <p>Use \(b\le E_i\), \(b\le K_{\rm des}\), and \(|T_i|\le K_{\rm des}\). Then \(b/K_{\rm des}\le1\), the product \((b/K_{\rm des})|T_i|\) is at most \(b\), and \((b/K_{\rm des})2K_{\rm des}=2b\). Expanding the absolute value by the triangle inequality yields the explicit conclusion</p>
+  <div class="technical-equation">\[
+    \boxed{\mu_{\rm core}\ge
+      -T_i-\bigl(2(C_F+C_U)+9\bigr)E_i.}
+  \]</div>
+  <p>This is the starting inequality needed in <a href="#geometric-core">2.10.2</a>. The terminal step uses a separate low-defect bound; the family takes the larger of its constant and the constant displayed here. The chain explains how heights become an integral core-lattice bound. Its geometric inputs still carry precise hypotheses about models, positivity, volume estimates, and finite-degree Hilbert–Samuel; <a href="sources.html#nv-covolume-proof">the original geometric assembly</a> records where those are supplied.</p>
 
   <h4 id="geometric-handoff"><span class="note-number">2.10.7</span> Make the estimate uniform and carry it to the same data.</h4>
   <p>The constants and thresholds are chosen for an eligible family, before the later point and lift index. With \(C_0=C_1+C_2+1\), the result has the order of quantifiers</p>
