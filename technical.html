@@ -202,9 +202,11 @@
     <li><a href="#nv-assembly">One theorem for every character</a><p>The final assembly supplies those inputs, proves the universal nonvanishing statement, and feeds it into the critical-line deduction.</p></li>
   </ol>
   <div class="technical-note"><p><strong>Where the numerical estimate comes from.</strong> The <a href="#arithmetic-fourier">finite Fourier calculation</a> identifies the prime sum, the <a href="#theta-main-cancellation">period normalization</a> cancels its large main terms, and the <a href="#arithmetic-square-root">four normalized costs</a> explain the square-root scale. These are the intermediate calculations connecting the arithmetic inputs to Landau.</p></div>
-  <p><strong>Follow the construction steps.</strong> These six expanded passages explain the maps, limiting arguments, and quantitative comparisons connecting the deeper inputs.</p>
+  <p><strong>Follow the construction steps.</strong> These expanded passages explain the prime choices, maps, limiting arguments, and quantitative comparisons connecting the deeper inputs.</p>
   <nav class="landau-step-nav adjoint-step-nav" aria-label="Expanded construction arguments"><ol>
+    <li><a href="#auxiliary-characters"><span class="note-nav-number">2.6.7.1</span><span>Auxiliary characters and compatible prime pairs</span></a></li>
     <li><a href="#galois-construction"><span class="note-nav-number">2.7.4</span><span>Geometry, congruences, and trace limits</span></a></li>
+    <li><a href="#galois-length-bound"><span class="note-nav-number">2.7.11</span><span>Integral derivation lifts and cohomology lengths</span></a></li>
     <li><a href="#adjoint-faithfulness"><span class="note-nav-number">2.7.12.6.8</span><span>Patching, freeness, and Selmer vanishing</span></a></li>
     <li><a href="#trace-reorder"><span class="note-nav-number">2.7.13.9</span><span>Euler characteristics and correction terms</span></a></li>
     <li><a href="#local-existence"><span class="note-nav-number">2.8.4</span><span>Local parameters and monodromy</span></a></li>
@@ -749,7 +751,224 @@
     x^{400}=\kappa^{400}(x')^{400}\le(x')^{401}.
   \]</div>
   <p>The original twist cutoff is therefore large enough after rescaling. Decreasing a cutoff only drops nonnegative terms from the cohomology sum. Also \(x'\le x\), so its budget \(\exp((x')^\varepsilon/2)\) is at most \(\exp(x^\varepsilon/2)\). These elementary comparisons explain the spare exponent and the change of window shape.</p>
-  <p>Separate field, prime-existence, rank and short-norm constructions supply the remaining host conditions. In particular, the same host retains the target characters, controls complementary characters and their logarithmic derivatives at \(1\), and gives the required proportions of selected arithmetic classes. Estimates on unrelated families would not combine in the way used below.</p>
+  <p>Separate field, rank and short-norm constructions supply the remaining host conditions. The auxiliary primes must also control the complementary characters and their logarithmic derivatives at \(1\). The following argument explains how to choose one pair that works throughout the required interval and is compatible with the arithmetic window.</p>
+
+  <nav class="landau-step-nav" aria-label="Bounding the auxiliary-character errors">
+    <ol>
+      <li><a href="#auxiliary-characters"><span class="note-nav-number">2.6.7.1</span><span>Identify the discarded twists</span></a></li>
+      <li><a href="#auxiliary-mean-square"><span class="note-nav-number">2.6.7.2</span><span>Average over candidate primes</span></a></li>
+      <li><a href="#auxiliary-whole-interval"><span class="note-nav-number">2.6.7.3</span><span>Control the entire interval</span></a></li>
+      <li><a href="#auxiliary-zero-box"><span class="note-nav-number">2.6.7.4</span><span>Exclude unsuitable zero boxes</span></a></li>
+      <li><a href="#auxiliary-finite-tail"><span class="note-nav-number">2.6.7.5</span><span>Recover the analytic error</span></a></li>
+      <li><a href="#auxiliary-prime-pair"><span class="note-nav-number">2.6.7.6</span><span>Choose both primes together</span></a></li>
+      <li><a href="#auxiliary-common-window"><span class="note-nav-number">2.6.7.7</span><span>Use the arithmetic window</span></a></li>
+      <li><a href="#auxiliary-total-error"><span class="note-nav-number">2.6.7.8</span><span>Sum the discarded errors</span></a></li>
+    </ol>
+  </nav>
+
+  <h5 id="auxiliary-characters"><span class="note-number">2.6.7.1</span> Identify which characters need a separate bound.</h5>
+  <p>Let \(M\ge1\) be the fixed level of the target character. Write \(\lambda_q(n)=(n/q)\) and \(\lambda_d(n)=(n/d)\) for the two auxiliary quadratic characters. Their role is to enlarge the arithmetic family while leaving the original target family identifiable. The resulting character functions have the form</p>
+  <div class="technical-equation">\[
+    \xi(n)\lambda_q(n)^i\lambda_d(n)^j,
+    \qquad \xi\pmod M,\quad i,j\in\{0,1\}.
+  \]</div>
+  <p>The host's character decomposition shows that every character discarded in the later comparison is represented by a <em>nonzero twist</em>, meaning \((i,j)\ne(0,0)\), after passage to its primitive inducing character \(\chi\). This passage identifies values on integers coprime to the relevant levels; the analytic estimates are stated for the primitive character itself. The untwisted target family is retained in \(G_F\).</p>
+  <p>Fix \(0&lt;\varepsilon&lt;1/52\), an interval exponent \(K\ge1\), and a sufficiently large lower scale \(Y\). The selection theorem will choose \(q,d\) so that, simultaneously for all these nonzero twists and all \(y\in[Y,Y^K]\),</p>
+  <div class="technical-equation">\[
+    |G_\chi(y)|\le y^{1/2+\varepsilon/2},
+    \qquad
+    \left|\frac{L'(1,\chi)}{L(1,\chi)}\right|\le4\log y.
+  \]</div>
+  <p>Here \(G_\chi\) is the smoothed error from <a href="#nv-analytic">§2.3</a>. The primes may depend on \(Y\), but remain fixed as \(y\) moves through the interval. Thus this statement does not give an all-scale bound for an arbitrary fixed character. It supplies suitable auxiliary characters for each sufficiently late interval.</p>
+
+  <h5 id="auxiliary-mean-square"><span class="note-number">2.6.7.2</span> Average the finite sums over many candidate primes.</h5>
+  <p>First consider one new quadratic twist. For a candidate prime \(p\), coefficients \(|\kappa(n)|\le1\), and truncation \(T=(Y^K)^{400}\), put</p>
+  <div class="technical-equation">\[
+    c_y(n)=\Lambda(n)\min(1,y/n),\qquad
+    S_p(y)=\sum_{1\le n\le T}c_y(n)\kappa(n)\lambda_p(n).
+  \]</div>
+  <p>The smoothing is continuous in \(y\). Below \(n=y\) its weight is \(1\); above that point it is \(y/n\). The large finite cutoff will leave a small analytic tail. We seek cancellation as the auxiliary prime varies, even when no useful individual estimate has yet been established.</p>
+  <p>The candidates lie in a specified progression:</p>
+  <div class="technical-equation">\[
+    \mathcal P=\{p\text{ prime}:U^{1/2}&lt;p\le U,
+                         \ p\equiv a_0\pmod{m_0}\}.
+  \]</div>
+  <p>The mean-square theorem requires \(m_0\ge1\), \(8\mid m_0\), \(\gcd(a_0,m_0)=1\), and the scale conditions</p>
+  <div class="technical-equation">\[
+    \tfrac14(\log Y)^2\log m_0\le\log U,
+    \qquad
+    Y^{\varepsilon/6}\le\log U
+       \le Y^{\varepsilon/5}(\log Y)^2.
+  \]</div>
+  <p>Every prime factor of \(m_0\) must also be at most \(Y^{\varepsilon/5}\) or greater than \(T\). Under these conditions, beyond a uniform threshold, there is a constant \(C&gt;0\) such that</p>
+  <div class="technical-equation">\[
+    \sum_{p\in\mathcal P}|S_p(y)|^2
+       \le C\,y\log y\,|\mathcal P|,
+       \qquad Y\le y\le Y^K.
+  \]</div>
+  <p>To see the source of cancellation, expand the square:</p>
+  <div class="technical-equation">\[
+    \sum_{p\in\mathcal P}|S_p(y)|^2
+      =\sum_{n,m\le T}c_y(n)c_y(m)\kappa(n)\overline{\kappa(m)}
+           \sum_{p\in\mathcal P}\lambda_p(nm).
+  \]</div>
+  <p>The inner sum measures correlation between the quadratic signs. Quadratic reciprocity reduces it to character sums over the prime progression. The source separates coherent square classes, contributions supported on the progression modulus, a possible exceptional square class, and the remaining small correlations. Prime-power coefficient estimates then bound their combined contribution by \(C y\log y\). This character-sum theorem is a substantive analytic input; the signs are not being assumed independent random variables.</p>
+  <p>At a fixed \(y\), the average squared size is therefore on the scale \(y\log y\). A threshold \(y^{1/2+\tau}\), with any fixed \(\tau&gt;0\), is eventually larger than the typical size. The next step ensures that a small exceptional proportion suffices for the <em>whole interval</em>.</p>
+
+  <h5 id="auxiliary-whole-interval"><span class="note-number">2.6.7.3</span> Turn pointwise averages into one good set for the interval.</h5>
+  <p>A separate good set for each \(y\) would not suffice: their intersection might be empty. The key extra fact is that the smoothed sums cannot change arbitrarily quickly. Away from the finitely many breakpoints, their derivative is</p>
+  <div class="technical-equation">\[
+    D_p(v)=\sum_{v&lt;n\le T}\frac{\Lambda(n)}n\kappa(n)\lambda_p(n),
+    \qquad
+    S_p(y)-S_p(a)=\int_a^y D_p(v)\,dv.
+  \]</div>
+  <p>The integral identity also holds across the breakpoints because these are finite, continuous, piecewise linear sums. For each fixed \(v\), replacing \(\kappa(n)\) by \(\kappa(n)\mathbf1_{n&gt;v}\) in the mean-square estimate gives</p>
+  <div class="technical-equation">\[
+    vD_p(v)=S_p(v;\kappa\mathbf1_{n&gt;v}),\qquad
+    \sum_{p\in\mathcal P}|D_p(v)|^2
+       \le C\frac{\log v}{v}|\mathcal P|.
+  \]</div>
+  <p>On a block \([a,b]\) with \(a\le b\le2a\), choose any point \(w_p\) in the block for each prime. The integral identity, \(|u+v|^2\le2|u|^2+2|v|^2\), and Cauchy–Schwarz yield</p>
+  <div class="technical-equation">\[
+    |S_p(w_p)|^2\le2|S_p(a)|^2
+          +2a\int_a^b|D_p(v)|^2\,dv,
+  \]
+  \[
+    \sum_{p\in\mathcal P}|S_p(w_p)|^2
+       \le4Ca\log(2a)|\mathcal P|.
+  \]</div>
+  <p>For every prime bad somewhere in this block, choose \(w_p\) where \(|S_p(w_p)|&gt;\tfrac12w_p^{1/2+\tau}\). Each such prime contributes at least \(a^{1+2\tau}/4\) to the preceding sum. Thus, for \(a\ge2\),</p>
+  <div class="technical-equation">\[
+    \frac{|\mathcal B_a|}{|\mathcal P|}
+      \le16C\frac{\log(2a)}{a^{2\tau}}
+      \le\frac{32C}{\tau}a^{-\tau}.
+  \]</div>
+  <p>The last inequality uses \(\log(2a)\le2a^\tau/\tau\). Now cover \([Y,Y^K]\) by blocks starting at \(2^jY\), truncating the final block at \(Y^K\). The proportion bad anywhere is bounded by a convergent geometric sum:</p>
+  <div class="technical-equation">\[
+    \frac{|\mathcal B|}{|\mathcal P|}
+      \le\frac{32C}{\tau}Y^{-\tau}\sum_{j\ge0}2^{-j\tau}
+      =\frac{32C}{\tau(1-2^{-\tau})}Y^{-\tau}
+      \longrightarrow0.
+  \]</div>
+  <p>This is the crucial uniformity argument. After discarding one small set of primes, every remaining prime satisfies the finite-sum estimate at every point of the interval.</p>
+
+  <h5 id="auxiliary-zero-box"><span class="note-number">2.6.7.4</span> Exclude twists with zeros too close to one.</h5>
+  <p>The finite-sum estimate must be accompanied by an analytic tail estimate. For that purpose, the selection also requires a nontrivial primitive character \(\chi\), conductor at most \(Q\), and the bounded-height zero-free condition</p>
+  <div class="technical-equation">\[
+    L(s,\chi)\ne0
+       \quad\text{if}\quad
+       \operatorname{Re}s&gt;1-\frac1{400},\quad
+       |\operatorname{Im}s|\le Q.
+  \]</div>
+  <p>This condition is near the line \(\operatorname{Re}s=1\), and only the selected twists must satisfy it. It does not assert nonvanishing throughout \(\operatorname{Re}s&gt;1/2\).</p>
+  <p>Let the base primitive characters have conductors at most \(F\le U^{1/2}\). Twisting by a candidate \(p&gt;U^{1/2}\) gives conductor \(fp\), where \(f\le F\), so use \(Q=FU\). The zero-density input bounds the number of unsuitable primes by</p>
+  <div class="technical-equation">\[
+    |\mathcal B_{\mathrm{zero}}|\le C_0Q^{1/4}
+        \le C_0U^{3/8}.
+  \]</div>
+  <p>Why can a count of characters bound a count of primes? Associate a bad primitive character to each bad prime. Its conductor identifies the new prime uniquely: if \(fp=f'p'\), with \(f,f'\le F&lt;p,p'\), primality forces \(p=p'\). The prime-progression estimate supplies \(|\mathcal P|\ge U^{9/10}\) under the admissibility conditions, hence</p>
+  <div class="technical-equation">\[
+    \frac{|\mathcal B_{\mathrm{zero}}|}{|\mathcal P|}
+       \le C_0U^{-21/40}\longrightarrow0.
+  \]</div>
+  <p>There are only finitely many base characters to handle. If their number is at most \(R\), allocate an exceptional proportion \(\eta/[2(R+1)]\) to the interval estimate for each one, and \(\eta/2\) to bad zero boxes. The union bound leaves at least \((1-\eta)|\mathcal P|\) primes satisfying all requirements simultaneously. These are deterministic counting estimates; no independence assumption is needed.</p>
+
+  <h5 id="auxiliary-finite-tail"><span class="note-number">2.6.7.5</span> Recover the smoothed error from its finite sum and tail.</h5>
+  <p>For a nontrivial primitive \(\chi\), abbreviate \(\ell_\chi=L'(1,\chi)/L(1,\chi)\). At \(1\le y\le T\), define the finite remainder</p>
+  <div class="technical-equation">\[
+    R_\chi(T)=-\ell_\chi-
+          \sum_{n\le T}\frac{\Lambda(n)\chi(n)}n.
+  \]</div>
+  <p>No convergence at \(s=1\) is required to define this remainder. Expanding the smoothing gives the exact identity</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+      G_\chi(y)
+        &amp;=\sum_{n\le y}\Lambda(n)\chi(n)(y/n-1)+y\ell_\chi\\
+        &amp;=-\sum_{n\le T}\Lambda(n)\chi(n)\min(1,y/n)-yR_\chi(T).
+    \end{aligned}
+  \]</div>
+  <p>When \(\chi=\kappa\lambda_p\), the finite sum on the second line is \(S_p(y)\). The analytic tail theorem uses the zero-free box and the scale restrictions</p>
+  <div class="technical-equation">\[
+    Y^{\varepsilon/6}\le\log Q\le Y^{\varepsilon/4}
+  \]</div>
+  <p>to obtain \(Y^K|R_\chi(T)|\le Y^\varepsilon\), beyond a threshold depending on the fixed parameters. For \(\varepsilon\le1/4\), \(Y\ge16\), \(\tau&gt;0\), and \(y\in[Y,Y^K]\), this is small enough:</p>
+  <div class="technical-equation">\[
+    y|R_\chi(T)|\le Y^\varepsilon
+         \le\tfrac12y^{1/2+\tau},\qquad
+    |S_p(y)|\le\tfrac12y^{1/2+\tau}.
+  \]
+  \[
+    |G_\chi(y)|\le|S_p(y)|+y|R_\chi(T)|
+          \le y^{1/2+\tau}.
+  \]</div>
+  <p>The near-square-root exponent comes from the averaged finite sums. The zero-free box controls the remaining tail; it does not by itself supply the near-square-root bound. The selection below takes \(\tau=\varepsilon/2\).</p>
+
+  <h5 id="auxiliary-prime-pair"><span class="note-number">2.6.7.6</span> Choose two primes while keeping every twist under control.</h5>
+  <p>Set \(z=Y^{\varepsilon/5}\) and \(z'=z(\log Y)^2\). First apply the preceding selection to</p>
+  <div class="technical-equation">\[
+    \mathcal P_1=\{q\text{ prime}:e^{z/2}&lt;q\le e^z,
+                                             \ q\equiv3\pmod8\}.
+  \]</div>
+  <p>It supplies a positive proportion of primes controlling \(\xi\lambda_q\) for every character \(\xi\) of the fixed base level. The formal selection uses level \(8M\), so it also covers the required real characters of conductor dividing \(8M\).</p>
+  <p>Once \(q\) is fixed, choose \(d\) from the second set</p>
+  <div class="technical-equation">\[
+    \mathcal P_2(q)=\left\{d\text{ prime}:
+       e^{z'/2}&lt;d\le e^{z'},\ d\equiv7\pmod{16},\
+       d\equiv-1\pmod{q\prod_{3\le p\le z,\ p\ \mathrm{prime}}p}
+       \right\}.
+  \]</div>
+  <p>The Chinese remainder theorem expresses these congruences as one coprime progression. The product of small primes and \(q\) controls its modulus; the larger scale \(z'\) provides the room required by the progression estimates. The second-stage proof checks the admissibility inequalities with the auxiliary parameter \(6\varepsilon/5\). Its small modulus primes remain below that parameter's cutoff, while \(q&gt;T\) for sufficiently large \(Y\).</p>
+  <p>Apply the same counting argument to the primitive representatives of \(\xi\) and \(\xi\lambda_q\), now using \(d\) as the new prime. Their number is bounded independently of \(q\), although their conductors may grow with \(q\). The second-stage thresholds are uniform over the first candidate set. Consequently there are good sets satisfying, for example,</p>
+  <div class="technical-equation">\[
+    |\mathcal G_1|\ge\tfrac12|\mathcal P_1|&gt;0,
+    \qquad
+    |\mathcal G_2(q)|\ge\tfrac12|\mathcal P_2(q)|&gt;0
+       \quad(q\in\mathcal G_1).
+  \]</div>
+  <p>Choose \(q\in\mathcal G_1\) and then \(d\in\mathcal G_2(q)\). The first selection controls the twist \((i,j)=(1,0)\); the second controls \((0,1)\) and \((1,1)\). The primes satisfy the arithmetic congruences and all the analytic estimates on the same interval. Choosing two unrelated good primes would not establish this compatibility.</p>
+  <p>The derivative bound also needs a quantitative refinement. For a selected zero-free box the source obtains, with a fixed constant \(C_1\),</p>
+  <div class="technical-equation">\[
+    |\ell_\chi|\le1000\log\log Q+C_1.
+  \]</div>
+  <p>Here one may use \(Q_0=8Me^z\) for the first twist and \(Q_1=8Me^{z+z'}\) for twists involving \(d\). For sufficiently large \(Y\), both have \(\log Q_j\le3Y^{\varepsilon/5}(\log Y)^2\). Therefore</p>
+  <div class="technical-equation">\[
+    |\ell_\chi|\le200\varepsilon\log Y
+         +2000\log\log Y+1000\log3+C_1
+         \le4\log Y\le4\log y.
+  \]</div>
+  <p>The penultimate inequality uses \(200\varepsilon&lt;4\) and \(\log\log Y/\log Y\to0\); all constants are absorbed by moving the starting threshold. This explains the fixed coefficient \(4\) in the host condition. With \(\tau=\varepsilon/2\), the same pair gives the error bound stated in step 2.6.7.1.</p>
+  <p class="source-callout">Source entry point: <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/MeanSquareBounds/StagePow.lean#L40">the simultaneous exclusion of bad finite sums and bad zero boxes</a>, followed by <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/MeanSquareBounds/pairEx.lean#L112">the compatible prime-pair construction</a>.</p>
+
+  <h5 id="auxiliary-common-window"><span class="note-number">2.6.7.7</span> Let the arithmetic theorem choose a subinterval afterwards.</h5>
+  <p>The order of choices now matters. First fix the target level and \(\varepsilon\); the cohomology theorem supplies its exponent \(J\). Apply the prime-pair selection with interval exponent \(K=J\). At a sufficiently large outer scale \(X\), put \(Y_0=X^{1/J}\). The analytic estimates then hold on</p>
+  <div class="technical-equation">\[
+    [Y_0,Y_0^J]=[X^{1/J},X].
+  \]</div>
+  <p>For this very pair \(q,d\), the arithmetic theorem chooses \(W\) with \(Y_0\le W\) and \(W^2\le X\). Thus its entire cohomology window lies within the interval already controlled analytically:</p>
+  <div class="technical-equation">\[
+    [W,W^2]\subseteq[Y_0,X].
+  \]</div>
+  <p>After the fixed rescaling above, \(Z=\kappa W\) and \(W\ge\kappa^3\) give \([Z,Z^{3/2}]\subseteq[W,W^2]\). The cohomology estimate is used at \(x'=x/\kappa\), while the auxiliary-character estimate is used at \(x\); both arguments lie in their respective available intervals. Taking the maximum of the fixed starting thresholds makes all these choices compatible.</p>
+  <p>The logical point is that the arithmetic theorem works for <em>every eligible pair</em>. We first choose a pair with good analytic behavior, then take the arithmetic subinterval it admits. There is no need to intersect two independently chosen good intervals.</p>
+
+  <h5 id="auxiliary-total-error"><span class="note-number">2.6.7.8</span> Sum the discarded characters and return to Landau.</h5>
+  <p>At a host scale \(x\), let \(\mathcal X_{\mathrm{disc}}\) be the finite family of discarded character labels. The character decomposition from step 2.6.7.1 and the selected-pair estimate give, for each associated primitive character,</p>
+  <div class="technical-equation">\[
+    |G_\chi(x)|\le x^{1/2+\varepsilon/2}
+         \le x^{1/2+\varepsilon}\qquad(x\ge1).
+  \]</div>
+  <p>The finite Fourier calculation identifies the host's character errors with these primitive errors. The character set surviving the averaging has size \(4o\), where \(o\) is the fixed level parameter from §2.6.9. The discarded labels are a subset of that finite set, so the triangle inequality gives</p>
+  <div class="technical-equation">\[
+    \begin{aligned}
+      \Sigma(x)
+        &amp;=\sum_{\theta\in\mathcal X_{\mathrm{disc}}}
+                   |G_{\chi_\theta}(x)|\\
+        &amp;\le|\mathcal X_{\mathrm{disc}}|\,x^{1/2+\varepsilon}
+         \le4o\,x^{1/2+\varepsilon}
+          =C_{\mathrm{lev}}x^{1/2+\varepsilon}.
+    \end{aligned}
+  \]</div>
+  <p>The coefficient counts a fixed finite family; it is not an asymptotic little-o or big-O symbol. The retained target errors remain in \(G_F\), to be bounded by the arithmetic and geometric comparison. This selection argument uses prime-progression, quadratic-correlation, zero-density and analytic-tail theorems as inputs. It does not insert the desired target nonvanishing as an assumption. Together with the later comparison, it supplies the precise auxiliary error term needed for the Landau step.</p>
 
   <h4 id="arithmetic-absorption"><span class="note-number">2.6.8</span> Absorb the cohomology term into a larger geometric bound.</h4>
   <p>At a host scale \(x\), write</p>
@@ -821,7 +1040,7 @@
        \bigl(G_F(x)-\Sigma(x)-4x^{1/2+\varepsilon}\bigr)
        \le E_x+\frac{2Q}{x}.
   \]</div>
-  <p>Here \(E_x\) is the lattice-comparison error and \(\Sigma(x)\) is the sum of the absolute errors of the discarded auxiliary characters. The chosen host supplies \(\Sigma(x)\le C_{\mathrm{lev}}x^{1/2+\varepsilon}\). This concerns the auxiliary characters; the target family remains on the left-hand side to be bounded.</p>
+  <p>Here \(E_x\) is the lattice-comparison error and \(\Sigma(x)\) is the sum of the absolute errors of the discarded auxiliary characters. The <a href="#auxiliary-total-error">prime-pair selection and finite-character count in §2.6.7</a> give \(\Sigma(x)\le C_{\mathrm{lev}}x^{1/2+\varepsilon}\). This concerns the auxiliary characters; the target family remains on the left-hand side to be bounded.</p>
 
   <h5 id="arithmetic-square-root"><span class="note-number">2.6.9.2</span> Balance the four normalized costs.</h5>
   <p>Work at \(x\ge3\) with \(\varepsilon&gt;0\). The decisive quantity is \(E_x/Q\). The source bounds \(E_x\le x^{C\varepsilon}B_x\), where the error bracket is</p>
@@ -1197,23 +1416,173 @@
 
   <h4 id="galois-length-bound"><span class="note-number">2.7.11</span> Measure the depth of every torsion layer.</h4>
   <p>A tangent-space dimension records how many directions remain modulo \(\varpi\). It does not record how long they survive. For example, \(\mathcal O/\varpi\mathcal O\) and \(\mathcal O/\varpi^{100}\mathcal O\) both have a one-dimensional quotient modulo \(\varpi\), but their lengths are \(1\) and \(100\).</p>
+  <p>The delicate step is to turn a torsion cocycle into a functional on the <em>saturated</em> cotangent lattice. We keep the good-data hypotheses from §2.7.6, the marked normalization, and the source's local deformation condition. In particular, \(\mathcal O\) is a complete discrete valuation ring with finite residue field, \(2\) is invertible, and the chosen model has the relative presentation described below. These hypotheses supply an integral lift on the ambient model; the universal deformation property alone does not supply it.</p>
+
+  <nav class="landau-step-nav" aria-label="Lifting cocycles to the saturated cotangent module">
+    <ol>
+      <li><a href="#galois-lift-depth"><span class="note-nav-number">2.7.11.1</span><span>Identify the length to bound</span></a></li>
+      <li><a href="#galois-lift-local-coboundary"><span class="note-nav-number">2.7.11.2</span><span>Use the local splitting witness</span></a></li>
+      <li><a href="#galois-lift-integral-matrix"><span class="note-nav-number">2.7.11.3</span><span>Lift the splitting matrix</span></a></li>
+      <li><a href="#galois-lift-local-deformation"><span class="note-nav-number">2.7.11.4</span><span>Preserve the local equations</span></a></li>
+      <li><a href="#galois-lift-global-derivation"><span class="note-nav-number">2.7.11.5</span><span>Match the global derivative</span></a></li>
+      <li><a href="#galois-lift-relative-presentation"><span class="note-nav-number">2.7.11.6</span><span>Use the relative presentation</span></a></li>
+      <li><a href="#galois-lift-linear-coefficients"><span class="note-nav-number">2.7.11.7</span><span>Lift the linear coefficients</span></a></li>
+      <li><a href="#galois-lift-saturation"><span class="note-nav-number">2.7.11.8</span><span>Pass through saturation</span></a></li>
+      <li><a href="#galois-lift-faithful"><span class="note-nav-number">2.7.11.9</span><span>Recover the original cocycle</span></a></li>
+      <li><a href="#galois-lift-length"><span class="note-nav-number">2.7.11.10</span><span>Count every torsion layer</span></a></li>
+    </ol>
+  </nav>
+
+  <h5 id="galois-lift-depth"><span class="note-number">2.7.11.1</span> Identify the integral quantity that must bound the cocycles.</h5>
   <p>Under the model's spanning hypotheses, elementary divisors put its equation lattice in diagonal form. After changing generators, with \(d\) the rank of \(\Lambda_{-1}\), its nonzero linear generators have the following form; any redundant linear generators can be taken to be zero:</p>
   <div class="technical-equation">\[
     \overline F_i=\varpi^{a_i}y_i,\qquad
     C_{-1}\simeq\bigoplus_{i=1}^{d}\mathcal O/\varpi^{a_i}\mathcal O,
     \qquad \operatorname{length}_{\mathcal O}C_{-1}=\sum_{i=1}^{d}a_i.
   \]</div>
-  <p>To see why this quotient controls cohomology, take a normalized cocycle with coefficients in \(\mathcal O/b\mathcal O\). The universal property produces a derivation on \(R\); composing with the model map \(A\to R\) produces a derivation \(\delta:A\to\mathcal O/b\mathcal O\) that kills the defining equations. The source's local lifting result supplies an integral, weight \(-1\) derivation \(\widetilde\delta:A\to\mathcal O\) reducing to \(\delta\).</p>
-  <p>This lift explains why the saturation causes no loss. If \(da\in J_A^2\) for \(d\ne0\), the derivation rule gives</p>
+  <p>Fix a nonzero \(b\in\mathcal O\) and put \(Q=\mathcal O/b\mathcal O\). We will attach a distinct element of \(\operatorname{Hom}_{\mathcal O}(C_{-1},Q)\) to each class in \(\mathcal S_{\ell,r,\psi}[b]\). The bound will then follow by counting the possible images of the generators \(y_i\).</p>
+
+  <h5 id="galois-lift-local-coboundary"><span class="note-number">2.7.11.2</span> Use the local splitting witness, not just the global cocycle equation.</h5>
+  <p>Let \(\gamma\) be the normalized matrix cocycle attached to a class. Write \(H\to G_{\mathbb Q}\) for the chosen local decomposition-group map above \(\ell\), and write \(h\star X\) for the polarized adjoint action of the split reference representation. The local condition supplies a matrix \(X\) such that</p>
   <div class="technical-equation">\[
-    0=\widetilde\delta(da)=d\,\widetilde\delta(a)
+    \gamma(h)=X-h\star X,\qquad
+    X=\begin{pmatrix}0&0&0\\\bar u&0&0\\0&\bar v&0\end{pmatrix}
+       \in M_3(Q).
+  \]</div>
+  <p>Here and below \(\gamma(h)\) means restriction along that local map. The two allowed positions have weight \(-1\). Local triviality therefore provides more than a vanishing statement in cohomology: it provides a concrete change of basis that splits the local deformation. Lifting this matrix is easier than lifting an arbitrary global cohomology class.</p>
+  <p>To keep track of the polarization, use indices \(0,1,2\), put \((w_0,w_1,w_2)=(1,0,-1)\), and let \(\eta\) be the quadratic character of \(K/\mathbb Q\). On the reference representation the action is</p>
+  <div class="technical-equation">\[
+    (h\star Z)_{ij}=\Psi(h)^{w_i-w_j}
+      \begin{cases}
+        Z_{ij},&\eta(h)=1,\\
+        -Z_{2-j,\,2-i},&\eta(h)=-1.
+      \end{cases}
+  \]</div>
+  <p>The coefficient character is reduced to \(Q^\times\) when \(Z\) has coefficients in \(Q\). The reflected indices have the same weight as the original entry, so the weight \(-1\) subspace is preserved.</p>
+
+  <h5 id="galois-lift-integral-matrix"><span class="note-number">2.7.11.3</span> Lift the splitting matrix while preserving the local continuity condition.</h5>
+  <p>Choose \(u,v\in\mathcal O\) lifting \(\bar u,\bar v\), and form</p>
+  <div class="technical-equation">\[
+    Y=\begin{pmatrix}0&0&0\\u&0&0\\0&v&0\end{pmatrix},
+    \qquad Y\bmod b=X,
+    \qquad (Y-h\star Y)\bmod b=\gamma(h).
+  \]</div>
+  <p>The source also checks the continuity needed for this integral coboundary. If \(\bar v=-\bar u\), choose \(v=-u\). Then \(Y_{ij}=-Y_{2-j,2-i}\), and the sign-and-reflection part of the action is independent of which value \(\eta(h)\) takes. Only the already continuous character \(\Psi\) varies.</p>
+  <p>If \(\bar v\ne-\bar u\), the two sign cases can be distinguished from the original locally constant cocycle. Indeed, its \((2,1)\) entry gives</p>
+  <div class="technical-equation">\[
+    \overline{\Psi(h)}\bigl(\bar v-\gamma(h)_{21}\bigr)
+      =\begin{cases}
+         \bar v,&\eta(h)=1,\\
+         -\bar u,&\eta(h)=-1.
+       \end{cases}
+  \]</div>
+  <p>The left side is locally constant: \(\gamma\) is locally constant and the continuous character \(\Psi\) becomes locally constant modulo \(b\). Since the two values on the right are distinct, the branch is locally constant too. Replacing those two values by the corresponding entries of \(Y\) preserves this property. Thus either choice of case yields an admissible continuous integral coboundary.</p>
+
+  <h5 id="galois-lift-local-deformation"><span class="note-number">2.7.11.4</span> Keep the integral local deformation inside its defining ideal.</h5>
+  <p>Work over \(\mathcal O[\epsilon]/(\epsilon^2)\). The matrix \(1+\epsilon Y\) is invertible, with inverse \(1-\epsilon Y\). Conjugating the reference representation gives</p>
+  <div class="technical-equation">\[
+    \rho_{\mathrm{loc},\epsilon}(h)
+      =(1+\epsilon Y)\rho_0(h)(1-\epsilon Y)
+      =\bigl(1+\epsilon(Y-h\star Y)\bigr)\rho_0(h).
+  \]</div>
+  <p>This formula uses the polarized group law when \(\eta(h)=-1\). It automatically satisfies the representation law because it is a conjugate of a representation.</p>
+  <p>Let \(R_{\mathrm{loc}}\) represent the local lifts and let \(I_{\mathrm{loc}}\) impose the chosen local condition. The source's local comparison supplies a base map \(x_{\mathrm{loc}}\) killing \(I_{\mathrm{loc}}\), together with stability of that condition under changes of basis congruent to the identity. Since \(1+\epsilon Y\) is such a change, its classifying map satisfies</p>
+  <div class="technical-equation">\[
+    F_{\mathrm{loc}}:R_{\mathrm{loc}}\longrightarrow
+        \mathcal O[\epsilon]/(\epsilon^2),\qquad
+    F_{\mathrm{loc}}(a)=x_{\mathrm{loc}}(a)+\epsilon D_{\mathrm{loc}}(a),
+    \qquad F_{\mathrm{loc}}(I_{\mathrm{loc}})=0.
+  \]</div>
+  <p>Comparing the two coefficients shows that \(D_{\mathrm{loc}}\) is an integral derivation and \(D_{\mathrm{loc}}(I_{\mathrm{loc}})=0\). It has weight \(-1\), because the coboundary of \(Y\) has only those matrix positions. This is where the specified local deformation condition is used: stability under conjugation keeps its equations valid over the integral dual numbers.</p>
+
+  <h5 id="galois-lift-global-derivation"><span class="note-number">2.7.11.5</span> Match the integral local derivative to the global derivative modulo \(b\).</h5>
+  <p>The global cocycle defines a representation over \(\mathcal O\oplus\epsilon Q\). Its normalization, its vanishing on the designated ramification subgroups, and the reduction of \(F_{\mathrm{loc}}\) verify the conditions defining the global ring \(R\). The universal property then gives</p>
+  <div class="technical-equation">\[
+    F:R\longrightarrow\mathcal O\oplus\epsilon Q,
+    \qquad F(a)=x_0(a)+\epsilon D_R(a).
+  \]</div>
+  <p>For a matrix-entry coordinate \(r_{ij}(g)\) of the universal representation, comparison with \((1+\epsilon\gamma(g))\rho_0(g)\) gives the explicit formula</p>
+  <div class="technical-equation">\[
+    D_R(r_{ij}(g))=\overline{\Psi(g)}^{\,w_j}\gamma(g)_{ij}.
+  \]</div>
+  <p>The exponent comes from the \(j\)-th diagonal entry of \(\rho_0(g)\), multiplying the \(j\)-th column. Restricting this formula to \(H\) agrees with \(D_{\mathrm{loc}}\bmod b\), since the two local cocycles agree. Derivations on the represented deformation ring are determined by these matrix-entry coordinates, so the local and global derivatives are compatible on the entire local ring.</p>
+  <p>Let \(q_A:A\to R\) be the model map and set \(\delta=D_R\circ q_A\). We have now constructed the required derivative modulo \(b\). The next step lifts \(\delta\) to \(\mathcal O\) using this local compatibility.</p>
+
+  <h5 id="galois-lift-relative-presentation"><span class="note-number">2.7.11.6</span> Separate the local relations from the additional global coordinates.</h5>
+  <p>The model construction provides a weighted presentation with local variables \(\mathbf u\) and additional variables \(\mathbf z\). Write its form as</p>
+  <div class="technical-equation">\[
+    B_{\mathrm{loc}}=R_{\mathrm{loc}}/I_{\mathrm{loc}}
+       \simeq\mathcal O[[\mathbf u]]/\mathfrak r_{\mathrm{loc}},
+    \qquad
+    \mathcal C\simeq
+       \frac{\mathcal O[[\mathbf u,\mathbf z]]}
+       {\mathfrak r_{\mathrm{loc}}\mathcal O[[\mathbf u,\mathbf z]]}.
+  \]</div>
+  <p>All variables have zero base value. The graded algebra \(A\) sits inside this ambient algebra \(\mathcal C\), and the map \(\mathcal C\to R\) restricts to \(q_A\). The significant property is the displayed equality of relation ideals: the ambient relations are generated by the local relations. The further equations defining the global problem are imposed by the map to \(R\). This relative presentation is a supplied part of the model construction, justified there using its local presentation and relation-count results.</p>
+  <p>Consequently we can prescribe an integral derivative on the local variables using \(D_{\mathrm{loc}}\), and lift the derivative values on the new variables individually. Put</p>
+  <div class="technical-equation">\[
+    d(u_i)=D_{\mathrm{loc}}(u_i),\qquad
+    d(z_j)=
+      \begin{cases}
+        \text{any lift of }D_R(q_{\mathcal C}(z_j)),
+             &\deg z_j=-1,\\
+        0,&\deg z_j\ne-1.
+      \end{cases}
+  \]</div>
+  <p>Here \(q_{\mathcal C}:\mathcal C\to R\) denotes the ambient map, and variables also denote their quotient images. The old values already reduce correctly by the local compatibility. The zero choices reduce correctly because \(D_R\) vanishes on coordinates of other weights. The values \(D_{\mathrm{loc}}(u_i)\) also vanish unless \(\deg u_i=-1\).</p>
+
+  <h5 id="galois-lift-linear-coefficients"><span class="note-number">2.7.11.7</span> Build the integral derivative and check every ambient relation.</h5>
+  <p>For a power series \(P\), let \([u_i]P\) and \([z_j]P\) denote its linear coefficients. Define</p>
+  <div class="technical-equation">\[
+    L(P)=\sum_i [u_i]P\,d(u_i)+\sum_j[z_j]P\,d(z_j).
+  \]</div>
+  <p>There are finitely many variables, so this is a finite sum. The coefficient identity</p>
+  <div class="technical-equation">\[
+    [v](PQ)=P(0)[v]Q+Q(0)[v]P
+    \quad\Longrightarrow\quad
+    L(PQ)=P(0)L(Q)+Q(0)L(P)
+  \]</div>
+  <p>proves the derivation rule. On series in the old variables, \(L\) agrees with \(D_{\mathrm{loc}}\) after passing to \(B_{\mathrm{loc}}\): both derivatives have the prescribed values on all \(u_i\). Thus \(L(f)=0\) for every \(f\in\mathfrak r_{\mathrm{loc}}\). Also \(f(0)=0\), since the origin is defined on the quotient. For an arbitrary series \(H\),</p>
+  <div class="technical-equation">\[
+    L(Hf)=H(0)L(f)+f(0)L(H)=0.
+  \]</div>
+  <p>Additivity now shows that \(L\) kills the entire extended relation ideal. It descends to \(\mathcal C\); restricting to \(A\) gives an integral derivation \(\widetilde\delta\). A homogeneous element of weight other than \(-1\) has no linear term in a variable of weight \(-1\), while all other assigned derivative values are zero. Therefore</p>
+  <div class="technical-equation">\[
+    \widetilde\delta:A\longrightarrow\mathcal O,
+    \qquad \widetilde\delta(A_j)=0\quad(j\ne-1),
+    \qquad \widetilde\delta\bmod b=\delta.
+  \]</div>
+  <p>The last equality follows by agreement on the variables: a series differs from its constant and linear terms by an element of the variable ideal squared, which an origin derivation kills. This completes the integral lifting step.</p>
+  <p>The domain of this lift matters. For a global equation \(F_i\in\ker q_A\), we know \(\delta(F_i)=0\), hence \(\widetilde\delta(F_i)\in b\mathcal O\). We do not know that this integral value is zero. The construction supplies a derivative on \(A\); it does not assert an integral deformation satisfying all the global equations. Their possibly nonzero multiples of \(b\) are compatible with the torsion we are measuring.</p>
+
+  <h5 id="galois-lift-saturation"><span class="note-number">2.7.11.8</span> Pass through the saturated square without losing a torsion class.</h5>
+  <p>Let \(J_A=\ker x\). The derivation rule makes \(\widetilde\delta\) vanish on \(J_A^2\). If \(a\in J_A^{2,\mathrm{sat}}\), choose a nonzero \(c\in\mathcal O\) with \(ca\in J_A^2\). Then</p>
+  <div class="technical-equation">\[
+    0=\widetilde\delta(ca)=c\,\widetilde\delta(a)
       \quad\Longrightarrow\quad\widetilde\delta(a)=0.
   \]</div>
-  <p>The implication uses that the target \(\mathcal O\) is torsion-free. It would not be justified directly in \(\mathcal O/b\mathcal O\). Reduction now shows that \(\delta\) kills the saturated square; it already kills the equations \(F_i\). It therefore descends to a linear functional on \(C_{-1}\). The normalization and weight condition preserve injectivity of the original encoding, giving</p>
+  <p>Cancellation is valid because \(\mathcal O\) is a domain. In \(Q\), a nonzero \(c\) can annihilate a nonzero element, so the same reasoning applied directly to \(\delta\) would fail. Reducing the integral conclusion shows that \(\delta\) kills the saturated square. It also kills the equations \(F_i\), and therefore defines</p>
+  <div class="technical-equation">\[
+    \lambda_\gamma:C_{-1}\longrightarrow Q,
+    \qquad \lambda_\gamma([a])=\delta(a)
+         \quad(a\in A_{-1}).
+  \]</div>
+  <p>The integral lift certifies that this formula is well-defined. Its value depends only on the original derivative modulo \(b\), so the arbitrary choices of lifts on the additional variables cause no ambiguity.</p>
+
+  <h5 id="galois-lift-faithful"><span class="note-number">2.7.11.9</span> Recover the cocycle from the cotangent functional.</h5>
+  <p>Suppose two classes produce the same functional. Their derivatives agree on \(A_{-1}\), because every such element gives a class in \(C_{-1}\). Both derivatives vanish on every other weight. Every element of the graded algebra is a finite sum of homogeneous elements, so the derivatives agree on all of \(A\).</p>
+  <p>The model supplies a homogeneous lift \(a_{gij}\in A_{w_i-w_j}\) of each universal matrix entry: \(q_A(a_{gij})=r_{ij}(g)\). The earlier matrix-entry formula can be inverted:</p>
+  <div class="technical-equation">\[
+    \gamma(g)_{ij}
+       =\overline{\Psi(g)}^{-w_j}\delta(a_{gij}).
+  \]</div>
+  <p>The scalar is a unit. Thus equality of the derivatives forces equality of all matrix cocycles, and the faithful normalization from §2.7.7 forces equality of the original cohomology classes. We have proved the injection</p>
   <div class="technical-equation">\[
     \mathcal S_{\ell,r,\psi}[b]\hookrightarrow
        \operatorname{Hom}_{\mathcal O}(C_{-1},\mathcal O/b\mathcal O).
   \]</div>
+
+  <h5 id="galois-lift-length"><span class="note-number">2.7.11.10</span> Count all torsion layers and pass to the whole group.</h5>
   <p>For \(b=\varpi^n\), the elementary-divisor description makes the size comparison explicit:</p>
   <div class="technical-equation">\[
     \operatorname{length}_{\mathcal O}
@@ -1221,12 +1590,13 @@
       =\sum_i\min(a_i,n)\le\sum_i a_i
       =\operatorname{length}_{\mathcal O}C_{-1}.
   \]</div>
+  <p>For one summand \(\mathcal O/\varpi^{a_i}\mathcal O\), a homomorphism is determined by the image of \(1\). That image must be killed by \(\varpi^{a_i}\) in \(\mathcal O/\varpi^n\mathcal O\). This subgroup has length \(\min(a_i,n)\), explaining every term of the sum.</p>
   <p>Since finite \(\mathcal O\)-modules have cardinality \(|\mathcal O/\varpi|^{\operatorname{length}}\), an injection gives the corresponding length inequality, even without asserting that our chosen encoding is \(\mathcal O\)-linear. For every nonzero \(b\in\mathcal O\), this yields</p>
   <div class="technical-equation">\[
     \operatorname{length}_{\mathcal O}\mathcal S_{\ell,r,\psi}[b]
        \le\operatorname{length}_{\mathcal O}C_{-1}.
   \]</div>
-  <p>The local lifting property is essential to the comparison; the universal property of \(R\) alone would not imply this inequality. Every continuous cocycle from the compact profinite group \(G_{\mathbb Q}\) into the discrete module \(D\) has finite image. A common nonzero denominator kills that image, so every class is torsion. The subgroups killed by \(\varpi^n\) therefore increase to the whole group, and a bound independent of \(n\) gives</p>
+  <p>Every continuous cocycle from the compact profinite group \(G_{\mathbb Q}\) into the discrete module \(D\) has finite image. A common nonzero denominator kills that image, so every class is torsion. The subgroups killed by \(\varpi^n\) increase to the whole group. Their cardinalities are bounded by the same finite number once \(C_{-1}\) has finite length, so this increasing sequence must stabilize. Consequently</p>
   <div class="technical-equation">\[
     \mathcal S_{\ell,r,\psi}=\bigcup_{n\ge1}\mathcal S_{\ell,r,\psi}[\varpi^n],
     \qquad
@@ -1239,6 +1609,7 @@
        \le\frac{\operatorname{length}_{\mathcal O}C_{-1}}{e_{\mathcal O}}.
   \]</div>
   <p>This is the normalization used with \(v_\ell(\ell)=1\). In particular, a factor \(\varpi^{a_i}\) contributes \(a_i/e_{\mathcal O}\) units of \(\ell\)-adic depth.</p>
+  <p class="source-callout">The <a href="https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/Development/AutomorphicArithmetic/AutomorphicVarieties/UnitaryThreeGroups/ModelLower.lean#L296">source's compatible-derivation construction</a> joins the local matrix lift, the local deformation condition and the model's relative presentation. The separate cotangent argument then uses this integral lift to justify saturation and the length bound.</p>
 
   <h4 id="galois-automorphic-rigidity"><span class="note-number">2.7.12</span> Use automorphy and Selmer vanishing to obtain rigidity.</h4>
   <p>We need to understand how a characteristic-zero point of the deformation ring can move. Automorphy identifies the arithmetic representations occurring at the relevant points. Separate Selmer-vanishing theorems then show that every permitted first-order motion is a change of basis. The normalization leaves just one such motion, the grading orbit. A transverse slice removes it, giving the multiplicity-one input in the cotangent-to-trace bound.</p>
