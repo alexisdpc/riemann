@@ -79,7 +79,7 @@ const priorities = manifest.priorities.map(priority => `<li><strong>${escape(pri
 const section = `${start}
 <section class="technical-section dependency-checklist" id="dependency-checklist" aria-labelledby="dependency-checklist-title">
   <p class="technical-kicker">Exposition coverage · reviewed ${escape(manifest.reviewDate)}</p>
-  <h2 id="dependency-checklist-title"><span class="note-number">13</span> What is explained, and what remains.</h2>
+  <h2 id="dependency-checklist-title" data-toc-title="Dependency checklist"><span class="note-number">13</span> What is explained, and what remains.</h2>
   <p>This checklist compares the notes with selected proof bodies and input packages in the downloaded Lean source. Each row concerns a specific mathematical argument. It records the explanation available here, the inputs still needed, and a concrete next expansion. A missing explanation means missing from this guide; it does not mean a theorem or proof is absent from the Lean files.</p>
   <div class="coverage-counts" aria-label="Counts of reviewed components">${Object.entries(statuses).map(([status, label]) => `<p><strong>${counts[status]}</strong><span>${label}</span></p>`).join('')}</div>
   <p class="coverage-count-note">${rows.length} reviewed components, of very different sizes. These counts are not a percentage of the full proof. The checklist follows the main paths inspected so far; it is not an exhaustive inventory of every declaration or imported library.</p>

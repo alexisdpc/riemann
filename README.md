@@ -156,7 +156,9 @@ The checker validates local links and cross-page anchors, LaTeX rendering,
 JavaScript syntax, math initialization, fonts, source-file hashes, and the exact
 displayed Lean excerpts. It also validates the dependency checklist's links,
 classifications, dependency references, and synchronization with its source
-record. The build writes a static website to `dist/`.
+record. The complete table of contents is checked against every numbered heading,
+including its order, nesting, title and destination. The build writes a static
+website to `dist/`.
 
 [The Pages workflow](.github/workflows/pages.yml) checks, builds, and deploys the
 site on pushes to `main`; it can also be run manually from GitHub Actions. Only
@@ -199,6 +201,13 @@ archive available locally, add `--verify-source` to verify every recorded source
 fingerprint and declaration line. Ordinary checks use `--check` and do not need
 the full archive. Source links use the pinned mirror revision recorded in the
 checklist; the review itself uses the downloaded source.
+
+After changing numbered headings or refreshing the checklist, run
+`node scripts/sync-technical-toc.mjs`. It generates the complete contents hierarchy
+from the article, so new sections cannot be omitted from navigation. Every heading
+needs a stable ID; an optional `data-toc-title` supplies a shorter navigation label.
+The contents remain fully visible without JavaScript. With JavaScript, each branch
+has its own expand control, and readers can expand or collapse the entire outline.
 
 The visual design adapts Alexis Plascencia’s Yang–Mills field guide. KaTeX and font
 license files remain alongside their vendored assets. The Visits and Hits counters
