@@ -33,19 +33,19 @@ for (const entry of entries) {
   siblings.push(entry); ids.add(entry.id); byNumber.set(entry.number, entry);
 }
 if (!entries.length) throw new Error('No numbered headings found');
-function render(entries, depth = 0, listId = '') {
-  return `<ol${listId ? ` id="${listId}"` : ''} class="${depth ? 'toc-children' : 'toc-tree'}">\n${entries.map(entry => {
-    const childId = `toc-children-${entry.number.replaceAll('.', '-')}`;
-    const toggle = entry.children.length
-      ? `<button type="button" class="toc-toggle" hidden aria-expanded="true" aria-controls="${childId}" aria-label="Collapse subsections of ${entry.number}"><span aria-hidden="true">−</span></button>` : '';
-    return `<li><div class="toc-row"><a class="toc-numbered" href="#${entry.id}" data-note-number="${entry.number}"><span class="note-nav-number">${entry.number}</span><span>${entry.title}</span></a>${toggle}</div>${entry.children.length ? '\n' + render(entry.children, depth + 1, childId) : ''}</li>`;
+function render(entries, depth = 0) {
+  return `<ol class="${depth ? 'toc-children' : 'toc-tree'}">\n${entries.map(entry => {
+    const label = `<span class="note-nav-number">${entry.number}</span><span>${entry.title}</span>`;
+    if (!entry.children.length) {
+      return `<li><a class="toc-numbered" href="#${entry.id}" data-note-number="${entry.number}">${label}</a></li>`;
+    }
+    return `<li><details class="toc-branch"><summary>${label}</summary><a class="toc-read" href="#${entry.id}" data-note-number="${entry.number}">Read ${depth ? 'section' : 'chapter'} ${entry.number}</a>\n${render(entry.children, depth + 1)}</details></li>`;
   }).join('\n')}\n</ol>`;
 }
 const section = `${start}
           <nav aria-label="Technical sections">
-            <p class="toc-part-label">${chapters.length} chapters · ${entries.length - chapters.length} sections and subsections</p>
-            <p class="toc-help">Every numbered section, in reading order.</p>
-            <div class="toc-actions" hidden><button type="button" data-toc-action="expand">Expand all</button><button type="button" data-toc-action="collapse">Collapse all</button></div>
+            <p class="toc-part-label">${chapters.length} master sections</p>
+            <p class="toc-help">Choose a section to open its contents.</p>
             ${render(chapters)}
             <a class="toc-sources" href="sources.html#references">References &amp; source records</a>
           </nav>

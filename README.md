@@ -206,8 +206,10 @@ After changing numbered headings or refreshing the checklist, run
 `node scripts/sync-technical-toc.mjs`. It generates the complete contents hierarchy
 from the article, so new sections cannot be omitted from navigation. Every heading
 needs a stable ID; an optional `data-toc-title` supplies a shorter navigation label.
-The contents remain fully visible without JavaScript. With JavaScript, each branch
-has its own expand control, and readers can expand or collapse the entire outline.
+The contents initially show only the 14 master sections. Click a section title to
+open its contents; deeper subsections have their own dropdowns. Native disclosures
+work without JavaScript. With JavaScript, opening a master section closes the
+previous one, keeping the menu compact.
 
 The visual design adapts Alexis Plascencia’s Yang–Mills field guide. KaTeX and font
 license files remain alongside their vendored assets. The Visits and Hits counters
