@@ -27,7 +27,8 @@
     if (contents) contents.open = !event.matches;
   });
   const links = [...document.querySelectorAll('.technical-toc a[href^="#"]')];
-  const sections = links.map(link => document.querySelector(link.getAttribute('href')));
+  const chapterLinks = links.filter(link => !link.closest('.toc-landmarks'));
+  const sections = chapterLinks.map(link => document.querySelector(link.getAttribute('href')));
   links.forEach(link => link.addEventListener('click', () => {
     if (compact.matches && contents) contents.open = false;
   }));
@@ -40,7 +41,7 @@
     sections.forEach((section, index) => {
       if (section && section.getBoundingClientRect().top <= 150) current = index;
     });
-    links.forEach((link, index) => {
+    chapterLinks.forEach((link, index) => {
       if (index === current) link.setAttribute('aria-current', 'true');
       else link.removeAttribute('aria-current');
     });

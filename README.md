@@ -70,8 +70,12 @@ The current edition explains:
   required components, exact factorization at integral points, arithmetic
   classicality and descent; finite invariant coefficients, valuation rescaling,
   formal evaluation and ordinary integral models; open-subgroup irreducibility
-  and the separate rank-three and rank-two automorphy transfers. The ordinary
-  modular-family, seed, local propagation and classicality inputs remain explicit.
+  and the separate rank-three and rank-two automorphy transfers. Component
+  propagation now has 13 detailed steps covering dimension-controlled local
+  chains, prime selection, flat charts, connected residual cores, exceptional
+  rank-three branches, and the global good/bad-component contradiction.
+  The ordinary modular-family, seed, arithmetic patching, coordinate and
+  dimension theorems, and classicality inputs remain explicit.
 - **Automorphy and rigidity:** tangent cocycles, the polarized adjoint, local
   Selmer conditions, separate rank-three and rank-two vanishing arguments,
   normalized basis changes, and the slice giving multiplicity at most one.
@@ -102,7 +106,10 @@ RH and the critical-line assertions for **Dirichlet L-functions**. Deeper geomet
 and automorphic construction theorems remain identified inputs where their full
 proofs have not yet been explained.
 
-The [dependency checklist in §2.12](technical.html#dependency-checklist) compares
+The technical notes are organized into 14 chapters, with separate chapters for
+automorphy, Selmer rigidity and trace congruences. Existing anchor links remain valid.
+
+The [dependency checklist in Chapter 13](technical.html#dependency-checklist) compares
 41 distinct arguments with inspected Lean proof bodies and input packages:
 20 are fully explained at an explicit scope, 11 are summarized, and 10 lack
 an explanation. Each entry links to the notes and source, identifies its input
@@ -187,7 +194,7 @@ excerpts from a local copy of the original archive. Its selection is recorded in
 snapshots and do not need that archive.
 
 Edit `references/dependency-checklist.json` to update the coverage review, then
-run `node scripts/sync-dependency-checklist.mjs` to refresh §2.12. With the original
+run `node scripts/sync-dependency-checklist.mjs` to refresh Chapter 13. With the original
 archive available locally, add `--verify-source` to verify every recorded source
 fingerprint and declaration line. Ordinary checks use `--check` and do not need
 the full archive. Source links use the pinned mirror revision recorded in the

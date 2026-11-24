@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewDate": "2026-11-23",
-  "notesBaseCommit": "4bff7ae323c4a3ecdcf21064e9293ff9d6ce7821",
+  "notesBaseCommit": "8436002029d392c18d74a64ac5e3ee9bc28b71b8",
   "archiveSha256": "9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc",
   "sourceRoot": "alpo-proof/extracted/lean/src",
   "sourceMirror": "https://github.com/TomasOrtega/RH/blob/a6ac91a412dcbaab31801355ec5707024a71bf65/extracted/lean/src/",
@@ -50,8 +50,8 @@
   ],
   "priorities": [
     {
-      "title": "Prove the modular-family and propagation inputs.",
-      "why": "The point-specialization and automorphy-transfer argument is now expanded. The largest remaining input in this branch is the ordinary modular-family theorem with its seeds, local propagation and dimension conditions, followed by arithmetic-point classicality. The construction of the constrained deformation model also needs its own proof.",
+      "title": "Prove the modular-family, seed and arithmetic support inputs.",
+      "why": "The component-chain induction, connected-core constructions and global propagation contradiction are now expanded alongside point specialization and automorphy transfer. The remaining inputs are the ordinary modular family and seeds, the arithmetic patching support theorems behind the local transfer rules, the supplying coordinate and dimension results, and arithmetic-point classicality. The constrained deformation model also needs its own construction.",
       "items": [
         "coverage-galois-point-automorphy",
         "coverage-galois-deformation-model"
@@ -213,15 +213,15 @@
         },
         {
           "anchor": "reflection",
-          "label": "3.1 Conditional critical-line theorem"
+          "label": "14.1 Conditional critical-line theorem"
         },
         {
           "anchor": "proof-reflection",
-          "label": "3.2.4 Reflecting the zero"
+          "label": "14.2.4 Reflecting the zero"
         },
         {
           "anchor": "proof-remove-completion",
-          "label": "3.2.5 Removing completion"
+          "label": "14.2.5 Removing completion"
         }
       ],
       "coverage": "The notes show that each omitted Euler factor is nonzero by its norm, track the inverse primitive character through the functional equation, and check the gamma factors and excluded endpoints.",
@@ -261,11 +261,11 @@
       "notes": [
         {
           "anchor": "arithmetic-construction",
-          "label": "2.6.6 The arithmetic construction"
+          "label": "3.6 The arithmetic construction"
         },
         {
           "anchor": "arithmetic-exceptional-window",
-          "label": "2.6.6.2 Where the uniform bound R is used"
+          "label": "3.6.2 Where the uniform bound R is used"
         }
       ],
       "coverage": "The website names the duality and tower inputs and explains how a finite exceptional set would be used, but does not derive that set. The inspected source contains the intermediate mechanism: cohomology length becomes a twisted cokernel length, finitely many ℓ-adic centers control that length, and at most one integer in [1,Z] lies sufficiently close to each center.",
@@ -312,7 +312,7 @@
       "notes": [
         {
           "anchor": "arithmetic-exceptional-window",
-          "label": "2.6.6.2 Logarithmic interval selection"
+          "label": "3.6.2 Logarithmic interval selection"
         }
       ],
       "coverage": "The notes convert k ≤ x^Ct ⇒ k ≤ x^α into avoidance of logarithmic intervals, explain the endpoint reduction that removes one obstruction at a time, and derive the uniform exponent J = 2^(R+2)(Ct/α)^R.",
@@ -352,7 +352,7 @@
       "notes": [
         {
           "anchor": "auxiliary-mean-square",
-          "label": "2.6.7.2 The finite quadratic mean square"
+          "label": "3.7.2 The finite quadratic mean square"
         }
       ],
       "coverage": "The notes expand the square, describe the different pair types and state the uniform estimate. They do not derive the prime-progressions correlation estimate or explain how its possible exceptional square class is isolated and paid for.",
@@ -399,7 +399,7 @@
       "notes": [
         {
           "anchor": "auxiliary-whole-interval",
-          "label": "2.6.7.3 Derivatives, dyadic blocks and bad primes"
+          "label": "3.7.3 Derivatives, dyadic blocks and bad primes"
         }
       ],
       "coverage": "The notes derive yD(y) as a new finite sum with truncated bounded coefficients, use Cauchy–Schwarz on each dyadic block, allow a separate bad point for each prime, apply Markov's inequality, and sum the geometric dyadic tail with constant 32C/[τ(1−2^−τ)].",
@@ -448,7 +448,7 @@
       "notes": [
         {
           "anchor": "auxiliary-zero-box",
-          "label": "2.6.7.4 The zero-free-box exclusion"
+          "label": "3.7.4 The zero-free-box exclusion"
         }
       ],
       "coverage": "The notes state the box Re(s) > 1−1/400, |Im(s)| ≤ Q and explain why the resulting bad-prime count is negligible, but do not explain the zero-detection or block-counting proof. In the inspected proof a zero makes a truncated L-series small; multiplication by a Möbius mollifier then forces a dyadic remainder block to be large.",
@@ -495,11 +495,11 @@
       "notes": [
         {
           "anchor": "auxiliary-finite-tail",
-          "label": "2.6.7.5 From the finite sum to Gχ"
+          "label": "3.7.5 From the finite sum to Gχ"
         },
         {
           "anchor": "auxiliary-prime-pair",
-          "label": "2.6.7.6 The required derivative bound"
+          "label": "3.7.6 The required derivative bound"
         }
       ],
       "coverage": "The notes give the exact identity expressing Gχ as minus the finite sum minus y times the analytic tail, the truncation scale and the required output bounds. They do not derive the contour displacement, its residue, or the left-edge/horizontal/truncation errors that justify replacing the analytic tail.",
@@ -546,19 +546,19 @@
       "notes": [
         {
           "anchor": "auxiliary-zero-box",
-          "label": "2.6.7.4 Combining exclusions"
+          "label": "3.7.4 Combining exclusions"
         },
         {
           "anchor": "auxiliary-prime-pair",
-          "label": "2.6.7.6 The two prime choices"
+          "label": "3.7.6 The two prime choices"
         },
         {
           "anchor": "auxiliary-common-window",
-          "label": "2.6.7.7 One common window"
+          "label": "3.7.7 One common window"
         },
         {
           "anchor": "auxiliary-total-error",
-          "label": "2.6.7.8 The total character error"
+          "label": "3.7.8 The total character error"
         }
       ],
       "coverage": "The notes explain both stages of the prime choice, the second-stage change to 6ε/5, the two character families, use of τ=ε/2, and the order in which the pair and arithmetic window are selected. They also count the relevant averaged characters to bound the discarded sum by 4o x^(1/2+ε).",
@@ -619,15 +619,15 @@
       "notes": [
         {
           "anchor": "arithmetic-absorption",
-          "label": "2.6.8 Absorbing the cohomology contribution"
+          "label": "3.8 Absorbing the cohomology contribution"
         },
         {
           "anchor": "arithmetic-fourier",
-          "label": "2.6.9.1 Character orthogonality"
+          "label": "3.9.1 Character orthogonality"
         },
         {
           "anchor": "arithmetic-square-root",
-          "label": "2.6.9.2 The four normalized costs"
+          "label": "3.9.2 The four normalized costs"
         }
       ],
       "coverage": "The notes spell out character orthogonality and inertia averaging, the ramp-to-smoothed-sum identity, and the division by the positive comparison scale. They individually estimate the four normalized costs, making the appearance of x^(1/2+O(ε)) visible.",
@@ -1037,11 +1037,11 @@
       "notes": [
         {
           "anchor": "automorphy-target",
-          "label": "§§2.7.12.1.1–16: automorphy at deformation points"
+          "label": "§§6.1–16: automorphy at deformation points"
         },
         {
           "anchor": "automorphy-modular-locus",
-          "label": "Modular support and component propagation"
+          "label": "13 steps: local chains, connected cores and global propagation"
         },
         {
           "anchor": "automorphy-rescaling",
@@ -1052,8 +1052,8 @@
           "label": "Irreducibility by residual traces"
         }
       ],
-      "coverage": "The notes now trace the route used by the final window theorem: modular ideals and seeds, propagation through the required components, exact ideal annihilation at integral points, arithmetic classicality, two auxiliary places, and descent. They derive finite invariants from special-fibre curve tests, make the rescaled coordinates topologically small, factor formal evaluation, construct the ordinary integral model, and prove open-subgroup irreducibility by a residual trace contradiction. Separate conjugation arguments transfer rank-three automorphy and rank-two newform attachment back to the original point. The final route directly uses the strengthened interface and its matching one-character theorem; conversion to the older interface is not needed.",
-      "next": "Prove the ordinary modular-family and seed inputs, then the local propagation and dimension hypotheses and arithmetic-point classicality used by the expanded assembly. The local deformation and solvable-descent theories also remain supplied results. The entire automorphy branch is therefore summarized, although the integral-model and point-transfer mechanisms are now explained in detail.",
+      "coverage": "The notes trace modular ideals and seeds, exact ideal annihilation, arithmetic classicality, two auxiliary places and descent. Thirteen new propagation substeps explain the dimension-controlled local component graph, prime avoidance, the arithmetic support input, flat charts, rank-two cocycle interpolation, rank-three finite-weight control and thick-branch transfer, polynomial core connectedness and density, and the global good/bad-component contradiction. The later steps derive finite invariants, valuation rescaling, formal factorization and the integral ordinary model, prove open-subgroup irreducibility by residual traces, and transfer rank-three automorphy and rank-two newform attachment back to the original point. The final route uses the strengthened interface directly.",
+      "next": "Prove the ordinary modular-family and automorphic-seed inputs; explain the arithmetic patching support theorems behind the local Type I and exceptional transfer rules, the supplying coordinate and dimension results, and arithmetic-point classicality. The local deformation and solvable-descent theories also remain supplied results. The entire branch stays summarized, although component propagation, integral models and point transfer are now explained in detail.",
       "dependsOn": [
         "coverage-galois-deformation-model",
         "coverage-galois-theta-descent"
@@ -1112,6 +1112,42 @@
           "inputs": "The stated literature and rank-four-lift hypotheses. Obtains ends0_alt, constructs AutomorphyUnramifiedCoefficientsAlt, and passes it directly to the strengthened one-character/counting route before assembling VWin. The older OneCharOf interface is not required at this junction.",
           "sha256": "576e18ba083451bcffe9e94075dc8d22ccfa6995fa8d30d68ea108b1cc910cf0",
           "lineText": "theorem vwin_of_hypotheses_H_E_alt (hH : _root_.UpperTheory.V.Af.HypothesesH') : VWin :="
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CurveDVRSpecialization/LocProp.lean",
+          "declaration": "UpperTheory.V.Pr.locProp",
+          "line": 17,
+          "kind": "proof",
+          "inputs": "Proves the abstract local propagation conclusion from LocData.Ok: dimension-controlled component chains, nice-prime existence, the Type I rule and the exceptional thick-link rule. The invariant remembers an incoming good Type I branch while crossing thick vertices; it does not declare those exceptional vertices modular.",
+          "sha256": "334452770def9a8aa28d6c7357bb3aab3071d93cc95256b60174f0c5deef8a71",
+          "lineText": "theorem UpperTheory.V.Pr.locProp :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/CurveDVRSpecialization/GlobProp.lean",
+          "declaration": "UpperTheory.V.Pr.globProp",
+          "line": 3,
+          "kind": "proof",
+          "inputs": "Proves global propagation from a Noetherian space and GlobData.Ok: a connected core, closed-point selection, density away from the exceptional closed locus, every relevant component meeting the core, local component transfer and a seed. Finite good/bad unions give the connectedness contradiction.",
+          "sha256": "1363c4db136fb262902705fb6e1cd640560e685a2f94917b43c9f0440d7af45a",
+          "lineText": "theorem UpperTheory.V.Pr.globProp :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/FrobeniusSmoothVectors/PreconnectedRankTwo.lean",
+          "declaration": "UpperTheory.V.Fr.preconnected_rank_two",
+          "line": 206,
+          "kind": "proof",
+          "inputs": "Under Frame.Ok, uses the supplied coordinate realization and a nonzero allowed cocycle. Polynomial interpolation gives a common generic prime for each core point and the fixed base point. Only the three-point subset must remain in the core.",
+          "sha256": "4fcd7b9db97a13509d9c1a77b4ba5ec2782ec525ee65754d59b43b87cde64896",
+          "lineText": "theorem UpperTheory.V.Fr.preconnected_rank_two :"
+        },
+        {
+          "path": "Development/AutomorphicArithmetic/AutomorphicVarieties/FrobeniusSmoothVectors/ExistsNonzeroLowCocycle.lean",
+          "declaration": "UpperTheory.V.Fr.preconnected_rank_three",
+          "line": 144,
+          "kind": "proof",
+          "inputs": "Under Frame.Ok and supplying Low-coordinate/nonzero-cocycle lemmas, quadratic polynomial families prove core preconnectedness and density off the closed exceptional locus. The closed exceptional locus is distinct from the off-triangular Type E locus used in local transfer.",
+          "sha256": "a8fcaeb1cf511d9b4bad1e1916eacd071e79bc00a92d226d0ffdcb2d8bdef92e",
+          "lineText": "theorem UpperTheory.V.Fr.preconnected_rank_three :"
         }
       ],
       "priority": "next",
@@ -1373,11 +1409,11 @@
         },
         {
           "anchor": "arithmetic-length",
-          "label": "2.6.2 What a length measures"
+          "label": "3.2 What a length measures"
         },
         {
           "anchor": "arithmetic-budget",
-          "label": "2.6.3 The finite-prime budget"
+          "label": "3.3 The finite-prime budget"
         }
       ],
       "coverage": "The notes display the algebraic trace product, explain integrality/conjugation invariance and the archimedean nonvanishing test, then sum its nonnegative valuations. They explain why a second auxiliary prime covers the denominator exception and why both integers must be chosen independently of the varying coefficient prime. The checked proof transports character orbits and combines the one-character length estimate with the uniform rank-three trace-label theorem; the final finite-prime summation uses divisibility and logarithms.",
@@ -1428,11 +1464,11 @@
       "notes": [
         {
           "anchor": "local-cuspidal-construction",
-          "label": "2.8.4.2–2.8.4.4: cuspidals and twists"
+          "label": "9.4.2–9.4.4: cuspidals and twists"
         },
         {
           "anchor": "local-segment-construction",
-          "label": "2.8.4.5–2.8.4.9: segments and restricted laws"
+          "label": "9.4.5–9.4.9: segments and restricted laws"
         }
       ],
       "coverage": "The notes now describe the induced controlled parameter, independence under twists, the auxiliary assignment outside the controlled class, the monodromy chain, and extension by a direct sum. They explicitly restrict central-character, duality and injectivity statements to the hypotheses in the source.",
@@ -1473,11 +1509,11 @@
       "notes": [
         {
           "anchor": "local-multisegment-construction",
-          "label": "2.8.4.7: the classification input"
+          "label": "9.4.7: the classification input"
         },
         {
           "anchor": "local-good-extension",
-          "label": "2.8.4.8: transport of controlled laws"
+          "label": "9.4.8: transport of controlled laws"
         }
       ],
       "coverage": "The notes explain why exhaustion and uniqueness make the chosen parameter independent of presentation. They do not derive exhaustion, irreducibility for unlinked segments, or the interchange/refinement steps.",
@@ -1515,11 +1551,11 @@
       "notes": [
         {
           "anchor": "arithmetic-absorption",
-          "label": "2.6.8: the local bound and its numerical absorption"
+          "label": "3.8: the local bound and its numerical absorption"
         },
         {
           "anchor": "local-galois-handshake",
-          "label": "2.8.4.9: the local compatibility handoff"
+          "label": "9.4.9: the local compatibility handoff"
         }
       ],
       "coverage": "The notes state the eta inequality and explain how the cohomology growth bound is absorbed. They do not show how local type/multiplicity bounds, exceptional primes and the controlled cut establish the inequality itself.",
@@ -1577,11 +1613,11 @@
       "notes": [
         {
           "anchor": "theta-matching",
-          "label": "2.9.2: matching local images"
+          "label": "10.2: matching local images"
         },
         {
           "anchor": "theta-test-vectors",
-          "label": "2.9.4: detecting the required information"
+          "label": "10.4: detecting the required information"
         }
       ],
       "coverage": "The notes give the matching relation, the need for a nonzero scalar, and the role of test vectors. They do not construct the finite-place Schwartz functions, the archimedean Fock lifts, or prove that their restricted tensor remains nonzero.",
@@ -1619,7 +1655,7 @@
       "notes": [
         {
           "anchor": "theta-test-vectors",
-          "label": "2.9.4: current general separation explanation"
+          "label": "10.4: current general separation explanation"
         }
       ],
       "coverage": "The current explanation discusses functionals detecting vectors, but does not explain why the same selected pair works simultaneously across the rows used in the construction.",
@@ -1659,19 +1695,19 @@
       "notes": [
         {
           "anchor": "theta-correlation-orbits",
-          "label": "2.9.8.2: orbital decomposition"
+          "label": "10.8.2: orbital decomposition"
         },
         {
           "anchor": "theta-correlation-local-gram",
-          "label": "2.9.8.3: finite Gram loss"
+          "label": "10.8.3: finite Gram loss"
         },
         {
           "anchor": "theta-correlation-row-counts",
-          "label": "2.9.8.4: main and error rows"
+          "label": "10.8.4: main and error rows"
         },
         {
           "anchor": "theta-correlation-coverage",
-          "label": "2.9.8.7: coverage"
+          "label": "10.8.7: coverage"
         }
       ],
       "coverage": "The seven steps now distinguish signed main-row sums from absolute error bounds, explain the product of (1+3/q) losses, retain D*/R, derive the diagonal error and compare the two dimensions, then deduce the rank/coverage conclusion.",
@@ -1720,11 +1756,11 @@
       "notes": [
         {
           "anchor": "theta-mean-slope",
-          "label": "2.9.9: the slope inequality used"
+          "label": "10.9: the slope inequality used"
         },
         {
           "anchor": "theta-main-cancellation",
-          "label": "2.9.10: the exact cancellation"
+          "label": "10.10: the exact cancellation"
         }
       ],
       "coverage": "The notes display and interpret the cancellation, including the positive-rank/normalization hypotheses, and explain why separately estimating the large summands would lose the needed result.",
@@ -1764,7 +1800,7 @@
       "notes": [
         {
           "anchor": "geometric-cover-data",
-          "label": "2.10.6.1: level and coefficient-field selection"
+          "label": "11.6.1: level and coefficient-field selection"
         }
       ],
       "coverage": "The notes identify the level-forgetting cover, the 15^e refinement, the ray-class-field compositum and the field-size estimate, and explain how one large threshold satisfies the inequalities together.",
@@ -1793,7 +1829,7 @@
       "notes": [
         {
           "anchor": "geometric-height-comparison",
-          "label": "2.10.6.2: supplied mean-volume information"
+          "label": "11.6.2: supplied mean-volume information"
         }
       ],
       "coverage": "The notes explain how short sections and the supplied component mean become height inequalities. They explicitly leave the arithmetic-volume lower bound as an input, so that lower bound's proof is not yet explained.",
@@ -1834,11 +1870,11 @@
       "notes": [
         {
           "anchor": "geometric-finite-hilbert-samuel",
-          "label": "2.10.6.3: finite-degree inequality"
+          "label": "11.6.3: finite-degree inequality"
         },
         {
           "anchor": "geometric-component-average",
-          "label": "2.10.6.4: logarithmic absorption and averaging"
+          "label": "11.6.4: logarithmic absorption and averaging"
         }
       ],
       "coverage": "The notes retain the finite-degree constants and hypotheses, define the component heights and weights, absorb A log(2+|h|) explicitly, and derive a uniform negative slope bound. They do not substitute an unspecified asymptotic o(1) statement.",
@@ -1879,7 +1915,7 @@
       "notes": [
         {
           "anchor": "geometric-finite-hilbert-samuel",
-          "label": "2.10.6.3: the currently supplied finite-degree theorem"
+          "label": "11.6.3: the currently supplied finite-degree theorem"
         }
       ],
       "coverage": "The current notes state the finite-degree inequality and explain its terms, but not the filtration of sections, independent short-column construction, determinant divisibility or height comparison that proves it.",
@@ -1928,11 +1964,11 @@
       "notes": [
         {
           "anchor": "geometric-foundations",
-          "label": "2.10.6: geometric inputs"
+          "label": "11.6: geometric inputs"
         },
         {
           "anchor": "geometric-finite-hilbert-samuel",
-          "label": "2.10.6.3: finite-degree hypotheses"
+          "label": "11.6.3: finite-degree hypotheses"
         }
       ],
       "coverage": "The notes name positivity and vanishing among the geometric ingredients, but do not derive the needed positivity or residue-surjectivity results. A package listing Kawamata–Viehweg and related statements is not itself their proof.",
@@ -1979,11 +2015,11 @@
       "notes": [
         {
           "anchor": "geometric-integral-descent",
-          "label": "2.10.6.5: integral maps and determinant"
+          "label": "11.6.5: integral maps and determinant"
         },
         {
           "anchor": "geometric-descent-budget",
-          "label": "2.10.6.6: slope and rank losses"
+          "label": "11.6.6: slope and rank losses"
         }
       ],
       "coverage": "The notes explain why the unnormalized trace preserves integrality, how bounded coefficients avoid a zero-divisor determinant, why the norm cost is |Gamma|^3 B^2, and how the independent target-rank comparison and scalar budget recover the core lower bound.",
@@ -2033,7 +2069,7 @@
       "notes": [
         {
           "anchor": "assembly-order",
-          "label": "§§2.11.2–2.11.6"
+          "label": "§§12.2–12.6"
         }
       ],
       "coverage": "The notes display the positive margin, the small-parameter choice, the maximum of thresholds, and the comparison of exponents before applying Landau. The implication is explained with its inputs explicit.",
@@ -2065,7 +2101,7 @@
       "notes": [
         {
           "anchor": "assembly-witness",
-          "label": "§2.11.1"
+          "label": "§12.1"
         }
       ],
       "coverage": "The quantifier order and the need for a single witness are explained. The actual construction of that witness is only outlined; its rational test vectors, common grid, open parameter conditions, and linked bundles are not reconstructed together.",
@@ -2103,7 +2139,7 @@
         },
         {
           "anchor": "nv-assembly",
-          "label": "§2.11"
+          "label": "§12"
         }
       ],
       "coverage": "The final exports and the principal branches are identified. Many fields of the intervening hypothesis records are still named inputs in the exposition. A short constructor at the end does not measure the size of their proofs.",
@@ -2147,11 +2183,11 @@
       "notes": [
         {
           "anchor": "local-existence",
-          "label": "§2.8.4"
+          "label": "§9.4"
         },
         {
           "anchor": "assembly-order",
-          "label": "§2.11.2"
+          "label": "§12.2"
         }
       ],
       "coverage": "Regular finite-field characters appear in the local-parameter construction, and Green's theorem is named in the final assembly. The exhaustion argument identifying all relevant cuspidal characters is not explained.",

@@ -83,8 +83,8 @@
 .technical-endlink{display:inline-flex;gap:25px;align-items:center;font-size:14px}
 .technical-numbered .note-number{font-family:var(--sans);font-size:.7em;font-weight:500;letter-spacing:0;white-space:nowrap;margin-right:.25em;color:var(--teal)}
 .technical-numbered .technical-part-release .note-number{color:#b7d3c6}
-.technical-numbered .technical-section h3{font-size:43px;line-height:1.12;letter-spacing:-.7px;color:var(--ink);margin:0 0 25px}
-.technical-numbered .technical-section h4{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.25;letter-spacing:-.2px;margin:32px 0 15px;color:var(--ink)}
+.technical-numbered .technical-section h3{font-size:30px;line-height:1.25;letter-spacing:-.3px;color:var(--ink);margin:32px 0 18px}
+.technical-numbered .technical-section h4{font-family:var(--serif);font-size:24px;font-weight:400;line-height:1.3;letter-spacing:-.2px;margin:28px 0 15px;color:var(--ink)}
 .technical-numbered .technical-section :is(h5,h6){font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.4;margin:25px 0 10px;color:var(--ink)}
 .technical-numbered :is(h3,h4,h5,h6)[id]{scroll-margin-top:32px}
 .technical-numbered .technical-substep{font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.4;margin:28px 0 12px;color:var(--ink);scroll-margin-top:32px}
@@ -92,6 +92,9 @@
 .technical-numbered-toc li{counter-increment:none}
 .technical-numbered-toc a.toc-numbered{grid-template-columns:3.1em minmax(0,1fr);gap:8px}
 .technical-numbered-toc a.toc-numbered:before{content:none}
+.technical-toc .toc-chapters>li>a{font-size:14px;font-weight:500;color:var(--ink)}
+.technical-toc .toc-landmarks{display:block;margin:0 0 8px 12px}
+.technical-toc .toc-landmarks a{font-size:14px;padding-block:6px}
 .technical-numbered-toc .note-nav-number,.technical-numbered .note-nav-number{white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--teal)}
 .technical-numbered .landau-step-nav ol{list-style:none;padding:0}
 .technical-numbered .landau-step-nav li{padding:0}
@@ -134,5 +137,5 @@
 @media(max-width:850px){.technical-toc details[open] nav{max-height:65vh;overflow:auto;overscroll-behavior:contain;padding-right:7px}.technical-toc .toc-part-label:first-child{margin-top:4px}}
 @media(max-width:600px){.technical-part-banner{padding:22px 20px;margin-bottom:32px}.technical-part-banner h2{font-size:35px}.technical-part-banner p:last-child{font-size:14px}.technical-hero-actions{gap:16px}.technical-hero-actions .button{gap:20px;font-size:13px}.proof-technical-figure figcaption{padding:15px 17px;font-size:12px}.proof-scope-chips>span{font-size:10px}.technical-toc details[open] nav{max-height:60vh}}
 @media print{.technical-toc,.technical-roadmap,.technical-meta,.technical-hero-actions{display:none}.technical-layout{display:block;margin:20px 0}.technical-hero{padding:15px 0}.technical-hero h1{font-size:42px}.technical-section{break-inside:auto}.technical-section h2{font-size:30px;break-after:avoid}.technical-article{font-size:11pt}.technical-equation{font-size:10pt;overflow:visible;break-inside:avoid}.technical-note{break-inside:avoid}.technical-part-banner{background:#eef2e8;color:#183c34;break-inside:avoid}.technical-part-banner h2,.technical-part-banner .technical-kicker{color:#183c34}.proof-scope-chips>span{color:#183c34}.proof-technical-figure{max-width:430px;break-inside:avoid}}
-@media(max-width:600px){.technical-numbered .technical-section h3{font-size:36px}.technical-numbered .technical-section h4{font-size:28px}}
-@media print{.technical-numbered .technical-section h3{font-size:30px}.technical-numbered .technical-section h4{font-size:23px}.technical-numbered :is(h2,h3,h4,h5,h6,.technical-substep){break-after:avoid}.technical-numbered .technical-part-release .note-number{color:#183c34}}
+@media(max-width:600px){.technical-numbered .technical-section h3{font-size:29px}.technical-numbered .technical-section h4{font-size:23px}}
+@media print{.technical-numbered .technical-section h3{font-size:23px}.technical-numbered .technical-section h4{font-size:18px}.technical-numbered :is(h2,h3,h4,h5,h6,.technical-substep){break-after:avoid}.technical-numbered .technical-part-release .note-number{color:#183c34}}
